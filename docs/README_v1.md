@@ -169,7 +169,7 @@ The platform follows a **"Precision Corporate"** design aesthetic with:
 ### File Hierarchy
 
 ```
-iTrust-Academy/
+itrust-academy/
 ├── 📁 backend/                      # Django Backend
 │   ├── 📁 academy/                  # Project Configuration
 │   │   ├── 📄 settings/
@@ -478,8 +478,8 @@ flowchart TD
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/nordeim/iTrust-Academy.git
-cd iTrust-Academy
+git clone https://github.com/itrust-academy/itrust-academy.git
+cd itrust-academy
 ```
 
 2. **Set up Backend**
@@ -534,8 +534,7 @@ Create `.env` files for both frontend and backend:
 ```env
 DEBUG=True
 SECRET_KEY=your-secret-key-here
-DATABASE_URL=postgresql://academy_user:academy_secret@localhost:5432/academy_db
-#DATABASE_URL=postgres://itrust_user:itrust_secretx@localhost:5432/itrust_academy_db
+DATABASE_URL=postgres://user:password@localhost:5432/itrust_academy
 REDIS_URL=redis://localhost:6379/0
 STRIPE_SECRET_KEY=sk_test_...
 STRIPE_WEBHOOK_SECRET=whsec_...
