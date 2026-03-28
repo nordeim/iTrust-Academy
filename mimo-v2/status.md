@@ -1651,3 +1651,45 @@ This document ensures any future agent or developer can immediately understand:
 7. How to debug issues
 The briefing is now ready for use!
 
+---
+
+✦ I have meticulously analyzed the CLAUDE.md, README.md, and status.md files to gain a comprehensive understanding of the iTrust Academy project. I've validated this understanding against the actual codebase, confirming the successful
+  remediation of several critical issues (e.g., Fast Refresh violations, setState in effect body anti-patterns, and orphaned legacy files) and the implementation of a modern, Avant-Garde design system.
+
+  The project is now in a stable, production-ready state, passing both npm run lint and npm run build with zero errors.
+
+  I have created a comprehensive, single-source-of-truth briefing document, GEMINI.md, which is designed to initialize a new instance of the Gemini coding agent with the following:
+
+   * Operational Mandate: Detailed SOP and design philosophy.
+   * Architecture Map: Clear file organization and data flow patterns.
+   * Design System: Precise tokens for colors, typography, and visual depth.
+   * Remediation History: Critical context on past fixes to prevent regressions.
+   * Roadmap: Clear next steps for routing, course detail pages, and state management.
+
+  ✅ GEMINI.md Status
+   * File Created: /home/project/iTrust-Academy/mimo-v2/GEMINI.md
+   * Total Lines: 481
+   * Verification: All build and lint checks pass.
+   * Visual Check: Production-ready screenshots available in /screenshots/.
+
+  This document ensures that any future Gemini instance can independently handle new PRs with minimal guidance and high technical rigor.
+
+---
+
+✦ I have meticulously planned and created the Project_Architecture_Document.md (PAD) in the project root. This document serves as the definitive technical handbook for iTrust Academy, synthesized from the actual codebase and existing
+  planning documents (CLAUDE.md, README.md, GEMINI.md, and status.md).
+
+  ✅ Project Architecture Document (PAD) Highlights:
+   1. Tech Stack Deep Dive: Detailed breakdown of React 19, TypeScript 5.9, Vite 8, and Tailwind CSS v4.
+   2. File Hierarchy & Manifest: A complete directory tree with deep descriptions of critical files.
+   3. Application Flowcharts (Mermaid):
+       * User Interaction Flow: Visualizes the journey from the Hero section through Course Discovery to Enrollment.
+       * Data & Logic Flow: Maps how static data in courses.ts moves through hooks and utilities to the UI layer.
+   4. Data Architecture (Schema): Detailed entity definitions for Course and Vendor, representing the relational nature of the static data.
+   5. Design System & Constraints: Comprehensive guide to the brand's visual hierarchy, OKLCH color tokens, and animation principles.
+   6. Onboarding SOP: Step-by-step instructions for initializing new developers/agents and critical coding rules (e.g., Fast Refresh safety).
+
+  I have validated the PAD against the actual codebase (verifying entity properties in courses.ts and component stacking in app.tsx) and the previous remediation work (Fast Refresh fixes and useSyncExternalStore implementation).
+
+  This document is now the single source of truth for all architectural and technical decisions within the iTrust Academy workspace.
+

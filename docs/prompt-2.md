@@ -52,6 +52,10 @@ Awesome job on your meticulous analysis, planning and execution. Please keep up 
 
 ---
 
+please meticulously review and analyze @CLAUDE.md , @README.md and @status.md to have a deep understanding of the WHAT, WHY and HOW of the project and its codebase design and architecture, then meticulously validate your deep understanding of the project with the actual codebase. next, meticulously plan to create a comprehensive single-source-of-truth briefing document `GEMINI.md` that will be sufficient to completely initialize another instance of the GEMINI coding agent to be able to handle new PRs independently with minimal error and do so with minimal further guidance.
+
+---
+
 Awesome job on your meticulous review, analysis and planning. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Now, meticulously plan to audit the backend codebase on the user management implementation to identify the root cause of outstanding test failures. also carefully evaluate the backend implementation for user management to identify any gaps/issues or any areas for improvement. then carefully validate any findings against the actual codebase again to ensure architectural alignment before meticulously create a remediation plan to fix any validated issues and to implement any validated suggestions for improvements. 
 
 1. Audit the backend user management implementation
