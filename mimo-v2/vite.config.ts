@@ -11,11 +11,13 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5173,
+    port: 5174,
+    allowedHosts: ['itrust-academy.jesspete.shop', 'localhost', '127.0.0.1'],
     proxy: {
       '/api': {
         target: 'http://localhost:8000',
         changeOrigin: true,
+        secure: false,
       },
     },
   },

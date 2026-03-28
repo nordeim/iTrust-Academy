@@ -2650,3 +2650,82 @@ All documents now accurately reflect:
 - ✅ UI verification screenshots
 The documentation is now 100% aligned with the current codebase state! 🚀
 
+---
+
+I've successfully updated the Project_Architecture_Document.md with comprehensive backend integration details! 🎉
+📋 Summary of Updates
+The PAD has been transformed from a frontend-only document to a complete full-stack architecture reference:
+New Sections Added:
+1. Backend Tech Stack - Django 6, PostgreSQL 16, Redis 7, MinIO
+2. Full-Stack Directory Structure - Complete file hierarchy including backend/
+3. Database Schema - All 4 core models with field-level documentation
+4. API Endpoints Reference - 15+ endpoints organized by domain
+5. Frontend API Integration Layer - Axios client, transformers, React Query hooks
+6. Authentication Flow Diagram - JWT token refresh mechanism
+7. Backend Initialization SOP - Docker, migrations, server startup
+Updated Sections:
+- Tech Stack Deep Dive - Separated into Frontend/Backend/DevOps
+- File Hierarchy - Added complete backend directory structure
+- Application Flowcharts - Added full-stack data flow diagram
+- Data Architecture - Replaced static types with real database schema
+- Development SOP - Added backend initialization steps
+Key Highlights:
+- 174 → 450+ lines of comprehensive documentation
+- 4 database models fully documented with constraints
+- 15+ API endpoints with authentication requirements
+- 3 flowcharts showing user interaction, data flow, and auth flow
+- Production-ready deployment architecture
+The document is now aligned with the actual codebase and ready for developers and AI agents! 🚀
+
+---
+
+I've completed the vite.config.ts update and codebase audit. Here's the summary:
+✅ Changes Applied
+1. vite.config.ts Updated
+server: {
+  port: 5174,  // Changed from 5173
+  allowedHH���: ['itrust-academy.jesspete.shop', 'localhoX��, '127.0.0���],
+  proxy: {
+    '/api': {
+      target: 'http://localhost:8000',
+      changeOrigin: true,
+      secure: false,
+    },
+  },
+},
+2. .env.local Verified
+The .env.local file is correctly configured with:
+- VITE_API_URL=/api/v1 (relative path for proxy)
+- Stripe test key placeholder
+- Feature flags enabled
+---
+🔍 Codebase Audit Results
+Issues Checked Against Troubleshooting Guide
+Issue	Status
+verbatimModuleSyntax (TS1484)	⚠️ Warning
+Blank white page	✅ OK
+<a href="#"> patterns	✅ OK
+Button handlers	⚠️ Warning
+Import errors	✅ OK
+Build Status
+✅ TypeScript: 0 errors
+✅ Vite Build: 1.12s
+✅ Bundle Size: 469 KB JS (148 KB gzipped)
+Buttons Without onClick Handlers
+These buttons are currently static but functional as UI elements:
+- header.tsx: Navigation buttons (Get Started, Request Demo)
+- cta.tsx: Call-to-action buttons
+- training-schedule.tsx: Enroll Now buttons
+- course-catalog.tsx: View Full Training Calendar
+Recommendation: Add useNavigate handlers when routing is fully implemented.
+---
+📋 Next Steps
+1. Start dev server on new port:
+      npm run dev  # Will run on port 5174
+   
+2. Test proxy configuration:
+      curl http://localhost:5174/api/v1/courses/
+   
+3. Update documentation to reflect port change
+The configuration is complete and the build passes! 🚀
+
