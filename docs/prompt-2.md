@@ -44,6 +44,14 @@ Awesome meticulous job so far. Please keep up the good work. Yes, please meticul
 
 ---
 
+Awesome job on your meticulous analysis, planning and execution. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Now, please meticulously review the following skills to understand how to use the available system tools/commands/programs to perform browser verification of the application UI. then start the application server in the background robustly using 'nohup', then use the available browsing capabilities and tools to perform UI verification, save the captured browser screenshots in the `screenshots/` sub-folder.
+
+---
+
+Awesome job on your meticulous analysis, planning and execution. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Though the app at browser URL `http://localhost:5173/ works great, the overall appearance (font, button and border colors) look flat and uninteresting. Please meticulously review the sample template images @sample_for_font_color_reference_1.png and @sample_for_font_color_reference_2.png to get inspiration to enhance the visual look the current app/codebase.
+
+---
+
 Awesome job on your meticulous review, analysis and planning. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Now, meticulously plan to audit the backend codebase on the user management implementation to identify the root cause of outstanding test failures. also carefully evaluate the backend implementation for user management to identify any gaps/issues or any areas for improvement. then carefully validate any findings against the actual codebase again to ensure architectural alignment before meticulously create a remediation plan to fix any validated issues and to implement any validated suggestions for improvements. 
 
 1. Audit the backend user management implementation

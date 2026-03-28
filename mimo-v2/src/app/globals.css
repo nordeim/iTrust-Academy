@@ -1,0 +1,261 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* ═══════════════════════════════════════════════════════
+     BRAND COLORS — Enhanced Burnt Orange with Depth
+     ═══════════════════════════════════════════════════════ */
+  --color-brand-50: #fef7ee;
+  --color-brand-100: #fdecd7;
+  --color-brand-200: #fad5ae;
+  --color-brand-300: #f6b87b;
+  --color-brand-400: #f29441;
+  --color-brand-500: #f27a1a;
+  --color-brand-600: #e36010;
+  --color-brand-700: #bc4a10;
+  --color-brand-800: #963b15;
+  --color-brand-900: #7a3315;
+
+  /* ═══════════════════════════════════════════════════════
+     TYPOGRAPHY — DM Sans + Space Mono
+     ═══════════════════════════════════════════════════════ */
+  --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "Space Mono", "SF Mono", "Fira Code", monospace;
+
+  /* ═══════════════════════════════════════════════════════
+     BORDER RADIUS — Slightly rounded for warmth
+     ═══════════════════════════════════════════════════════ */
+  --radius: 0.5rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* ═══════════════════════════════════════════════════════
+     SHADOWS — Multi-layered depth
+     ═══════════════════════════════════════════════════════ */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+  --shadow-brand: 0 4px 14px 0 rgb(242 122 26 / 0.39);
+  --shadow-brand-lg: 0 8px 28px 0 rgb(242 122 26 / 0.39);
+
+  /* ═══════════════════════════════════════════════════════
+     ANIMATIONS
+     ═══════════════════════════════════════════════════════ */
+  --animate-fade-in: fade-in 0.3s ease-out forwards;
+  --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
+  --animate-scale-in: scale-in 0.3s ease-out forwards;
+  --animate-slide-in-left: slide-in-left 0.4s ease-out forwards;
+  --animate-slide-in-right: slide-in-right 0.4s ease-out forwards;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scale-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes slide-in-left {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CSS CUSTOM PROPERTIES — Enhanced Tokens
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  /* Background colors */
+  --background: #ffffff;
+  --background-secondary: #fafafa;
+  --background-tertiary: #f5f5f5;
+
+  /* Text colors — Rich charcoal for depth */
+  --foreground: #1a1a2e;
+  --foreground-secondary: #2d2d3a;
+  --foreground-tertiary: #4a4a5a;
+
+  /* Card colors */
+  --card: #ffffff;
+  --card-foreground: #1a1a2e;
+  --card-border: #e8e8ec;
+
+  /* Popover */
+  --popover: #ffffff;
+  --popover-foreground: #1a1a2e;
+
+  /* Primary — Vibrant burnt orange */
+  --primary: #f27a1a;
+  --primary-foreground: #ffffff;
+  --primary-hover: #e36010;
+  --primary-light: #fef3e6;
+
+  /* Secondary */
+  --secondary: #f5f5f7;
+  --secondary-foreground: #1a1a2e;
+
+  /* Muted */
+  --muted: #f5f5f7;
+  --muted-foreground: #6b6b7b;
+
+  /* Accent — Warm cream */
+  --accent: #fef3e6;
+  --accent-foreground: #1a1a2e;
+
+  /* Destructive */
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+
+  /* Borders */
+  --border: #e8e8ec;
+  --border-subtle: #f0f0f3;
+  --input: #e8e8ec;
+  --ring: #f27a1a;
+
+  /* Shadows */
+  --shadow-color: 220 3% 15%;
+  --shadow-strength: 1%;
+}
+
+.dark {
+  --background: #0f0f12;
+  --background-secondary: #1a1a1e;
+  --background-tertiary: #252529;
+
+  --foreground: #fafafa;
+  --foreground-secondary: #e5e5e5;
+  --foreground-tertiary: #a0a0a0;
+
+  --card: #1a1a1e;
+  --card-foreground: #fafafa;
+  --card-border: #2d2d32;
+
+  --popover: #1a1a1e;
+  --popover-foreground: #fafafa;
+
+  --primary: #f29441;
+  --primary-foreground: #0f0f12;
+  --primary-hover: #f5a55c;
+  --primary-light: #2d2518;
+
+  --secondary: #2d2d32;
+  --secondary-foreground: #fafafa;
+
+  --muted: #2d2d32;
+  --muted-foreground: #a0a0a0;
+
+  --accent: #2d2518;
+  --accent-foreground: #fafafa;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+
+  --border: #2d2d32;
+  --border-subtle: #3d3d42;
+  --input: #2d2d32;
+  --ring: #f29441;
+
+  --shadow-color: 220 40% 2%;
+  --shadow-strength: 25%;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════════════════════ */
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Enhanced selection with brand color */
+::selection {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground-tertiary);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   UTILITY CLASSES — Shadcn-compatible tokens
+   ═══════════════════════════════════════════════════════════ */
+
+/* Background utilities */
+.bg-background {
+  background-color: var(--background);
+}
+.bg-background-secondary {
+  background-color: var(--background-secondary);
+}
+
+/* Text color utilities */
+.text-foreground {
+  color: var(--foreground);
+}
+.text-foreground-secondary {
+  color: var(--foreground-secondary);
+}
+.text-foreground-tertiary {
+  color: var(--foreground-tertiary);
+}
+
+/* Border utilities */
+.border-card {
+  border-color: var(--card-border);
+}
+.border-subtle {
+  border-color: var(--border-subtle);
+}
+
+/* Shadow utilities */
+.shadow-brand {
+  box-shadow: 0 4px 14px 0 rgb(242 122 26 / 0.39);
+}
+.shadow-brand-lg {
+  box-shadow: 0 8px 28px 0 rgb(242 122 26 / 0.39);
+}
