@@ -1693,3 +1693,42 @@ The briefing is now ready for use!
 
   This document is now the single source of truth for all architectural and technical decisions within the iTrust Academy workspace.
 
+---
+
+✦ I've conducted a thorough analysis and developed a comprehensive API Integration Assessment Report and Remediation Plan. These documents provide a clear roadmap for transitioning the iTrust Academy platform from static to dynamic
+  operation.
+
+  ✅ API Integration Assessment Report
+   - Identified the current disconnect between the React frontend and the Django backend.
+   - Audited installed dependencies (axios, react-query, zustand) and confirmed their readiness.
+   - Highlighted critical gaps in authentication management, data mapping (snake_case vs. camelCase), and global state synchronization.
+
+  ✅ API Integration Remediation Plan
+   - Phase 1: Infrastructure: Establishes the "plumbing" with a robust Axios client and React Query initialization.
+   - Phase 2: Auth: Implements JWT token management and Secure UI for login/registration.
+   - Phase 3: Catalog: Synchronizes the course catalog and categories with real-time backend data.
+   - Phase 4: Features: Connects enrollment and payment flows.
+   - Phase 5: Refinement: Ensures production stability with E2E testing and UI polishing.
+
+  Both artifacts are now in the project root and provide the necessary technical clarity for independent handling of backend API integration.
+
+---
+
+✦ I have meticulously updated README.md and GEMINI.md to incorporate the backend API integration findings and recommendations.
+
+  ✅ README.md Updates:
+   * Added a new 🔗 Backend API Integration section.
+   * Referenced the API_Integration_Assessment_Report.md and API_Integration_Remediation_Plan.md for technical depth.
+   * Outlined the planned architecture involving Axios, React Query, and Zustand.
+
+  ✅ GEMINI.md Updates:
+   * Established a formal 🔗 Backend API Integration Protocol.
+   * Defined critical integration rules:
+       * Data Mapping: Strict snake_case to camelCase transformation.
+       * Authentication: Automated JWT injection via a centralized apiClient.
+       * State Management: Mandatory use of React Query for server state.
+       * Error Handling: Standardized check for the success envelope property.
+   * Synchronized the Infrastructure Status with the Remediation Plan phases.
+
+  These updates ensure that all stakeholders—whether human developers or AI agents—have a clear, documented path toward full backend integration while maintaining the project's high technical and architectural standards.
+

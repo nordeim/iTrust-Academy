@@ -18,8 +18,8 @@
 - [Architecture Overview](#architecture-overview)
 - [User Interaction Flow](#user-interaction-flow)
 - [Application Logic Flow](#application-logic-flow)
-- [Getting Started](#getting-started)
 - [Key Technologies](#key-technologies)
+- [Backend API Integration](#-backend-api-integration)
 - [Deployment](#deployment)
 - [Development Guidelines](#development-guidelines)
 
@@ -35,8 +35,26 @@
 - System administrators and network engineers
 - IT managers looking for team upskilling solutions
 
-### 💡 Key Value Propositions
+---
 
+## 🔗 Backend API Integration
+
+The frontend is currently transitioning from a static-first prototype to a fully dynamic platform integrated with the **AI Academy Backend API (v1.7.0)**.
+
+### 📑 Integration Documentation
+For deep technical details, refer to the following artifacts in the root directory:
+*   [**API Integration Assessment Report**](./API_Integration_Assessment_Report.md): Analysis of connectivity gaps, authentication strategy, and data mapping requirements.
+*   [**API Integration Remediation Plan**](./API_Integration_Remediation_Plan.md): Step-by-step strategic roadmap for implementing the infrastructure, authentication, and dynamic data layers.
+
+### 🛠️ Planned Architecture
+*   **API Client**: Axios instance with JWT interceptors.
+*   **Server State**: `@tanstack/react-query` for caching and synchronization.
+*   **Authentication**: Persistent JWT management via **Zustand**.
+*   **Data Flow**: Transitioning `src/data/courses.ts` to dynamic fetching from `GET /api/v1/courses/`.
+
+---
+
+## ✨ Features
 - **Expert-Led Training**: Courses taught by certified instructors with real-world experience
 - **Hands-On Labs**: Dedicated lab environments for practical learning
 - **Certification Aligned**: Curriculum mapped to official vendor certification paths

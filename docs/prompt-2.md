@@ -56,6 +56,10 @@ please meticulously review and analyze @CLAUDE.md , @README.md and @status.md to
 
 ---
 
+Awesome job on your meticulous review, analysis and planning. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Now, please meticulously review @API_Usage_Guide.md to have a deep understanding of the core business logic via backend API call, then meticulously review the current codebase to carefully check/determine how best to integrate the web frontend with the API backend as defined in the API usage guide. produce as the artifact of your detailed and methodical investigation a comprehensive analysis assessment report and a remediation plan to implement the backend API integration. create these two artifact doucments as markdown files with appropriate filename. 
+
+---
+
 Awesome job on your meticulous review, analysis and planning. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Now, meticulously plan to audit the backend codebase on the user management implementation to identify the root cause of outstanding test failures. also carefully evaluate the backend implementation for user management to identify any gaps/issues or any areas for improvement. then carefully validate any findings against the actual codebase again to ensure architectural alignment before meticulously create a remediation plan to fix any validated issues and to implement any validated suggestions for improvements. 
 
 1. Audit the backend user management implementation

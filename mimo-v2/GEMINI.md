@@ -69,6 +69,23 @@ src/
 
 ---
 
+## 🔗 Backend API Integration Protocol
+
+The frontend is being integrated with the **AI Academy Backend API (v1.7.0)**. All contributors must follow the protocol defined in the [Assessment Report](./API_Integration_Assessment_Report.md) and [Remediation Plan](./API_Integration_Remediation_Plan.md).
+
+### Key Integration Rules
+1.  **Data Mapping**: Backend uses `snake_case`. Always map to frontend `camelCase` in the service layer using transformer utilities.
+2.  **Authentication**: Use the `apiClient` (to be created in `src/services/api/client.ts`) which automatically handles JWT injection from the Zustand store.
+3.  **State Management**: Use `@tanstack/react-query` for all server-side data. Avoid `useEffect` for data fetching.
+4.  **Error Handling**: Standardized responses include a `success` boolean and a `message`. Always check `success` before consuming `data`.
+
+### Infrastructure Status
+*   **Axios Client**: Pending implementation (Phase 1).
+*   **Auth Store**: Pending implementation (Phase 2).
+*   **Course Hooks**: Transitioning from static `courses.ts` to `useCourses` hook (Phase 3).
+
+---
+
 ## 🔧 Workflow & Verification SOP
 
 ### Mandatory Verification Commands
