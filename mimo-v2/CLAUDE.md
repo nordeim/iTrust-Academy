@@ -1,0 +1,481 @@
+# CLAUDE.md - iTrust Academy Project Briefing
+
+> **Single Source of Truth for AI Coding Agents**
+> 
+> **Project**: iTrust Academy - Enterprise IT Training Platform
+> **Tech Stack**: React 19 + TypeScript + Tailwind CSS v4 + Vite
+> **Last Updated**: March 28, 2026
+
+---
+
+## 📋 Executive Summary
+
+iTrust Academy is a **production-ready React application** for enterprise IT training and certification. The platform showcases courses from 4 major vendors (SolarWinds, Securden, Quest, Ivanti) and serves IT professionals in the Asia-Pacific region.
+
+**Key Characteristics:**
+- ✅ TypeScript strict mode enabled
+- ✅ Tailwind CSS v4 with CSS-first configuration
+- ✅ Radix UI primitives for accessibility
+- ✅ Framer Motion animations throughout
+- ✅ Responsive design (mobile-first)
+- ✅ Build passes linting and TypeScript checks
+
+---
+
+## 🏗️ Architecture Overview
+
+### Core Application Structure
+
+```
+App (app.tsx)
+├── Header (Sticky navigation with mobile drawer)
+├── Main Content
+│   ├── Hero (Animated hero with CTA buttons)
+│   ├── Stats (Trust indicators with counter stats)
+│   ├── VendorCards (4 vendor showcase cards)
+│   ├── CourseCatalog (Filterable course grid)
+│   ├── Features (6 feature cards with icons)
+│   ├── TrainingSchedule (Calendar/scheduling)
+│   ├── ProfessionalServices (Services grid)
+│   ├── Testimonials (Customer testimonials)
+│   └── CTA (Call-to-action section)
+└── Footer (Enhanced footer with contact info)
+```
+
+### State Management
+- **Local State**: React `useState` for component-level state
+- **Filtering**: CourseCatalog uses `activeVendor` state for filtering
+- **Mobile Navigation**: Header uses `isOpen` state for mobile drawer
+- **No Global State**: Currently using props drilling; ready for Zustand if needed
+
+### Data Flow
+```
+Data Layer (data/courses.ts)
+    ↓
+Section Components (sections/*.tsx)
+    ↓
+Layout Components (layout/*.tsx)
+    ↓
+UI Components (ui/*.tsx)
+    ↓
+Render to DOM
+```
+
+---
+
+## 📁 File Organization
+
+### Critical Files - KNOW THESE
+
+| File | Purpose | Key Info |
+|------|---------|----------|
+| `src/app/app.tsx` | Root component | All sections rendered here in order |
+| `src/app/globals.css` | Global styles | Tailwind v4 theme tokens, CSS variables |
+| `src/data/courses.ts` | Course data | 9 courses, VENDORS array, COURSE_CATEGORIES |
+| `src/lib/constants.ts` | App constants | BRAND_NAME, NAV_ITEMS, FOOTER_LINKS, API_URL |
+| `src/lib/utils.ts` | Utilities | `cn()` class merger, `formatPrice()`, `formatDate()` |
+
+### Component Architecture
+
+**Layout Components** (`src/components/layout/`)
+- `Container.tsx` - Max-width wrapper with responsive padding
+- `Section.tsx` - Section wrapper with background variants
+- `Header.tsx` - Sticky header with mobile navigation
+- `Footer.tsx` - Site footer with links and contact info
+
+**Section Components** (`src/components/sections/`)
+- `Hero.tsx` - Hero section with headline and CTAs
+- `Stats.tsx` - Statistics section with counters
+- `VendorCards.tsx` - Vendor showcase cards
+- `CourseCatalog.tsx` - Course grid with filtering
+- `Features.tsx` - Platform features
+- `TrainingSchedule.tsx` - Training calendar
+- `ProfessionalServices.tsx` - Services grid
+- `Testimonials.tsx` - Customer testimonials
+- `CTA.tsx` - Call-to-action section
+
+**UI Components** (`src/components/ui/`)
+- `Button.tsx` - Button component with variants
+- `Card.tsx` - Card container
+- `Badge.tsx` - Badge/label component
+- `Input.tsx` - Form input
+- `Separator.tsx` - Visual divider
+- `variants.ts` - CVA variant definitions for buttons/badges
+
+**Custom Components** (`src/components/`)
+- `CourseCard.tsx` - Course listing card with hover effects
+- `social-icons.tsx` - Custom SVG social icons
+
+### Hooks
+- `useReducedMotion.ts` - Detects `prefers-reduced-motion` preference
+
+### Styles
+- `globals.css` - Tailwind v4 theme configuration
+- `animations.ts` - Framer Motion animation variants
+
+---
+
+## 🎨 Design System
+
+### Color Tokens (CSS Variables in globals.css)
+
+```css
+:root {
+  /* Brand Colors */
+  --color-brand-500: #f27a1a;  /* Primary burnt orange */
+  
+  /* Background */
+  --background: #ffffff;
+  --background-secondary: #fafafa;
+  
+  /* Text */
+  --foreground: #1a1a2e;  /* Dark charcoal */
+  --foreground-secondary: #2d2d3a;
+  --muted-foreground: #6b6b7b;
+  
+  /* Borders */
+  --border: #e8e8ec;
+  --card-border: #e8e8ec;
+  
+  /* Shadows */
+  --shadow-brand: 0 4px 14px 0 rgb(242 122 26 / 0.39);
+}
+```
+
+### Typography
+- **Font Family**: DM Sans (sans), Space Mono (mono)
+- **Headlines**: `text-4xl md:text-5xl lg:text-6xl font-bold`
+- **Body**: `text-base text-muted-foreground`
+
+### Spacing Scale
+- Standard Tailwind spacing
+- Container: `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`
+- Section padding: `py-16 md:py-24 lg:py-32`
+
+### Component Variants (CVA Pattern)
+
+```typescript
+// Button variants
+- default: "bg-brand-500 text-white hover:bg-brand-600 shadow-md"
+- outline: "border-2 border-brand-500 text-brand-600"
+- ghost: "text-brand-600 hover:bg-brand-50"
+- secondary: "bg-slate-100 text-slate-900"
+
+// Badge variants
+- default: "bg-brand-100 text-brand-700 border border-brand-200 rounded-full"
+- outline: "border border-brand-500 text-brand-600"
+```
+
+---
+
+## 🔧 Development Workflow
+
+### Available Scripts
+```bash
+npm run dev      # Start Vite dev server (port 5173)
+npm run build    # TypeScript check + production build
+npm run lint     # ESLint with react-refresh rules
+npm run preview  # Preview production build locally
+```
+
+### Build Process
+1. TypeScript compilation (`tsc -b`)
+2. Vite bundling to `dist/`
+3. Output: `index.html`, `assets/`
+
+### Code Quality
+- **ESLint**: Configured with react-refresh plugin
+- **TypeScript**: Strict mode enabled
+- **No console errors** in production
+- **Fast Refresh**: Only export components from component files
+
+### File Import Patterns
+```typescript
+// Aliases configured in tsconfig.json
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { COURSES } from "@/data/courses"
+```
+
+---
+
+## 🧪 Testing Approach
+
+### Current Testing Status
+- ✅ Linting passes (`npm run lint`)
+- ✅ TypeScript compiles (`npm run build`)
+- ✅ Production build generates successfully
+
+### Manual Testing Checklist
+- [ ] Hero section loads with animations
+- [ ] Mobile navigation drawer works
+- [ ] Course filtering functions correctly
+- [ ] All sections render without errors
+- [ ] Footer displays contact information
+- [ ] Buttons have hover states
+- [ ] Cards have hover lift effect
+
+### UI Verification
+- Screenshots saved to `/screenshots/` folder
+- Test viewports: 1440px, 768px, 375px
+
+---
+
+## 🚀 Deployment
+
+### Production Build
+```bash
+npm run build
+# Output: dist/ folder with index.html and assets/
+```
+
+### Deployment Targets
+1. **Netlify**: Recommended - drag & drop `dist/` folder
+2. **Vercel**: Connect GitHub repo for auto-deployment
+3. **GitHub Pages**: Use `gh-pages` npm package
+
+### Environment Variables
+```env
+VITE_API_URL=http://localhost:8000/api/v1
+```
+
+---
+
+## ⚠️ Known Issues & Considerations
+
+### FIXED Issues
+1. ✅ ESLint errors resolved (component exports, useReducedMotion hook)
+2. ✅ TypeScript errors resolved (import.meta.env types, Lucide icons)
+3. ✅ Orphaned files removed (App.tsx, App.css, index.css)
+
+### Current State
+- All lint checks pass
+- Build completes successfully
+- UI renders correctly across viewports
+- Animations work with Framer Motion
+
+### Potential Improvements
+- [ ] Add unit tests with Vitest
+- [ ] Implement contact form functionality
+- [ ] Add course detail pages
+- [ ] Connect to backend API for dynamic data
+- [ ] Add loading skeletons for async operations
+
+---
+
+## 📚 Important Patterns
+
+### Component Pattern (UI Components)
+```typescript
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@/lib/utils"
+
+const componentVariants = cva(
+  "base-classes",
+  {
+    variants: {
+      variant: { default: "...", outline: "..." },
+      size: { default: "...", sm: "...", lg: "..." }
+    },
+    defaultVariants: { variant: "default", size: "default" }
+  }
+)
+
+export interface ComponentProps extends VariantProps<typeof componentVariants> {
+  // Additional props
+}
+
+export function Component({ variant, size, className }: ComponentProps) {
+  return <div className={cn(componentVariants({ variant, size }), className)} />
+}
+```
+
+### Section Pattern
+```typescript
+import { Section } from "@/components/layout/section"
+import { Container } from "@/components/layout/container"
+import { motion } from "framer-motion"
+
+export function MySection() {
+  return (
+    <Section id="section-id" background="default">
+      <Container>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          {/* Content */}
+        </motion.div>
+      </Container>
+    </Section>
+  )
+}
+```
+
+### Animation Pattern
+```typescript
+import { motion } from "framer-motion"
+
+// Entrance animation
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true, margin: "-50px" }}
+  transition={{ duration: 0.5, delay: 0.1 }}
+>
+  Content
+</motion.div>
+
+// Staggered children
+<motion.div
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true }}
+  variants={staggerContainer}
+>
+  {items.map((item, i) => (
+    <motion.div key={i} variants={staggerItem}>
+      {item}
+    </motion.div>
+  ))}
+</motion.div>
+```
+
+---
+
+## 🔍 Debugging Tips
+
+### Common Issues
+
+**Build fails with TypeScript errors:**
+- Check `tsconfig.json` includes all source files
+- Verify no `any` types in strict mode
+- Check import.meta.env usage
+
+**Framer Motion animations not working:**
+- Ensure `use client` directive for client components
+- Check for `prefers-reduced-motion` preference
+- Verify motion.div has proper initial/animate props
+
+**Tailwind classes not applying:**
+- Verify `globals.css` is imported in `main.tsx`
+- Check className concatenation with `cn()` utility
+- Ensure Tailwind v4 CSS-first config is correct
+
+**ESLint errors:**
+- Never export constants from component files (fast-refresh issue)
+- Use `variants.ts` for shared CVA definitions
+- Avoid setState in useEffect (use useSyncExternalStore instead)
+
+---
+
+## 📦 Dependencies
+
+### Core
+- react ^19.2.4
+- react-dom ^19.2.4
+- typescript ~5.9.3
+
+### Build & Dev
+- vite ^8.0.1
+- @vitejs/plugin-react ^6.0.1
+- eslint ^9.39.4
+
+### Styling
+- tailwindcss ^4.2.2
+- @tailwindcss/vite ^4.2.2
+- class-variance-authority ^0.7.1
+- tailwind-merge ^3.5.0
+- clsx ^2.1.1
+
+### UI & Animation
+- @radix-ui/react-* (various primitives)
+- framer-motion ^12.38.0
+- lucide-react ^1.7.0
+
+### Forms & State
+- react-hook-form ^7.72.0
+- zod ^4.3.6
+- @hookform/resolvers ^5.2.2
+- zustand ^5.0.12
+
+### Data
+- @tanstack/react-query ^5.95.2
+- axios ^1.14.0
+
+---
+
+## 📝 Conventions
+
+### Naming
+- **Components**: PascalCase (Hero.tsx, CourseCard.tsx)
+- **Hooks**: camelCase with `use` prefix (useReducedMotion.ts)
+- **Utils**: camelCase (formatPrice.ts)
+- **Files**: kebab-case (course-catalog.tsx)
+
+### Imports Order
+1. React/Next
+2. Third-party libraries
+3. Absolute imports (@/)
+4. Relative imports
+
+### Comments
+- Use `//` for single-line comments
+- Use `/* */` for multi-line
+- Add section dividers: `/* ═══════════════════ */`
+
+---
+
+## 🎯 Project Goals
+
+### Completed ✅
+- [x] Hero section with animations
+- [x] Responsive navigation
+- [x] Course catalog with filtering
+- [x] Feature sections
+- [x] Footer with contact info
+- [x] All lint checks passing
+- [x] Production build working
+
+### In Progress 🔄
+- [ ] Mobile menu interaction refinements
+- [ ] Additional course detail pages
+
+### Planned 📋
+- [ ] Contact form functionality
+- [ ] Backend API integration
+- [ ] User authentication
+- [ ] Course enrollment flow
+- [ ] Admin dashboard
+
+---
+
+## 🆘 Getting Help
+
+### Resources
+- **README.md**: Complete project documentation
+- **package.json**: Dependency versions and scripts
+- **tsconfig.json**: TypeScript configuration
+- **vite.config.ts**: Build configuration
+
+### Troubleshooting
+1. Run `npm install` to ensure dependencies
+2. Run `npm run lint` to check for code issues
+3. Run `npm run build` to verify TypeScript compilation
+4. Check browser console for runtime errors
+5. Verify animations with `useReducedMotion` hook
+
+---
+
+**Last Updated**: March 28, 2026  
+**Maintained By**: iTrust Academy Development Team  
+**Version**: 0.0.0
+
+---
+
+<div align="center">
+
+**END OF BRIEFING DOCUMENT**
+
+</div>
