@@ -7,6 +7,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-v4-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
 [![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite)](https://vitejs.dev/)
+[![Django REST](https://img.shields.io/badge/Django%20REST-3.16-092E20?logo=django)](https://www.django-rest-framework.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
@@ -16,10 +17,9 @@
 - [About The Project](#about-the-project)
 - [Features](#features)
 - [Architecture Overview](#architecture-overview)
-- [User Interaction Flow](#user-interaction-flow)
-- [Application Logic Flow](#application-logic-flow)
+- [Full-Stack Integration](#-full-stack-integration)
+- [Getting Started](#getting-started)
 - [Key Technologies](#key-technologies)
-- [Backend API Integration](#-backend-api-integration)
 - [Deployment](#deployment)
 - [Development Guidelines](#development-guidelines)
 
@@ -27,7 +27,7 @@
 
 ## 🎯 About The Project
 
-**iTrust Academy** is a modern, responsive web application designed for enterprise IT training and certification. Built with React 19 and Tailwind CSS v4, it delivers a premium user experience for IT professionals seeking training across leading technology platforms.
+**iTrust Academy** is a modern, full-stack web application designed for enterprise IT training and certification. Built with React 19 + Tailwind CSS v4 frontend and Django REST API backend, it delivers a premium user experience for IT professionals seeking training across leading technology platforms.
 
 ### 🌏 Target Audience
 - IT professionals in the Asia-Pacific region
@@ -37,20 +37,73 @@
 
 ---
 
-## 🔗 Backend API Integration
+## 🔗 Full-Stack Integration
 
-The frontend is currently transitioning from a static-first prototype to a fully dynamic platform integrated with the **AI Academy Backend API (v1.7.0)**.
+The application is **fully integrated** with a Django REST API backend.
+
+### 🛠️ Integration Architecture
+
+```
+Frontend (React 19 + Vite)
+    ↓
+QueryClient (TanStack Query)
+    ↓
+apiClient (Axios + JWT)
+    ↓
+Django REST API (localhost:8000)
+    ↓
+PostgreSQL Database
+```
+
+### 📁 API Layer Structure
+
+```
+src/
+├── services/api/
+│   ├── client.ts          # Axios instance with JWT interceptors
+│   ├── types.ts           # API response types
+│   ├── transformers.ts    # snake_case → camelCase
+│   ├── courses.ts         # Course API functions
+│   ├── categories.ts      # Category API functions
+│   └── auth.ts            # Auth API functions
+├── store/
+│   └── useAuthStore.ts    # Zustand JWT token management
+├── hooks/
+│   ├── useCourses.ts      # Course query hooks
+│   ├── useCategories.ts   # Category query hooks
+│   └── useAuth.ts         # Auth mutation hooks
+└── providers/
+    └── QueryProvider.tsx   # React Query configuration
+```
+
+### 🔐 Authentication
+
+- **JWT Tokens**: 30-minute access, 7-day refresh
+- **Token Persistence**: Zustand with localStorage
+- **Auto-Refresh**: Automatic token refresh on 401
+- **Secure Storage**: Tokens stored in `itrust-auth` localStorage key
+
+### 📊 Data Flow
+
+```typescript
+// Fetch courses from API
+const { data: coursesData, isLoading } = useCourses()
+
+// Filter by category
+const { data: filtered } = useCourses({ 
+  categories__slug: 'security' 
+})
+
+// Get single course
+const { data: course } = useCourse('solarwinds-npm')
+```
 
 ### 📑 Integration Documentation
-For deep technical details, refer to the following artifacts in the root directory:
-*   [**API Integration Assessment Report**](./API_Integration_Assessment_Report.md): Analysis of connectivity gaps, authentication strategy, and data mapping requirements.
-*   [**API Integration Remediation Plan**](./API_Integration_Remediation_Plan.md): Step-by-step strategic roadmap for implementing the infrastructure, authentication, and dynamic data layers.
 
-### 🛠️ Planned Architecture
-*   **API Client**: Axios instance with JWT interceptors.
-*   **Server State**: `@tanstack/react-query` for caching and synchronization.
-*   **Authentication**: Persistent JWT management via **Zustand**.
-*   **Data Flow**: Transitioning `src/data/courses.ts` to dynamic fetching from `GET /api/v1/courses/`.
+- [API Integration Assessment Report](./API_Integration_Assessment_Report.md)
+- [API Integration Remediation Plan](./API_Integration_Remediation_Plan.md)
+- [Frontend API Integration Plan](./FRONTEND_API_INTEGRATION_PLAN.md)
+- [Backend Validation Report](./BACKEND_VALIDATION_REPORT.md)
 
 ---
 
@@ -94,7 +147,7 @@ For deep technical details, refer to the following artifacts in the root directo
 
 ## 🏗️ Architecture Overview
 
-### Project Structure
+### Project Structure (Updated)
 
 ```
 mimo-v2/
@@ -105,7 +158,7 @@ mimo-v2/
 │   │
 │   ├── 📁 components/
 │   │   ├── 📁 cards/
-│   │   │   └── course-card.tsx     # Course listing card component
+│   │   │   └── course-card.tsx     # Course listing card (API-driven)
 │   │   │
 │   │   ├── 📁 icons/
 │   │   │   └── social-icons.tsx    # Custom SVG social media icons
@@ -120,7 +173,7 @@ mimo-v2/
 │   │   │   ├── hero.tsx            # Hero banner section
 │   │   │   ├── stats.tsx           # Statistics/trust indicators
 │   │   │   ├── vendor-cards.tsx    # Vendor showcase cards
-│   │   │   ├── course-catalog.tsx  # Course grid with filtering
+│   │   │   ├── course-catalog.tsx  # Course grid (API-integrated)
 │   │   │   ├── features.tsx        # Platform features
 │   │   │   ├── training-schedule.tsx # Calendar/scheduling
 │   │   │   ├── professional-services.tsx # Services section
@@ -135,28 +188,49 @@ mimo-v2/
 │   │       ├── separator.tsx       # Visual divider
 │   │       └── variants.ts         # Component variant definitions
 │   │
-│   ├── 📁 data/
-│   │   └── courses.ts              # Course data & types
+│   ├── 📁 services/
+│   │   └── 📁 api/
+│   │       ├── client.ts           # Axios instance with JWT interceptors
+│   │       ├── types.ts            # API response types
+│   │       ├── transformers.ts     # snake_case → camelCase
+│   │       ├── courses.ts          # Course API functions
+│   │       ├── categories.ts       # Category API functions
+│   │       └── auth.ts             # Auth API functions
+│   │
+│   ├── 📁 store/
+│   │   └── useAuthStore.ts         # Zustand JWT token management
 │   │
 │   ├── 📁 hooks/
-│   │   └── useReducedMotion.ts     # Accessibility hook for animations
+│   │   ├── useCourses.ts           # Course query hooks
+│   │   ├── useCategories.ts        # Category query hooks
+│   │   ├── useAuth.ts              # Auth mutation hooks
+│   │   └── useReducedMotion.ts     # Accessibility hook
+│   │
+│   ├── 📁 providers/
+│   │   └── QueryProvider.tsx       # React Query configuration
+│   │
+│   ├── 📁 data/
+│   │   └── courses.ts              # Legacy static data (fallback)
 │   │
 │   ├── 📁 lib/
-│   │   ├── constants.ts            # App constants & navigation
-│   │   └── utils.ts                # Utility functions (cn, formatters)
+│   │   ├── constants.ts            # App constants & API_URL
+│   │   └── utils.ts                # Utility functions
 │   │
 │   ├── 📁 types/
 │   │   └── vite-env.d.ts           # TypeScript declarations
 │   │
-│   ├── main.tsx                    # React entry point
+│   ├── main.tsx                    # React entry point (QueryProvider)
 │   └── index.css                   # Base CSS imports
 │
-├── 📁 public/                      # Static assets
-├── 📁 dist/                        # Production build output
-├── 📄 index.html                   # HTML entry point
-├── 📄 vite.config.ts               # Vite configuration
-├── 📄 tsconfig.json                # TypeScript configuration
-├── 📄 package.json                 # Dependencies & scripts
+├── 📁 backend/                     # Django REST API
+│   ├── 📁 api/                     # API endpoints & serializers
+│   ├── 📁 courses/                 # Course models & logic
+│   ├── 📁 users/                   # User authentication
+│   └── manage.py                   # Django management
+│
+├── 📁 screenshots/                 # UI verification screenshots
+├── 📄 docker-compose.yml           # PostgreSQL, Redis, MinIO
+├── 📄 package.json                 # Frontend dependencies
 └── 📄 README.md                    # This file
 ```
 
@@ -164,10 +238,11 @@ mimo-v2/
 
 | Pattern | Implementation | Purpose |
 |---------|---------------|---------|
-| **Composition** | Radix UI + Custom | Reusable, accessible primitives |
-| **Container/Presentational** | Layout/Section split | Separation of concerns |
-| **Custom Hooks** | useReducedMotion | Reusable animation logic |
-| **CVA (Class Variance Authority)** | variants.ts | Type-safe component variants |
+| **API Client** | Axios + JWT interceptors | Centralized HTTP layer |
+| **Server State** | React Query hooks | Data fetching & caching |
+| **Auth State** | Zustand store | JWT token persistence |
+| **Data Transform** | transformers.ts | Backend ↔ Frontend mapping |
+| **CVA Variants** | variants.ts | Type-safe component variants |
 | **CSS-first Theming** | globals.css | Tailwind v4 theme tokens |
 
 ---

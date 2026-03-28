@@ -3,7 +3,7 @@ import { Clock, BarChart3, Users, Star } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 import { formatPrice } from "@/lib/utils"
-import type { Course } from "@/data/courses"
+import type { Course } from "@/services/api/types"
 
 interface CourseCardProps {
   course: Course
@@ -11,6 +11,10 @@ interface CourseCardProps {
 }
 
 export function CourseCard({ course, index = 0 }: CourseCardProps) {
+  // Get primary category color
+  const primaryCategory = course.categories[0]
+  const color = primaryCategory?.color || "#f27a1a"
+
   return (
     <motion.a
       href={`#course-${course.slug}`}
@@ -26,24 +30,26 @@ export function CourseCard({ course, index = 0 }: CourseCardProps) {
       )}
     >
       {/* Color accent bar */}
-      <div className="h-1.5" style={{ backgroundColor: course.color }} />
+      <div className="h-1.5" style={{ backgroundColor: color }} />
 
       <div className="p-6">
         {/* Header */}
         <div className="flex items-start justify-between gap-3 mb-4">
           <div className="flex gap-2 flex-wrap">
-            <Badge 
-              size="sm" 
-              className="rounded-full"
-              style={{ backgroundColor: `${course.color}15`, color: course.color, borderColor: `${course.color}30` }}
-            >
-              {course.vendor}
-            </Badge>
+            {course.categories.length > 0 && (
+              <Badge 
+                size="sm" 
+                className="rounded-full"
+                style={{ backgroundColor: `${color}15`, color: color, borderColor: `${color}30` }}
+              >
+                {course.categories[0].name}
+              </Badge>
+            )}
             <Badge variant="outline" size="sm" className="rounded-full">
               {course.level}
             </Badge>
           </div>
-          {course.featured && (
+          {course.isFeatured && (
             <Badge size="sm" className="shrink-0 rounded-full bg-brand-100 text-brand-700 border-brand-200">
               Featured
             </Badge>
@@ -60,20 +66,15 @@ export function CourseCard({ course, index = 0 }: CourseCardProps) {
           {course.subtitle}
         </p>
 
-        {/* Description */}
-        <p className="text-sm text-muted-foreground mb-5 line-clamp-2">
-          {course.description}
-        </p>
-
         {/* Meta */}
         <div className="flex items-center gap-4 text-xs text-muted-foreground mb-5">
           <div className="flex items-center gap-1.5">
             <Clock className="w-3.5 h-3.5" />
-            <span className="font-mono">{course.duration}</span>
+            <span className="font-mono">{course.durationWeeks} weeks</span>
           </div>
           <div className="flex items-center gap-1.5">
             <BarChart3 className="w-3.5 h-3.5" />
-            <span className="font-mono">{course.modules} modules</span>
+            <span className="font-mono">{course.modulesCount} modules</span>
           </div>
           <div className="flex items-center gap-1.5">
             <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
@@ -95,21 +96,23 @@ export function CourseCard({ course, index = 0 }: CourseCardProps) {
           </div>
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <Users className="w-3.5 h-3.5" />
-            <span className="font-mono">{course.enrolled.toLocaleString()}</span>
+            <span className="font-mono">{course.reviewCount.toLocaleString()}</span>
           </div>
         </div>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mt-4">
-          {course.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-[10px] font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded uppercase tracking-wider"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+        {course.categories.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-4">
+            {course.categories.map((cat) => (
+              <span
+                key={cat.id}
+                className="text-[10px] font-mono text-slate-500 bg-slate-100 px-2 py-0.5 rounded uppercase tracking-wider"
+              >
+                {cat.name}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </motion.a>
   )

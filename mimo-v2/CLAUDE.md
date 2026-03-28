@@ -3,14 +3,14 @@
 > **Single Source of Truth for AI Coding Agents**
 > 
 > **Project**: iTrust Academy - Enterprise IT Training Platform
-> **Tech Stack**: React 19 + TypeScript + Tailwind CSS v4 + Vite
-> **Last Updated**: March 28, 2026
+> **Tech Stack**: React 19 + TypeScript + Tailwind CSS v4 + Vite + Django REST API
+> **Last Updated**: March 29, 2026
 
 ---
 
 ## 📋 Executive Summary
 
-iTrust Academy is a **production-ready React application** for enterprise IT training and certification. The platform showcases courses from 4 major vendors (SolarWinds, Securden, Quest, Ivanti) and serves IT professionals in the Asia-Pacific region.
+iTrust Academy is a **production-ready full-stack application** for enterprise IT training and certification. The platform integrates a React 19 frontend with a Django REST API backend, showcasing courses from 4 major vendors (SolarWinds, Securden, Quest, Ivanti) and serving IT professionals in the Asia-Pacific region.
 
 **Key Characteristics:**
 - ✅ TypeScript strict mode enabled
@@ -18,7 +18,9 @@ iTrust Academy is a **production-ready React application** for enterprise IT tra
 - ✅ Radix UI primitives for accessibility
 - ✅ Framer Motion animations throughout
 - ✅ Responsive design (mobile-first)
-- ✅ Build passes linting and TypeScript checks
+- ✅ **Full API integration with Django backend**
+- ✅ **JWT authentication with token refresh**
+- ✅ **Real-time data fetching with React Query**
 
 ---
 
@@ -28,12 +30,13 @@ iTrust Academy is a **production-ready React application** for enterprise IT tra
 
 ```
 App (app.tsx)
+├── QueryProvider (React Query)
 ├── Header (Sticky navigation with mobile drawer)
 ├── Main Content
 │   ├── Hero (Animated hero with CTA buttons)
 │   ├── Stats (Trust indicators with counter stats)
 │   ├── VendorCards (4 vendor showcase cards)
-│   ├── CourseCatalog (Filterable course grid)
+│   ├── CourseCatalog (API-integrated course grid)
 │   ├── Features (6 feature cards with icons)
 │   ├── TrainingSchedule (Calendar/scheduling)
 │   ├── ProfessionalServices (Services grid)
@@ -43,14 +46,18 @@ App (app.tsx)
 ```
 
 ### State Management
+- **Server State**: React Query for API data
+- **Auth State**: Zustand store with localStorage persistence
 - **Local State**: React `useState` for component-level state
 - **Filtering**: CourseCatalog uses `activeVendor` state for filtering
-- **Mobile Navigation**: Header uses `isOpen` state for mobile drawer
-- **No Global State**: Currently using props drilling; ready for Zustand if needed
 
-### Data Flow
+### Data Flow (Updated)
 ```
-Data Layer (data/courses.ts)
+Backend API (Django REST)
+    ↓
+apiClient (Axios + JWT)
+    ↓
+React Query Hooks (useCourses, useCategories)
     ↓
 Section Components (sections/*.tsx)
     ↓
