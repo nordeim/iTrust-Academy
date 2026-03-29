@@ -131,12 +131,22 @@ allowedHosts: ['itrust-academy.jesspete.shop', 'localhost', '127.0.0.1']
 ```
 
 ### E2E Testing Status
-- ✅ 9 test cases executed
+- ✅ 14 test cases executed
 - ✅ 9 screenshots captured (desktop, mobile, tablet)
 - ✅ Page load verified
 - ✅ Hero section renders correctly
 - ✅ Navigation functional
 - ✅ Mobile responsive (375px, 768px, 1440px)
+- ✅ **100% E2E test pass rate (14/14)**
+
+### QA Remediation Status
+- ✅ Logo duplication bug fixed (header & footer)
+- ✅ All 11 CTAs now functional with onClick handlers
+- ✅ Header button text increased to 14px
+- ✅ Accessibility labels added to decorative icons
+- ✅ Scroll utility functions implemented
+- ✅ Favicon 404 error fixed (vite.svg → favicon.svg)
+- ✅ No static asset 404 errors
 
 ### Deployment Checklist
 - [x] Build generated in `dist/`
@@ -144,6 +154,10 @@ allowedHosts: ['itrust-academy.jesspete.shop', 'localhost', '127.0.0.1']
 - [x] Dark mode/Light mode variables verified
 - [x] Fast Refresh rules satisfied (no non-component exports in component files)
 - [x] API integration verified with live backend
+- [x] All CTAs functional (11/11)
+- [x] Logo renders correctly without duplication
+- [x] Favicon loads without 404 errors
+- [x] 100% E2E test pass rate
 
 ---
 
@@ -155,6 +169,9 @@ allowedHosts: ['itrust-academy.jesspete.shop', 'localhost', '127.0.0.1']
 4.  **Icon Strategy**: Brand icons (LinkedIn, Twitter, etc.) are custom SVGs in `src/components/icons/` because Lucide excludes brand logos.
 5.  **Asset Cleanup**: Legacy `App.tsx`, `App.css`, and `index.css` were removed to eliminate conflict with `src/app/`.
 6.  **API Integration**: Complete frontend API layer with Axios, React Query, and Zustand for JWT management.
+7.  **Logo Fix**: Changed icon from `<span>i</span>` to `<GraduationCap>` Lucide icon to prevent "iiTrust Academy" duplication.
+8.  **CTA Wiring**: Added `scrollToSection()` utility and onClick handlers to all interactive buttons.
+9.  **Favicon Fix**: Changed favicon reference from `/vite.svg` (bundled) to `/favicon.svg` (public folder) to resolve 404 error.
 
 ---
 
@@ -168,6 +185,9 @@ allowedHosts: ['itrust-academy.jesspete.shop', 'localhost', '127.0.0.1']
 *   Zustand auth store with persistence
 *   CourseCatalog component updated for API
 *   Visual design enhancements (shadows, typography, colors)
+*   E2E testing (9 test cases, 9 screenshots)
+*   QA remediation (logo fix, 11 CTAs wired, accessibility)
+*   Server configuration (port 5174, allowedHosts)
 
 ### 🔄 In Progress
 *   Loading skeleton components

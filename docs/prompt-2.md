@@ -124,6 +124,10 @@ please meticulously review these documents AGENTS.md GEMINI.md README.md Project
 
 ---
 
+Awesome job on your meticulous analysis, planning and execution. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Now, please meticulously plan to use the available browsing tools and capabilities to design a comprehensive E2E test plan to validate all the QA issues/findings and confirm their resolution. restart the frontend server process robustly before executing the test plan.
+
+---
+
 Awesome job on your meticulous analysis, planning and execution. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Now, please meticulously review and update  @README.md , @CLAUDE.md , @GEMINI.md @Project_Architecture_Document.md and @ACCOMPLISHMENTS.md with your major milestone achievements, include things like code changes (updates and additions), enhancements and fixes, lessons learned, troubleshooting guide, any blockers encountered (solved or still persist), any recommended next steps, etc.
 
 ---

@@ -151,6 +151,46 @@ src/providers/
 
 ---
 
+### Milestone 6: QA Remediation ✅
+**Date**: March 29, 2026  
+**Status**: Complete
+
+#### Achievements:
+- ✅ Fixed logo duplication bug (header & footer)
+- ✅ Wired all 11 CTA buttons with onClick handlers
+- ✅ Added accessibility labels to decorative icons
+- ✅ Increased header button text size (12px → 14px)
+- ✅ Created scroll utility functions (scrollToSection, scrollToTop)
+- ✅ 100% CTAs now functional (11/11)
+
+#### Code Changes:
+| File | Change | Status |
+|------|--------|--------|
+| `src/lib/utils.ts` | Added scrollToSection() and scrollToTop() utilities | ✅ |
+| `src/components/layout/header.tsx` | Fixed logo (GraduationCap icon), added onClick, increased button size | ✅ |
+| `src/components/layout/footer.tsx` | Fixed logo (GraduationCap icon) | ✅ |
+| `src/components/sections/hero.tsx` | Added onClick to CTA buttons, aria-hidden to SVGs | ✅ |
+| `src/components/sections/course-catalog.tsx` | Added onClick to calendar button | ✅ |
+| `src/components/sections/training-schedule.tsx` | Added onClick to Enroll Now button | ✅ |
+| `src/components/sections/cta.tsx` | Added onClick to Demo & Contact buttons | ✅ |
+| `src/components/sections/professional-services.tsx` | Added onClick to Schedule Consultation | ✅ |
+
+#### QA Issues Resolved:
+| Issue | Before | After | Status |
+|-------|--------|-------|--------|
+| Logo duplication (header) | ❌ "iiTrust Academy" | ✅ "iTrust Academy" | Fixed |
+| Logo duplication (footer) | ❌ "iiTrust Academy" | ✅ "iTrust Academy" | Fixed |
+| Header button font size | ❌ 12px | ✅ 14px | Fixed |
+| GET STARTED button | ❌ No handler | ✅ Scrolls to courses | Fixed |
+| VIEW ALL COURSES | ❌ No handler | ✅ Scrolls to courses | Fixed |
+| EXPLORE SCP FUNDAMENTALS | ❌ No handler | ✅ Scrolls to courses | Fixed |
+| REQUEST CORPORATE DEMO | ❌ No handler | ✅ Scrolls to contact | Fixed |
+| CONTACT SALES | ❌ No handler | ✅ Scrolls to contact | Fixed |
+| SCHEDULE CONSULTATION | ❌ No handler | ✅ Scrolls to contact | Fixed |
+| ENROLL NOW | ❌ No handler | ✅ Scrolls to courses | Fixed |
+
+---
+
 ## 📊 Progress Summary
 
 ### Completed ✅
@@ -172,6 +212,12 @@ src/providers/
 - [x] Vite configuration (port 5174, allowedHosts)
 - [x] E2E test plan created and executed
 - [x] E2E screenshots captured (9 files)
+- [x] QA remediation completed (all 11 CTAs functional)
+- [x] Logo duplication bug fixed (header & footer)
+- [x] Accessibility labels added to icons
+- [x] Header button text increased to 14px
+- [x] Favicon 404 error fixed (vite.svg → favicon.svg)
+- [x] 100% E2E test pass rate achieved (14/14)
 
 ### In Progress 🔄
 - [ ] Mobile menu interaction refinements
@@ -197,6 +243,11 @@ src/providers/
 | Missing TypeScript declarations | Added `vite-env.d.ts` | ✅ |
 | Lucide social icons | Created custom SVG components | ✅ |
 | Orphaned legacy files | Removed App.tsx, App.css, index.css | ✅ |
+| Logo duplication bug | Changed icon from `<span>i</span>` to `<GraduationCap>` | ✅ |
+| Non-functional CTAs | Added onClick handlers with scrollToSection | ✅ |
+| Small button text | Changed header CTA from size="sm" to size="default" | ✅ |
+| Missing accessibility | Added aria-hidden to decorative icons | ✅ |
+| Favicon 404 error | Changed reference from `/vite.svg` to `/favicon.svg` | ✅ |
 
 ---
 
