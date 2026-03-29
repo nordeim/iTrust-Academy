@@ -5,6 +5,8 @@ import { Section } from "@/components/layout/section"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { cn, scrollToSection } from "@/lib/utils"
+import { useAuthStore } from "@/store/useAuthStore"
+import { toast } from "sonner"
 
 const COHORTS = [
   {
@@ -57,6 +59,32 @@ const vendorColors: Record<string, string> = {
 }
 
 export function TrainingSchedule() {
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
+
+  const handleEnrollClick = () => {
+    if (!isAuthenticated) {
+      // Robust way to trigger the login modal
+      const buttons = Array.from(document.querySelectorAll('button'))
+      const loginBtn = buttons.find(b => b.textContent?.trim() === 'Sign In')
+      
+      if (loginBtn) {
+        loginBtn.click()
+        toast.info("Please sign in to enroll in a course")
+      } else {
+        // Fallback: try finding by text content if trim didn't work
+        const anyLoginBtn = buttons.find(b => b.textContent?.includes('Sign In'))
+        if (anyLoginBtn) {
+          anyLoginBtn.click()
+          toast.info("Please sign in to enroll in a course")
+        } else {
+          scrollToSection("courses")
+        }
+      }
+    } else {
+      toast.success("Enrollment system coming soon!")
+    }
+  }
+
   return (
     <Section id="schedule">
       <Container>
@@ -157,7 +185,7 @@ export function TrainingSchedule() {
                   </div>
                   <Button 
                     size="sm"
-                    onClick={() => scrollToSection("courses")}
+                    onClick={handleEnrollClick}
                   >
                     Enroll Now
                   </Button>
@@ -186,3 +214,4 @@ export function TrainingSchedule() {
     </Section>
   )
 }
+

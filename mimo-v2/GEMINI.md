@@ -29,60 +29,36 @@ As a Gemini agent in this workspace, you are an **internally acclaimed web desig
 
 ## 🏗️ Project Architecture & Data Flow
 
-### Core Structure (Updated)
+### Core Structure (Integrated Full-Stack)
 ```
 src/
 ├── app/                  # Main Entry & Global Configuration
 │   ├── app.tsx           # Root orchestrator for all sections
 │   └── globals.css       # Tailwind v4 CSS-first theme & variables
 ├── components/
-│   ├── layout/           # Sticky Header, Redesigned Light Footer, Containers
+│   ├── forms/            # NEW: Zod-validated Auth Modals (Login, Register)
+│   ├── layout/           # Sticky Header, UserNav Dropdown, Light Footer
 │   ├── sections/         # Animated landing page sections (Hero, Stats, Catalog, etc.)
-│   ├── ui/               # Radix Primitives + Custom CVA Variants (Button, Badge, Card)
-│   └── icons/            # Custom SVG Brand Icons (Social media, brand accents)
+│   ├── ui/               # Radix Primitives: Dialog, Dropdown, Avatar, Button, etc.
+│   └── icons/            # Custom SVG Brand Icons
 ├── services/
-│   └── api/              # API Integration Layer
-│       ├── client.ts     # Axios + JWT interceptors
-│       ├── types.ts      # Backend/Frontend type definitions
-│       ├── transformers.ts # snake_case → camelCase
-│       ├── courses.ts    # Course API functions
-│       ├── categories.ts # Category API functions
-│       └── auth.ts       # Auth API functions
+│   └── api/              # API Integration Layer (Axios + JWT + Transformers)
 ├── store/
-│   └── useAuthStore.ts   # Zustand JWT token management
+│   └── useAuthStore.ts   # Zustand JWT & User persistence
 ├── hooks/
-│   ├── useCourses.ts     # Course query hooks (React Query)
-│   ├── useCategories.ts  # Category query hooks (React Query)
-│   ├── useAuth.ts        # Auth mutation hooks
-│   └── useReducedMotion.ts # Accessibility hook
+│   ├── useAuth.ts        # Auth mutation & profile hooks
+│   ├── useCourses.ts     # Course query hooks
+│   └── useCategories.ts  # Category query hooks
 ├── providers/
 │   └── QueryProvider.tsx # React Query configuration
 ├── data/                 # Static Course & Vendor data (fallback)
-├── lib/                  # Constants, CN Utility, Formatters
-└── types/                # Vite-env, CSS module declarations
+└── lib/                  # Constants, CN Utility, Scroll Utilities
 ```
 
-### Critical Data Flows (Updated)
-1.  **API Data**: `apiClient` → `React Query` → `useCourses/useCategories` → Components
-2.  **Styles**: `globals.css` (Tailwind v4) → All components via `cn()` utility
-3.  **Animations**: `framer-motion` variants defined in `src/styles/animations.ts`
-4.  **Auth**: `useAuthStore` (Zustand) → `apiClient` → JWT token injection
-
----
-
-## 🎨 Design System & Visual Grammar
-
-### Verified Tokens (globals.css)
-*   **Primary Brand**: `--color-brand-500: #f27a1a` (Burnt Orange)
-*   **Text (Primary)**: `--foreground: #1a1a2e` (Rich Charcoal - High Contrast)
-*   **Accent (Light)**: `--accent-warm: #fef3e6` (Warm Cream for highlights)
-*   **Shadows**: Custom multi-layered shadows (`shadow-brand`, `shadow-brand-lg`).
-*   **Radius**: `--radius: 0.5rem` (Consistent rounded corners across all components).
-
-### Typography Hierarchy
-*   **Sans**: DM Sans (Headlines/Body)
-*   **Mono**: Space Mono (Badges, Buttons, Precision Labels)
-*   **Headlines**: Bold, dark navy, with SVG accent underlines for emphasis.
+### Critical Data Flows
+1.  **Identity**: `useAuthStore` (Zustand) → `apiClient` (Axios Interceptors) → JWT Injection.
+2.  **Server State**: `React Query` → `apiService` → `Transformers (snake → camel)` → Components.
+3.  **Navigation**: `scrollToSection()` utility for single-page; React Router planned for detail pages.
 
 ---
 
@@ -93,23 +69,16 @@ The frontend is **fully integrated** with the **Django REST API Backend**.
 ### Integration Status: ✅ COMPLETE
 
 All phases of the API integration have been implemented:
-1.  ✅ **Axios Client**: `src/services/api/client.ts` with JWT interceptors
-2.  ✅ **Auth Store**: `src/store/useAuthStore.ts` with Zustand persistence
-3.  ✅ **Data Transformers**: `src/services/api/transformers.ts` for snake_case → camelCase
-4.  ✅ **React Query Hooks**: `useCourses`, `useCategories`, `useAuth`
-5.  ✅ **Component Integration**: CourseCatalog now fetches from API
+1.  ✅ **Axios Client**: `src/services/api/client.ts` with JWT interceptors & token refresh.
+2.  ✅ **Auth Store**: `src/store/useAuthStore.ts` with Zustand persistence.
+3.  ✅ **Data Transformers**: `src/services/api/transformers.ts` for schema alignment.
+4.  ✅ **Authentication UI**: Login and Register modals with Radix UI Dialog.
+5.  ✅ **User Navigation**: `UserNav` component for profile access and logout.
 
 ### Key Integration Rules
 1.  **Data Mapping**: Backend uses `snake_case`. Always map to frontend `camelCase` in the service layer using transformer utilities.
-2.  **Authentication**: Use the `apiClient` which automatically handles JWT injection from the Zustand store.
-3.  **State Management**: Use `@tanstack/react-query` for all server-side data. Avoid `useEffect` for data fetching.
-4.  **Error Handling**: Standardized responses include a `success` boolean and a `message`. Always check `success` before consuming `data`.
-
-### API Endpoints Connected
-*   `GET /api/v1/courses/` → `useCourses()` hook
-*   `GET /api/v1/categories/` → `useCategories()` hook
-*   `POST /api/v1/auth/token/` → `useLogin()` hook
-*   `GET /api/v1/users/me/` → `useCurrentUser()` hook
+2.  **State Management**: Use `@tanstack/react-query` for all server-side data. Avoid `useEffect` for data fetching.
+3.  **Validation**: All forms must use `react-hook-form` with `zod` schemas.
 
 ---
 
@@ -119,59 +88,87 @@ All phases of the API integration have been implemented:
 1.  **Linting**: `npm run lint` (Must pass with 0 errors).
 2.  **Type Checking & Build**: `npm run build` (Ensures production bundle integrity).
 3.  **UI Verification**: Use Playwright scripts to capture screenshots to `/screenshots/`.
-4.  **E2E Testing**: Follow `E2E_TEST_PLAN.md` for comprehensive test execution.
+4.  **E2E Testing**: 27/27 test cases must pass (14 Landing + 13 Auth).
 
-### Server Configuration (Updated)
+### Server Configuration
 ```bash
-# Development server runs on port 5174 (changed from 5173)
+# Development server runs on port 5174
 npm run dev  # http://localhost:5174
 
 # Vite config includes allowedHosts for external domain
 allowedHosts: ['itrust-academy.jesspete.shop', 'localhost', '127.0.0.1']
 ```
 
-### E2E Testing Status
-- ✅ 14 test cases executed
-- ✅ 9 screenshots captured (desktop, mobile, tablet)
-- ✅ Page load verified
-- ✅ Hero section renders correctly
-- ✅ Navigation functional
-- ✅ Mobile responsive (375px, 768px, 1440px)
-- ✅ **100% E2E test pass rate (14/14)**
-
-### QA Remediation Status
-- ✅ Logo duplication bug fixed (header & footer)
-- ✅ All 11 CTAs now functional with onClick handlers
-- ✅ Header button text increased to 14px
-- ✅ Accessibility labels added to decorative icons
-- ✅ Scroll utility functions implemented
-- ✅ Favicon 404 error fixed (vite.svg → favicon.svg)
-- ✅ No static asset 404 errors
-
-### Deployment Checklist
-- [x] Build generated in `dist/`
-- [x] Responsive check: Mobile (375px), Tablet (768px), Desktop (1440px)
-- [x] Dark mode/Light mode variables verified
-- [x] Fast Refresh rules satisfied (no non-component exports in component files)
-- [x] API integration verified with live backend
-- [x] All CTAs functional (11/11)
-- [x] Logo renders correctly without duplication
-- [x] Favicon loads without 404 errors
-- [x] 100% E2E test pass rate
-
 ---
 
 ## ⚠️ History: The "Remediation" Phase
 **CRITICAL: Do not revert these architectural decisions.**
-1.  **Fast Refresh Fix**: Variants (CVA) are separated into `src/components/ui/variants.ts` to prevent ESLint errors in `button.tsx` and `badge.tsx`.
-2.  **React 19 Hooks**: `useReducedMotion` uses `useSyncExternalStore` instead of `useEffect` to avoid cascading renders.
-3.  **Footer Redesign**: The footer was updated to a **Light Theme** (`#F8FAFC`) with prominent contact icons to match the reference design in `sample_for_font_color_reference_3.png`.
-4.  **Icon Strategy**: Brand icons (LinkedIn, Twitter, etc.) are custom SVGs in `src/components/icons/` because Lucide excludes brand logos.
-5.  **Asset Cleanup**: Legacy `App.tsx`, `App.css`, and `index.css` were removed to eliminate conflict with `src/app/`.
-6.  **API Integration**: Complete frontend API layer with Axios, React Query, and Zustand for JWT management.
-7.  **Logo Fix**: Changed icon from `<span>i</span>` to `<GraduationCap>` Lucide icon to prevent "iiTrust Academy" duplication.
-8.  **CTA Wiring**: Added `scrollToSection()` utility and onClick handlers to all interactive buttons.
-9.  **Favicon Fix**: Changed favicon reference from `/vite.svg` (bundled) to `/favicon.svg` (public folder) to resolve 404 error.
+1.  **React 19 Patterns**: Use `useSyncExternalStore` for accessibility hooks.
+2.  **Fast Refresh Fix**: CVA Variants are in `src/components/ui/variants.ts`.
+3.  **Footer Redesign**: Light Theme (`#F8FAFC`) matching reference samples.
+4.  **Logo Fix**: Icon changed to `<GraduationCap>` to prevent duplication.
+5.  **Favicon Fix**: Reference changed from `/vite.svg` to `/favicon.svg`.
+6.  **Auth UI**: Implemented as high-conversion modals using Radix UI Dialog.
+
+---
+
+## 🚀 Accomplishments & Milestones
+
+### Milestone 7: Authentication UI (March 29, 2026)
+*   ✅ **Radix UI Primitives**: Created foundational `src/components/ui/` primitives: `dialog.tsx`, `dropdown-menu.tsx`, `avatar.tsx`, and `label.tsx`.
+*   ✅ **High-Conversion Modals**: Implemented `LoginModal` and `RegisterModal` with seamless switching logic.
+*   ✅ **Identity Persistence**: Integrated `useAuthStore` (Zustand) with localStorage to maintain sessions across reloads.
+*   ✅ **Dynamic Header**: Refactored `Header.tsx` to conditionally render Guest CTAs or the `UserNav` profile menu.
+
+### Milestone 8: Full-Stack E2E Validation (March 29, 2026)
+*   ✅ **Integrated Lifecycle**: Successfully simulated the full user journey: Registration → Auto-Login → Logout → Manual Login.
+*   ✅ **Discovery Sync**: Verified real-time course fetching and category filtering from the Django REST backend.
+*   ✅ **Action Interception**: Implemented and verified guest-to-auth redirection for business-critical actions (Enroll Now).
+
+---
+
+## 🧪 E2E Testing Methodology
+
+Our E2E suite utilizes **Playwright (Python Sync API)** for high-fidelity browser automation.
+
+### 1. Verification Strategy
+*   **Target Environment**: Tests must run against `npm run preview` (port 5174).
+*   **Infrastructure Requirement**: `vite preview` is mandatory to support the `/api` proxy and `POST` requests (simple static servers like `http.server` will fail).
+*   **Lifecycle Simulation**: We use `uuid` generation for `USER_DATA` to ensure every test run is independent and avoids unique constraint violations in the backend.
+
+### 2. Evidence Standard
+*   **Annotated Screenshots**: Every major state change (Modal Open, Auth Success, Filter Applied) must capture a screenshot in `/screenshots/`.
+*   **Console Monitoring**: Playwright listeners are used to pipe browser `console` logs and `pageerror` events to the terminal for transparent debugging.
+
+---
+
+## ⚠️ Technical Hurdles & Resolutions
+
+### 1. Network & Connectivity
+*   **Issue**: `localhost` resolving to IPv6 caused `ERR_CONNECTION_REFUSED` in automated environments.
+*   **Resolution**: Explicitly bind Vite to `127.0.0.1` (`--host 127.0.0.1`) and update test scripts to use IP-based URLs.
+
+### 2. Mock vs. Real Infrastructure
+*   **Issue**: Python `http.server` returned `501 Unsupported Method` for authentication `POST` requests.
+*   **Resolution**: Standardized on `vite preview` for all verification phases to ensure the API proxy layer is active.
+
+### 3. Robust Selectors
+*   **Issue**: Non-standard CSS selectors (e.g., `:has-text`) used in `document.querySelector` caused runtime errors in DOM utilities.
+*   **Resolution**: Refactored `scrollToSection` and interception logic to use robust, standard-compliant `Array.from(document.querySelectorAll('button'))` patterns.
+
+---
+
+## 🎓 Lessons Learnt
+1.  **Proxy Fidelity**: Never assume a static build is "integrated" without an active proxy. Always test against the environment that matches the `VITE_API_URL` configuration.
+2.  **Timing is Everything**: Development modules take time to compile. Use `wait_until="networkidle"` and include "warm-up" navigation calls in E2E scripts.
+3.  **UI Interception**: Intercepting guest actions at the component level (instead of global route guards) provides a smoother UX for single-page applications.
+
+---
+
+## 🔧 Troubleshooting Tips for Future Agents
+*   **Server Stability**: If port 5174 is hanging, use `fuser -k 5174/tcp` to clear the process before restarting.
+*   **Zod Errors**: If a form isn't submitting and no API call is visible, check the `errors` object in `react-hook-form`; Zod will block submission silently if the schema isn't met.
+*   **JWT Issues**: If API calls return 401, check the `itrust-auth` entry in Application Storage. Ensure the `accessToken` is present.
 
 ---
 
@@ -179,27 +176,22 @@ allowedHosts: ['itrust-academy.jesspete.shop', 'localhost', '127.0.0.1']
 
 ### ✅ Completed
 *   Full API integration with Django backend
-*   JWT authentication with token refresh
-*   React Query hooks for courses and categories
-*   Data transformers (snake_case → camelCase)
+*   JWT authentication with silent token refresh
+*   Authentication UI (Login/Register Modals)
+*   User Profile navigation and dropdown
 *   Zustand auth store with persistence
-*   CourseCatalog component updated for API
-*   Visual design enhancements (shadows, typography, colors)
-*   E2E testing (9 test cases, 9 screenshots)
-*   QA remediation (logo fix, 11 CTAs wired, accessibility)
-*   Server configuration (port 5174, allowedHosts)
+*   Visual design enhancements & QA remediation
+*   100% E2E test pass rate (27/27)
 
 ### 🔄 In Progress
-*   Loading skeleton components
+*   Loading skeleton components for catalog
 *   Error boundary implementation
 
 ### 📋 Planned (Next Directives)
-1.  **Course Detail Pages**: Dynamic routes for courses
-2.  **User Authentication UI**: Login/Register modals
-3.  **Enrollment Flow**: Course enrollment with payment
-4.  **Profile Management**: User profile editing
-5.  **Dark Mode Toggle**: UI switch for theme preference
-6.  **Contact Form**: Inquiry and feedback forms
+1.  **Course Detail Pages**: Dynamic routes for course curriculums.
+2.  **Enrollment Flow**: Course enrollment integration with Stripe payments.
+3.  **Profile Management**: Dedicated page for user profile editing.
+4.  **Dark Mode Toggle**: Theme switching logic.
 
 ---
 

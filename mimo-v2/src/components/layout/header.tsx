@@ -1,10 +1,18 @@
+// ═══════════════════════════════════════════════════════════
+// Header Component with Authentication Integration
+// ═══════════════════════════════════════════════════════════
+
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ChevronRight, GraduationCap } from "lucide-react"
+import { Menu, X, ChevronRight, GraduationCap, LogIn, UserPlus } from "lucide-react"
 import { Container } from "./container"
 import { Button } from "@/components/ui/button"
 import { cn, scrollToSection, scrollToTop } from "@/lib/utils"
 import { NAV_ITEMS, BRAND_NAME } from "@/lib/constants"
+import { useAuthStore } from "@/store/useAuthStore"
+import { UserNav } from "./user-nav"
+import { LoginModal } from "@/components/forms/login-modal"
+import { RegisterModal } from "@/components/forms/register-modal"
 
 function Logo({ className }: { className?: string }) {
   return (
@@ -59,10 +67,46 @@ function DesktopNav() {
   )
 }
 
-function MobileNav() {
-  const [isOpen, setIsOpen] = useState(false)
+function GuestButtons({ 
+  onLoginClick, 
+  onRegisterClick 
+}: { 
+  onLoginClick: () => void
+  onRegisterClick: () => void 
+}) {
+  return (
+    <div className="flex items-center gap-2">
+      <Button 
+        variant="ghost" 
+        size="default"
+        onClick={onLoginClick}
+        className="hidden md:inline-flex"
+      >
+        <LogIn className="mr-2 h-4 w-4" />
+        Sign In
+      </Button>
+      <Button 
+        size="default"
+        onClick={onRegisterClick}
+        className="hidden md:inline-flex"
+      >
+        <UserPlus className="mr-2 h-4 w-4" />
+        Register
+      </Button>
+    </div>
+  )
+}
 
-  // Lock body scroll when menu is open
+function MobileNav({ 
+  onLoginClick, 
+  onRegisterClick 
+}: { 
+  onLoginClick: () => void
+  onRegisterClick: () => void 
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden"
@@ -88,7 +132,6 @@ function MobileNav() {
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -98,7 +141,6 @@ function MobileNav() {
               onClick={() => setIsOpen(false)}
             />
 
-            {/* Menu Panel */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
@@ -131,7 +173,12 @@ function MobileNav() {
                       >
                         <a
                           href={item.href}
-                          onClick={() => setIsOpen(false)}
+                          onClick={(e) => {
+                            e.preventDefault()
+                            setIsOpen(false)
+                            const sectionId = item.href.replace("#", "")
+                            scrollToSection(sectionId)
+                          }}
                           className="flex items-center justify-between py-4 px-4 font-mono text-base font-medium uppercase tracking-wider text-foreground-secondary hover:text-brand-600 hover:bg-brand-50/50 rounded-lg transition-colors"
                         >
                           {item.label}
@@ -143,27 +190,33 @@ function MobileNav() {
                 </nav>
 
                 <div className="p-6 border-t border-border space-y-3">
-                  <Button 
-                    className="w-full" 
-                    size="lg"
-                    onClick={() => {
-                      scrollToSection("courses")
-                      setIsOpen(false)
-                    }}
-                  >
-                    Get Started
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    className="w-full" 
-                    size="lg"
-                    onClick={() => {
-                      scrollToSection("contact")
-                      setIsOpen(false)
-                    }}
-                  >
-                    Request Demo
-                  </Button>
+                  {!isAuthenticated && (
+                    <>
+                      <Button 
+                        className="w-full" 
+                        size="lg"
+                        onClick={() => {
+                          setIsOpen(false)
+                          onLoginClick()
+                        }}
+                      >
+                        <LogIn className="mr-2 h-4 w-4" />
+                        Sign In
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        className="w-full" 
+                        size="lg"
+                        onClick={() => {
+                          setIsOpen(false)
+                          onRegisterClick()
+                        }}
+                      >
+                        <UserPlus className="mr-2 h-4 w-4" />
+                        Create Account
+                      </Button>
+                    </>
+                  )}
                 </div>
               </div>
             </motion.div>
@@ -176,6 +229,9 @@ function MobileNav() {
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [loginOpen, setLoginOpen] = useState(false)
+  const [registerOpen, setRegisterOpen] = useState(false)
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -185,31 +241,58 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  const handleSwitchToRegister = () => {
+    setLoginOpen(false)
+    setRegisterOpen(true)
+  }
+
+  const handleSwitchToLogin = () => {
+    setRegisterOpen(false)
+    setLoginOpen(true)
+  }
+
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border"
-          : "bg-transparent"
-      )}
-    >
-      <Container>
-        <div className="flex items-center justify-between h-16 md:h-20">
-          <Logo />
-          <DesktopNav />
-          <div className="flex items-center gap-3">
-            <Button 
-              className="hidden md:inline-flex" 
-              size="default"
-              onClick={() => scrollToSection("courses")}
-            >
-              Get Started
-            </Button>
-            <MobileNav />
+    <>
+      <header
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          isScrolled
+            ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border"
+            : "bg-transparent"
+        )}
+      >
+        <Container>
+          <div className="flex items-center justify-between h-16 md:h-20">
+            <Logo />
+            <DesktopNav />
+            <div className="flex items-center gap-3">
+              {isAuthenticated ? (
+                <UserNav />
+              ) : (
+                <GuestButtons 
+                  onLoginClick={() => setLoginOpen(true)}
+                  onRegisterClick={() => setRegisterOpen(true)}
+                />
+              )}
+              <MobileNav 
+                onLoginClick={() => setLoginOpen(true)}
+                onRegisterClick={() => setRegisterOpen(true)}
+              />
+            </div>
           </div>
-        </div>
-      </Container>
-    </header>
+        </Container>
+      </header>
+
+      <LoginModal 
+        open={loginOpen} 
+        onOpenChange={setLoginOpen}
+        onSwitchToRegister={handleSwitchToRegister}
+      />
+      <RegisterModal 
+        open={registerOpen} 
+        onOpenChange={setRegisterOpen}
+        onSwitchToLogin={handleSwitchToLogin}
+      />
+    </>
   )
 }

@@ -66,10 +66,19 @@ itrust-academy/
 │   ├── components/                  # Component Library
 │   │   ├── cards/                   # Composite card components (e.g., CourseCard)
 │   │   ├── forms/                   # Form-specific logic and UI (React Hook Form)
+│   │   │   ├── login-modal.tsx      # Login form with Zod validation
+│   │   │   └── register-modal.tsx   # Registration form with Zod validation
 │   │   ├── icons/                   # Custom SVG brand icons (Lucide-compatible)
 │   │   ├── layout/                  # Global Layout: Header, Light Footer, Section Wrappers
+│   │   │   ├── header.tsx           # Header with auth state management
+│   │   │   ├── footer.tsx           # Footer with contact info
+│   │   │   └── user-nav.tsx         # Authenticated user dropdown
 │   │   ├── sections/                # Feature-specific landing page sections
 │   │   └── ui/                      # Atomic UI primitives (Button, Badge, Input, etc.)
+│   │       ├── dialog.tsx           # Radix UI dialog primitive
+│   │       ├── dropdown-menu.tsx    # Dropdown menu primitive
+│   │       ├── avatar.tsx           # Avatar component
+│   │       └── label.tsx            # Form label component
 │   ├── services/                    # API Integration Layer
 │   │   └── api/
 │   │       ├── client.ts            # Axios instance with JWT interceptors
@@ -145,6 +154,11 @@ itrust-academy/
 | `src/services/api/transformers.ts` | Data Transformers | Converts snake_case API responses to camelCase frontend types. |
 | `src/store/useAuthStore.ts` | Auth State | Zustand store for JWT token persistence. |
 | `src/hooks/useCourses.ts` | Data Hooks | React Query hooks for course data fetching. |
+| `src/hooks/useAuth.ts` | Auth Hooks | React Query hooks for login, register, logout. |
+| `src/components/ui/dialog.tsx` | Dialog Primitive | Radix UI dialog for modals. |
+| `src/components/forms/login-modal.tsx` | Login Modal | User login form with Zod validation. |
+| `src/components/forms/register-modal.tsx` | Register Modal | User registration form with Zod validation. |
+| `src/components/layout/user-nav.tsx` | User Navigation | Authenticated user dropdown menu. |
 | `backend/courses/models.py` | Data Models | Course, Category, Cohort, Enrollment database models. |
 | `backend/api/serializers.py` | Serializers | DRF serializers for API response formatting. |
 | `backend/api/responses.py` | Response Handler | Standardized API response envelope. |
