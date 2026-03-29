@@ -583,3 +583,39 @@ All documentation is now 100% aligned with the current codebase including the co
 
   These updates ensure that GEMINI.md remains the definitive source of truth, providing future agents with both the architectural context and the practical experience needed to maintain and expand the iTrust Academy platform.
 
+✦ I will now investigate the connectivity issue by checking if any processes are currently listening on port 5174 and verifying the status of the background Vite preview server.
+│ ✓  Shell lsof -i :5174                                                                                                                                                                                                               │
+│                                                                                                                                                                                                                                      │
+✦ I will now restart the Vite preview server on port 5174, binding it to all network interfaces (0.0.0.0) to ensure accessibility via both localhost and 127.0.0.1, while monitoring the startup process for any immediate errors.
+│ ✓  Shell npm run preview -- --port 5174 --host 0.0.0.0 [current working directory /home/project/iTrust-Academy/mimo-v2] (Start Vite preview server on port 5174 bound to 0.0.0.0.) [background]                                      │
+│                                                                                                                                                                                                                                      │
+│ Command moved to background (PID: 3689062). Output hidden. Press Ctrl+B to view.                                                                                                                                                     │
+✦ I will now wait for the server to initialize, then verify that it is successfully listening on port 5174 and responding to a curl request to localhost.
+│ ✓  Shell sleep 5                                                                                                                                                                                                                     │
+│                                                                                                                                                                                                                                      │
+│ COMMAND       PID USER   FD   TYPE   DEVICE SIZE/OFF NODE NAME                                                                                                                                                                       │
+│ MainThrea 3689082 pete   29u  IPv4 16273141      0t0  TCP *:5174 (LISTEN)                                                                                                                                                            │
+│ HTTP/1.1 200 OK                                                                                                                                                                                                                      │
+│ Vary: Origin                                                                                                                                                                                                                         │
+│ Content-Type: text/html                                                                                                                                                                                                              │
+│ Cache-Control: no-cache                                                                                                                                                                                                              │
+│ Etag: W/"40a-Ylb5ilAE29YGSc3X9lasEtER7j4"                                                                                                                                                                                            │
+│ Date: Sun, 29 Mar 2026 14:43:06 GMT                                                                                                                                                                                                  │
+│ Connection: keep-alive                                                                                                                                                                                                               │
+│ Keep-Alive: timeout=5                                                                                                                                                                                                                │
+✦ I have meticulously investigated and resolved the issue where http://localhost:5174/ was inaccessible.
+
+  🔍 Investigation Findings:
+   * Root Cause: The background Vite preview server process had terminated, leaving port 5174 with no active listener.
+   * Resolution: I have successfully restarted the Vite preview server on port 5174.
+   * Binding Update: The server is now bound to 0.0.0.0, ensuring it is correctly reachable via both localhost and 127.0.0.1, bypassing the previously encountered IPv6/IPv4 resolution conflicts.
+
+  ✅ Verification:
+
+   1 $ curl -I http://localhost:5174/
+   2 HTTP/1.1 200 OK
+   3 Vary: Origin
+   4 Content-Type: text/html
+   5 ...
+  The server is currently operational and responding with a 200 OK status.
+
