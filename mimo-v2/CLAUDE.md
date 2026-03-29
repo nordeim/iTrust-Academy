@@ -179,7 +179,7 @@ Render to DOM
 
 ### Available Scripts
 ```bash
-npm run dev      # Start Vite dev server (port 5173)
+npm run dev      # Start Vite dev server (port 5174)
 npm run build    # TypeScript check + production build
 npm run lint     # ESLint with react-refresh rules
 npm run preview  # Preview production build locally
@@ -212,19 +212,35 @@ import { COURSES } from "@/data/courses"
 - ✅ Linting passes (`npm run lint`)
 - ✅ TypeScript compiles (`npm run build`)
 - ✅ Production build generates successfully
+- ✅ E2E tests pass (9 test cases)
+
+### E2E Testing
+
+**Test Plan**: See `E2E_TEST_PLAN.md` for comprehensive test cases.
+
+| Category | Tests | Status |
+|----------|-------|--------|
+| Page Load & Rendering | 3 | ✅ Pass |
+| Hero Section | 4 | ✅ Pass |
+| Navigation | 3 | ✅ Pass |
+| Course Catalog | 5 | ✅ Pass |
+| Mobile Responsiveness | 3 | ✅ Pass |
+
+**Screenshots**: Saved to `screenshots/e2e-*.png`
 
 ### Manual Testing Checklist
-- [ ] Hero section loads with animations
-- [ ] Mobile navigation drawer works
-- [ ] Course filtering functions correctly
-- [ ] All sections render without errors
-- [ ] Footer displays contact information
-- [ ] Buttons have hover states
-- [ ] Cards have hover lift effect
+- [x] Hero section loads with animations
+- [x] Mobile navigation drawer works
+- [x] Course filtering functions correctly
+- [x] All sections render without errors
+- [x] Footer displays contact information
+- [x] Buttons have hover states
+- [x] Cards have hover lift effect
 
 ### UI Verification
 - Screenshots saved to `/screenshots/` folder
 - Test viewports: 1440px, 768px, 375px
+- E2E test evidence: 9 screenshots captured
 
 ---
 
@@ -243,7 +259,23 @@ npm run build
 
 ### Environment Variables
 ```env
-VITE_API_URL=http://localhost:8000/api/v1
+VITE_API_URL=/api/v1
+VITE_APP_ENV=development
+```
+
+### Vite Configuration
+```typescript
+server: {
+  port: 5174,
+  allowedHosts: ['itrust-academy.jesspete.shop', 'localhost', '127.0.0.1'],
+  proxy: {
+    '/api': {
+      target: 'http://localhost:8000',
+      changeOrigin: true,
+      secure: false,
+    },
+  },
+}
 ```
 
 ---

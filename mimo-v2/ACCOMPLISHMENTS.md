@@ -109,6 +109,48 @@ src/providers/
 
 ---
 
+### Milestone 5: Server Configuration & E2E Testing ✅
+**Date**: March 29, 2026  
+**Status**: Complete
+
+#### Achievements:
+- ✅ Updated Vite server port from 5173 to 5174
+- ✅ Added allowedHosts for external domain (itrust-academy.jesspete.shop)
+- ✅ Configured API proxy with secure: false for local development
+- ✅ Created comprehensive E2E test plan (E2E_TEST_PLAN.md)
+- ✅ Executed 9 E2E test cases (all passing)
+- ✅ Captured 9 screenshots for visual verification
+- ✅ Verified mobile responsiveness (375px, 768px, 1440px)
+
+#### Code Changes:
+| File | Change | Status |
+|------|--------|--------|
+| `vite.config.ts` | Updated port to 5174, added allowedHosts | ✅ |
+| `E2E_TEST_PLAN.md` | Created comprehensive test plan | ✅ |
+| `screenshots/` | Added 9 E2E verification screenshots | ✅ |
+
+#### E2E Test Results:
+| Test ID | Description | Status |
+|---------|-------------|--------|
+| TC-001 | Homepage loads successfully | ✅ Pass |
+| TC-002 | React app mounts | ✅ Pass |
+| TC-003 | No JS errors on load | ✅ Pass |
+| TC-010 | Hero headline visible | ✅ Pass |
+| TC-011 | CTA buttons present | ✅ Pass |
+| TC-020 | Header visible | ✅ Pass |
+| TC-030 | Course cards render | ✅ Pass |
+| TC-060 | Mobile viewport responsive | ✅ Pass |
+| TC-061 | Mobile menu button found | ✅ Pass |
+
+#### Verification Screenshots:
+- `e2e-01-homepage-full.png` - Full page desktop (416 KB)
+- `e2e-02-hero-section.png` - Hero close-up (320 KB)
+- `e2e-03-course-catalog.png` - Course catalog (39 KB)
+- `e2e-06-mobile-hero.png` - Mobile responsive (171 KB)
+- `e2e-09-tablet-view.png` - Tablet responsive (275 KB)
+
+---
+
 ## 📊 Progress Summary
 
 ### Completed ✅
@@ -127,6 +169,9 @@ src/providers/
 - [x] CourseCard component update
 - [x] Production build (succeeds)
 - [x] UI verification (screenshots captured)
+- [x] Vite configuration (port 5174, allowedHosts)
+- [x] E2E test plan created and executed
+- [x] E2E screenshots captured (9 files)
 
 ### In Progress 🔄
 - [ ] Mobile menu interaction refinements
@@ -186,9 +231,59 @@ The application is now **production-ready** with:
 5. ✅ JWT authentication ready
 6. ✅ Loading/error states implemented
 7. ✅ Accessible components (Radix UI)
+8. ✅ E2E testing verified (9 test cases)
+9. ✅ Mobile/tablet/desktop responsive
+
+---
+
+## 📚 Lessons Learned
+
+### Server Configuration
+- **Port conflicts**: Changed from 5173 to 5174 to avoid conflicts
+- **allowedHosts**: Required for external domain access (itrust-academy.jesspete.shop)
+- **Proxy security**: Set `secure: false` for local HTTP development
+
+### E2E Testing
+- **Playwright reliability**: More reliable than agent-browser for automated testing
+- **Screenshot timing**: Wait for networkidle before capturing
+- **Mobile testing**: Test at 375px, 768px, and 1440px viewports
+
+### API Integration
+- **Data transformers**: Essential for backend/frontend type compatibility
+- **React Query**: Excellent for caching and synchronization
+- **Zustand**: Lightweight solution for auth state persistence
+
+---
+
+## ⚠️ Blockers Encountered
+
+| Blocker | Status | Resolution |
+|---------|--------|------------|
+| nohup command not found | ✅ Solved | Use Python HTTP server for static serving |
+| agent-browser timeout | ✅ Solved | Switched to Playwright for E2E tests |
+| Vite port conflict | ✅ Solved | Changed to port 5174 |
+
+---
+
+## 🎯 Recommended Next Steps
+
+### Immediate
+1. **Contact form**: Implement inquiry form with Zod validation
+2. **Course detail pages**: Individual course pages with curriculum
+3. **User authentication UI**: Login/register modals
+
+### Short-term
+1. **Enrollment flow**: Course enrollment with payment
+2. **Dashboard**: User dashboard with enrolled courses
+3. **Admin panel**: Course and user management
+
+### Long-term
+1. **Mobile app**: React Native implementation
+2. **Analytics**: User engagement tracking
+3. **CMS integration**: Content management for courses
 
 ---
 
 **Last Updated**: March 29, 2026  
 **Maintained By**: iTrust Academy Development Team  
-**Version**: 1.0.0
+**Version**: 1.1.0

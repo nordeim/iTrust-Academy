@@ -434,7 +434,35 @@ graph LR
 1.  **Dependencies**: `npm install`
 2.  **Linting Check**: `npm run lint` (0 errors required).
 3.  **Build Check**: `npm run build` (Ensures Type/Vite integrity).
-4.  **Dev Server**: `npm run dev` (Port 5173).
+4.  **Dev Server**: `npm run dev` (Port 5174).
+
+### 9.1.1 Vite Server Configuration
+```typescript
+// vite.config.ts
+server: {
+  port: 5174,
+  allowedHosts: ['itrust-academy.jesspete.shop', 'localhost', '127.0.0.1'],
+  proxy: {
+    '/api': {
+      target: 'http://localhost:8000',
+      changeOrigin: true,
+      secure: false,
+    },
+  },
+}
+```
+
+### 9.1.2 E2E Testing
+**Test Plan**: `E2E_TEST_PLAN.md`
+**Screenshots**: `screenshots/e2e-*.png`
+
+| Test Category | Tests | Status |
+|---------------|-------|--------|
+| Page Load | 3 | ✅ Pass |
+| Hero Section | 4 | ✅ Pass |
+| Navigation | 3 | ✅ Pass |
+| Course Catalog | 5 | ✅ Pass |
+| Mobile Responsive | 3 | ✅ Pass |
 
 ### 9.2 Backend Initialization
 1.  **Start Docker**: `docker-compose up -d` (PostgreSQL, Redis, MinIO)

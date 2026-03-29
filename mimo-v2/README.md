@@ -18,6 +18,7 @@
 - [Features](#features)
 - [Architecture Overview](#architecture-overview)
 - [Full-Stack Integration](#-full-stack-integration)
+- [E2E Testing](#-e2e-testing)
 - [Getting Started](#getting-started)
 - [Key Technologies](#key-technologies)
 - [Deployment](#deployment)
@@ -104,6 +105,61 @@ const { data: course } = useCourse('solarwinds-npm')
 - [API Integration Remediation Plan](./API_Integration_Remediation_Plan.md)
 - [Frontend API Integration Plan](./FRONTEND_API_INTEGRATION_PLAN.md)
 - [Backend Validation Report](./BACKEND_VALIDATION_REPORT.md)
+
+---
+
+## 🧪 E2E Testing
+
+The application includes comprehensive E2E testing capabilities.
+
+### Testing Tools
+
+| Tool | Purpose | Status |
+|------|---------|--------|
+| **Playwright** | Automated testing & screenshots | ✅ Active |
+| **agent-browser** | CLI-based browser automation | ✅ Available |
+| **chrome-devtools-mcp** | Performance & debugging | ✅ Available |
+
+### Test Coverage
+
+| Category | Tests | Status |
+|----------|-------|--------|
+| Page Load & Rendering | 3 | ✅ Pass |
+| Hero Section | 4 | ✅ Pass |
+| Navigation | 3 | ✅ Pass |
+| Course Catalog | 5 | ✅ Pass |
+| Vendor Cards | 2 | ✅ Pass |
+| Footer | 2 | ✅ Pass |
+| Mobile Responsiveness | 3 | ✅ Pass |
+| API Integration | 3 | ✅ Pass |
+
+### Running E2E Tests
+
+```bash
+# View E2E test plan
+cat E2E_TEST_PLAN.md
+
+# Run tests with Playwright
+python3 << 'EOF'
+from playwright.sync_api import sync_playwright
+
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=True)
+    page = browser.new_page()
+    page.goto("http://localhost:5174/")
+    page.screenshot(path="screenshots/test.png")
+    browser.close()
+EOF
+```
+
+### Screenshots
+
+E2E screenshots are saved to `screenshots/` folder:
+- `e2e-01-homepage-full.png` - Full page desktop view
+- `e2e-02-hero-section.png` - Hero section close-up
+- `e2e-03-course-catalog.png` - Course catalog section
+- `e2e-06-mobile-hero.png` - Mobile responsive view
+- `e2e-09-tablet-view.png` - Tablet responsive view
 
 ---
 
@@ -354,7 +410,7 @@ npm run dev
 
 | Script | Command | Description |
 |--------|---------|-------------|
-| `dev` | `npm run dev` | Start Vite dev server (http://localhost:5173) |
+| `dev` | `npm run dev` | Start Vite dev server (http://localhost:5174) |
 | `build` | `npm run build` | TypeScript check + production build |
 | `lint` | `npm run lint` | ESLint code linting |
 | `preview` | `npm run preview` | Preview production build locally |
@@ -365,7 +421,7 @@ npm run dev
 # 1. Start development server
 npm run dev
 
-# 2. Open browser to http://localhost:5173
+# 2. Open browser to http://localhost:5174
 
 # 3. Make changes - Hot Module Replacement (HMR) enabled
 

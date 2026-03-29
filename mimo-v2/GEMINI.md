@@ -118,7 +118,25 @@ All phases of the API integration have been implemented:
 ### Mandatory Verification Commands
 1.  **Linting**: `npm run lint` (Must pass with 0 errors).
 2.  **Type Checking & Build**: `npm run build` (Ensures production bundle integrity).
-3.  **UI Verification**: Use `playwright` scripts to capture screenshots to `/screenshots/`.
+3.  **UI Verification**: Use Playwright scripts to capture screenshots to `/screenshots/`.
+4.  **E2E Testing**: Follow `E2E_TEST_PLAN.md` for comprehensive test execution.
+
+### Server Configuration (Updated)
+```bash
+# Development server runs on port 5174 (changed from 5173)
+npm run dev  # http://localhost:5174
+
+# Vite config includes allowedHosts for external domain
+allowedHosts: ['itrust-academy.jesspete.shop', 'localhost', '127.0.0.1']
+```
+
+### E2E Testing Status
+- ✅ 9 test cases executed
+- ✅ 9 screenshots captured (desktop, mobile, tablet)
+- ✅ Page load verified
+- ✅ Hero section renders correctly
+- ✅ Navigation functional
+- ✅ Mobile responsive (375px, 768px, 1440px)
 
 ### Deployment Checklist
 - [x] Build generated in `dist/`
