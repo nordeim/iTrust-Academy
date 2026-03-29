@@ -136,7 +136,15 @@ Our E2E suite utilizes **Playwright (Python Sync API)** for high-fidelity browse
 *   **Infrastructure Requirement**: `vite preview` is mandatory to support the `/api` proxy and `POST` requests (simple static servers like `http.server` will fail).
 *   **Lifecycle Simulation**: We use `uuid` generation for `USER_DATA` to ensure every test run is independent and avoids unique constraint violations in the backend.
 
-### 2. Evidence Standard
+### 2. E2E Test Results Summary
+| Category | Tests | Status |
+|----------|-------|--------|
+| Landing Page | 14 | ✅ 100% Pass |
+| Authentication UI | 13 | ✅ 100% Pass |
+| Registration & Course Flow | 6 | ✅ 100% Pass |
+| **Total** | **33** | **✅ 100% Pass** |
+
+### 3. Evidence Standard
 *   **Annotated Screenshots**: Every major state change (Modal Open, Auth Success, Filter Applied) must capture a screenshot in `/screenshots/`.
 *   **Console Monitoring**: Playwright listeners are used to pipe browser `console` logs and `pageerror` events to the terminal for transparent debugging.
 
@@ -181,7 +189,7 @@ Our E2E suite utilizes **Playwright (Python Sync API)** for high-fidelity browse
 *   User Profile navigation and dropdown
 *   Zustand auth store with persistence
 *   Visual design enhancements & QA remediation
-*   100% E2E test pass rate (27/27)
+*   100% E2E test pass rate (33/33 total)
 
 ### 🔄 In Progress
 *   Loading skeleton components for catalog

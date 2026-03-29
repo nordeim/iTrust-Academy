@@ -303,7 +303,7 @@ server: {
 - Logo renders correctly (no duplication)
 - Favicon loads correctly (no 404 errors)
 - Authentication UI fully functional
-- **E2E Test Pass Rate: 100% (27/27 total)**
+- **E2E Test Pass Rate: 100% (33/33 total)**
 
 ### Authentication UI Components
 ```
@@ -320,6 +320,24 @@ src/components/
     ├── header.tsx          # Updated with auth state management
     └── user-nav.tsx        # Authenticated user dropdown
 ```
+
+### E2E Testing Methodology
+- **Tool**: Playwright (Python Sync API)
+- **Target**: `vite preview` (port 5174) for API proxy support
+- **Strategy**: UUID-based unique users for test isolation
+- **Evidence**: Screenshots for every major state change
+
+### E2E Testing Lessons Learned
+1. **Proxy Fidelity**: Never assume a static build is "integrated" without an active proxy
+2. **Timing is Everything**: Use `wait_until="networkidle"` and warm-up navigation calls
+3. **UI Interception**: Component-level interception provides smoother UX for SPAs
+4. **IPv6 Issues**: Use `127.0.0.1` instead of `localhost` for reliable automation
+
+### Troubleshooting Tips
+- **Server Stability**: Use `fuser -k 5174/tcp` to clear hung processes
+- **Zod Errors**: Check `errors` object in `react-hook-form` if form won't submit
+- **JWT Issues**: Check `itrust-auth` in localStorage for token presence
+- **Static Server**: Use `vite preview` not `http.server` for API proxy support
 
 ### Scroll Utility Functions
 ```typescript

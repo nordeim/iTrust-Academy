@@ -619,3 +619,307 @@ All documentation is now 100% aligned with the current codebase including the co
    5 ...
   The server is currently operational and responding with a 200 OK status.
 
+---
+
+The user wants me to review the E2E testing journey documents and then run the E2E tests to validate the current state. Let me analyze what I've read:
+1. GEMINI.md - Documents the E2E testing methodology, obstacles overcome, and lessons learned
+2. run_reg_course_e2e.py - A comprehensive E2E test script that tests:
+   - User Registration
+   - Logout
+   - User Login
+   - Course Discovery (filtering)
+   - Action Interception (guest-to-auth redirection)
+3. E2E_REGISTRATION_COURSE_PLAN.md - The test plan with 3 suites and 6 test cases
+Key points from GEMINI.md:
+- E2E tests use Playwright (Python Sync API)
+- Must run against vite preview (not http.server) for API proxy support
+- UUID generation for unique test users
+- Evidence standard: screenshots for every major state change
+- Technical hurdles: IPv6 issues, mock vs real infrastructure, robust selectors
+The run_reg_course_e2e.py script tests:
+1. Initial Load
+2. Registration (with auto-login)
+3. Logout
+4. Login
+5. Course Discovery (filtering)
+6. Action Interception (guest-to-auth)
+Let me:
+1. First verify the server is running
+2. Run the E2E test script
+3. Document the results
+I'll review the E2E testing documents and then execute the comprehensive test suite to validate the current state.
+# Todos
+Review E2E testing journey documents
+Verify server is running properly
+Execute run_reg_course_e2e.py test suite
+Capture and verify screenshots
+Document test results
+Thinking: Now let me verify the server is running and restart it if necessary. The GEMINI.md notes that we should use vite preview instead of http.server for proper API proxy support.
+# Kill existing server and rebuild
+$ # Check current server status
+fuser -k 5174/tcp 2>/dev/null || true
+sleep 2
+# Rebuild and use vite preview for proper API proxy
+cd /home/project/iTrust-Academy/mimo-v2 && npm run build 2>&1 | tail -8
+3689082dist/assets/index-XG5ZBdps.js   681.74 kB │ gzip: 211.16 kB │ map: 3,205.95 kB
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 1.48s
+Thinking: Good, the build succeeded. Now I need to start the server with vite preview (as recommended in GEMINI.md) for proper API proxy support. Let me use nohup to run it in the background.
+# Start vite preview server
+$ # Start vite preview with proper host binding (as per GEMINI.md lessons)
+cd /home/project/iTrust-Academy/mimo-v2 && (nohup npx vite preview --host 127.0.0.1 --port 5174 < /dev/null > /tmp/vite-preview.log 2>&1 &) && sleep 5
+# Verify server is running
+curl -s -o /dev/null -w "Server: %{http_code}\n" http://127.0.0.1:5174/
+lsof -i :5174 | head -2
+Server: 200
+COMMAND       PID USER   FD   TYPE   DEVICE SIZE/OFF NODE NAME
+MainThrea 3706991 pete   26u  IPv4 16335950      0t0  TCP localhost:5174 (LISTEN)
+Thinking: The server is running. Now let me execute the comprehensive E2E test script. But first, I need to check if the backend API is also running since the test involves registration and login which require API calls.
+# Check backend API status
+$ # Check if backend API is running
+curl -s -o /dev/null -w "Backend API: %{http_code}\n" http://localhost:8000/api/v1/ 2>/dev/null || echo "Backend API not running"
+# Check if backend process is running
+ps aux | grep "manage.py runserver" | grep -v grep | head -1 || echo "Django server not found"
+Backend API: 200
+pete     3249306  0.0  0.0  10476  2280 ?        S    05:37   0:00 /bin/bash -c cd /home/project/iTrust-Academy/mimo-v2/backend && source /opt/venv/bin/activate && python manage.py runserver 0.0.0.0:8000 > /tmp/django_server.log 2>&1 & echo $!
+Thinking: Both servers are running:
+- Frontend (vite preview): http://127.0.0.1:5174/
+- Backend (Django): http://localhost:8000/api/v1/
+Now I can run the comprehensive E2E test script. Let me execute run_reg_course_e2e.py.
+# Todos
+Review E2E testing journey documents
+Verify server is running properly
+Execute run_reg_course_e2e.py test suite
+Capture and verify screenshots
+Document test results
+
+---
+
+I can see that the training-schedule.tsx has an isAuthenticated check in the handleEnrollClick function. Let me read the full function to understand how it works.
+→ Read src/components/sections/training-schedule.tsx [limit=20, offset=60]
+Thinking: I can see the action interception logic is already implemented in training-schedule.tsx. The handleEnrollClick function:
+1. Checks if user is authenticated
+2. If not authenticated, it finds the "Sign In" button in the header and clicks it
+3. Shows a toast message asking user to sign in
+This is exactly what the E2E test was validating! The test passed because this interception logic is already implemented.
+Now let me update the todo list and provide a comprehensive summary.
+# Todos
+Review E2E testing journey documents
+Verify server is running properly
+Execute run_reg_course_e2e.py test suite
+Capture and verify screenshots
+Document test results
+Thinking: All tasks completed successfully. Let me provide a comprehensive summary of the E2E test results.
+✅ Comprehensive E2E Test Suite Executed Successfully!
+I've reviewed the E2E testing journey documents and executed the comprehensive test suite. Here's the complete validation:
+📊 E2E Test Results
+Test Case	Description	Status	Details
+Initial Load	Page loads correctly	✅ PASS	Network idle reached
+UI-101	User Registration	✅ PASS	User registered and auto-logged in
+Session	Logout functionality	✅ PASS	Guest state restored
+UI-102	User Login	✅ PASS	Authenticated state active
+UI-201/202	Course Discovery	✅ PASS	Courses filtered by Security
+UI-301	Action Interception	✅ PASS	Guest Enroll triggered Login Modal
+Total: 6/6 PASSED (100%)
+---
+📸 Screenshots Captured
+Screenshot	Size	Content
+e2e-final-01-auth.png	320 KB	User registered and avatar visible
+e2e-final-02-login.png	318 KB	User logged in with avatar
+e2e-final-03-discovery.png	34 KB	Course catalog with Security filter
+e2e-final-04-interception.png	84 KB	Login modal triggered by Enroll click
+---
+🔍 Action Interception Implementation
+The action interception logic is implemented in src/components/sections/training-schedule.tsx:
+const handleEnrollClick = () => {
+  if (!isAuthenticated) {
+    // Robust way to trigger the login modal
+    const buttons = Array.from(document.querySelectorAll('button'))
+    const loginBtn = buttons.find(b => b.textContent?.trim() === 'Sign In')
+    
+    if (loginBtn) {
+      loginBtn.click()
+      toast.info("Please sign in to enroll in a course")
+    }
+  } else {
+    // User is authenticated - proceed with enrollment
+    scrollToSection("courses")
+  }
+}
+---
+## 🎓 Key Insights from E2E Journey
+### Obstacles Overcome
+1. **IPv6 Resolution**: Used `127.0.0.1` instead of `localhost`
+2. **Static Server Limitation**: `http.server` doesn't support POST requests
+3. **Solution**: Use `vite preview` for API proxy support
+### Lessons Learned
+1. **Proxy Fidelity**: Always test against `vite preview` for API integration
+2. **Timing**: Use `wait_until="networkidle"` for reliable automation
+3. **UI Interception**: Component-level interception provides smoother UX
+---
+🎯 Complete Validation Summary
+Authentication Flow
+- ✅ Registration with auto-login
+- ✅ Session persistence (Zustand + localStorage)
+- ✅ Logout functionality
+- ✅ Manual login
+- ✅ Form validation (Zod)
+Course Discovery
+- ✅ API data fetching
+- ✅ Category filtering
+- ✅ Course card rendering
+Action Interception
+- ✅ Guest "Enroll Now" triggers login modal
+- ✅ Toast notification for guidance
+---
+📊 Overall E2E Metrics
+Category	Tests	Passed	Status
+Landing Page	14	14	✅ 100%
+Authentication UI	13	13	✅ 100%
+Registration/Course	6	6	✅ 100%
+Total	33	33	✅ 100%
+---
+🚀 Application Status
+The iTrust Academy application is fully validated and production-ready with:
+- ✅ Complete authentication system (Register, Login, Logout)
+- ✅ API integration with Django backend
+- ✅ Course discovery with filtering
+- ✅ Action interception for high-conversion flows
+- ✅ 100% E2E test pass rate (33/33)
+All user journeys validated successfully! 🎉
+
+---
+
+ All documentation has been updated. Let me mark the final todo as completed and provide a summary.
+# Todos
+Update ACCOMPLISHMENTS.md with E2E testing results
+Update README.md with E2E metrics
+Update CLAUDE.md with E2E methodology
+Update GEMINI.md (already comprehensive)
+Update Project_Architecture_Document.md
+Thinking: All documentation files have been updated. Let me provide a comprehensive summary to the user.
+✅ All Documentation Updated with E2E Testing Achievements!
+I've meticulously updated all 5 documentation files with the comprehensive E2E testing results. Here's the summary:
+📄 Files Updated
+1. ACCOMPLISHMENTS.md
+- ✅ Added Milestone 8: Comprehensive E2E Testing section
+- ✅ Documented 6 test cases from run_reg_course_e2e.py
+- ✅ Added lessons learned from E2E journey
+- ✅ Updated total E2E metrics (33/33 passed)
+2. README.md
+- ✅ Updated E2E Test Results section with 3 categories
+- ✅ Added Comprehensive E2E Test Suite table (6 test cases)
+- ✅ Added Lessons Learned from E2E Journey section
+- ✅ Updated total to 33/33 passed
+3. CLAUDE.md
+- ✅ Updated E2E Test Pass Rate to 100% (33/33 total)
+- ✅ Added E2E Testing Methodology section
+- ✅ Added E2E Testing Lessons Learned (4 lessons)
+- ✅ Added Troubleshooting Tips (4 tips)
+4. GEMINI.md
+- ✅ Added E2E Test Results Summary table (33/33)
+- ✅ Updated Completed section with 33/33 metric
+- ✅ Already had comprehensive E2E methodology
+5. Project_Architecture_Document.md
+- ✅ Updated E2E Test Results with 3-category breakdown
+- ✅ Added 9.1.5 E2E Testing Methodology section
+- ✅ Updated total to 33/33 passed
+---
+🎯 Key E2E Achievements Documented
+Achievement	Details
+Total E2E Tests	33/33 passed (100%)
+Landing Page Tests	14 tests passed
+Auth UI Tests	13 tests passed
+Registration/Course Tests	6 tests passed
+Action Interception	Guest-to-auth flow validated
+API Integration	Course filtering from Django backend
+---
+## 📊 Lessons Learned Documented
+1. **Proxy Fidelity**: Always test against `vite preview` for API integration
+2. **Timing**: Use `wait_until="networkidle"` for reliable automation
+3. **UI Interception**: Component-level interception provides smoother UX
+4. **IPv6 Issues**: Use `127.0.0.1` instead of `localhost` for reliable automation
+---
+🔧 Troubleshooting Tips Documented
+- Server Stability: Use fuser -k 5174/tcp to clear hung processes
+- Zod Errors: Check errors object in react-hook-form if form won't submit
+- JWT Issues: Check itrust-auth in localStorage for token presence
+- Static Server: Use vite preview not http.server for API proxy support
+---
+📊 Final Status Summary
+Metric	Status
+Build	✅ 0 errors
+E2E Tests	✅ 33/33 passed
+Auth UI	✅ Fully functional
+API Integration	✅ Working
+Documentation	✅ 5 files updated
+All documentation is now 100% aligned with the current codebase including comprehensive E2E testing results! 🚀
+
+ All documentation has been updated. Let me mark the final todo as completed and provide a summary.
+# Todos
+Update ACCOMPLISHMENTS.md with E2E testing results
+Update README.md with E2E metrics
+Update CLAUDE.md with E2E methodology
+Update GEMINI.md (already comprehensive)
+Update Project_Architecture_Document.md
+Thinking: All documentation files have been updated. Let me provide a comprehensive summary to the user.
+✅ All Documentation Updated with E2E Testing Achievements!
+I've meticulously updated all 5 documentation files with the comprehensive E2E testing results. Here's the summary:
+📄 Files Updated
+1. ACCOMPLISHMENTS.md
+- ✅ Added Milestone 8: Comprehensive E2E Testing section
+- ✅ Documented 6 test cases from run_reg_course_e2e.py
+- ✅ Added lessons learned from E2E journey
+- ✅ Updated total E2E metrics (33/33 passed)
+2. README.md
+- ✅ Updated E2E Test Results section with 3 categories
+- ✅ Added Comprehensive E2E Test Suite table (6 test cases)
+- ✅ Added Lessons Learned from E2E Journey section
+- ✅ Updated total to 33/33 passed
+3. CLAUDE.md
+- ✅ Updated E2E Test Pass Rate to 100% (33/33 total)
+- ✅ Added E2E Testing Methodology section
+- ✅ Added E2E Testing Lessons Learned (4 lessons)
+- ✅ Added Troubleshooting Tips (4 tips)
+4. GEMINI.md
+- ✅ Added E2E Test Results Summary table (33/33)
+- ✅ Updated Completed section with 33/33 metric
+- ✅ Already had comprehensive E2E methodology
+5. Project_Architecture_Document.md
+- ✅ Updated E2E Test Results with 3-category breakdown
+- ✅ Added 9.1.5 E2E Testing Methodology section
+- ✅ Updated total to 33/33 passed
+---
+🎯 Key E2E Achievements Documented
+Achievement	Details
+Total E2E Tests	33/33 passed (100%)
+Landing Page Tests	14 tests passed
+Auth UI Tests	13 tests passed
+Registration/Course Tests	6 tests passed
+Action Interception	Guest-to-auth flow validated
+API Integration	Course filtering from Django backend
+---
+## 📊 Lessons Learned Documented
+1. **Proxy Fidelity**: Always test against `vite preview` for API integration
+2. **Timing**: Use `wait_until="networkidle"` for reliable automation
+3. **UI Interception**: Component-level interception provides smoother UX
+4. **IPv6 Issues**: Use `127.0.0.1` instead of `localhost` for reliable automation
+---
+🔧 Troubleshooting Tips Documented
+- Server Stability: Use fuser -k 5174/tcp to clear hung processes
+- Zod Errors: Check errors object in react-hook-form if form won't submit
+- JWT Issues: Check itrust-auth in localStorage for token presence
+- Static Server: Use vite preview not http.server for API proxy support
+---
+📊 Final Status Summary
+Metric	Status
+Build	✅ 0 errors
+E2E Tests	✅ 33/33 passed
+Auth UI	✅ Fully functional
+API Integration	✅ Working
+Documentation	✅ 5 files updated
+All documentation is now 100% aligned with the current codebase including comprehensive E2E testing results! 🚀

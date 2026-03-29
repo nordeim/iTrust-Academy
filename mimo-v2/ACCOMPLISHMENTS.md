@@ -231,6 +231,34 @@ src/providers/
 
 ---
 
+### Milestone 8: Comprehensive E2E Testing ✅
+**Date**: March 29, 2026  
+**Status**: Complete
+
+#### Achievements:
+- ✅ Executed comprehensive E2E test suite (run_reg_course_e2e.py)
+- ✅ Validated full user journey: Registration → Auto-Login → Logout → Manual Login
+- ✅ Verified course discovery and category filtering from API
+- ✅ Validated action interception (guest-to-auth redirection)
+- ✅ 100% E2E test pass rate (33/33 total)
+
+#### E2E Test Results:
+| Test Case | Description | Status |
+|-----------|-------------|--------|
+| Initial Load | Page loads correctly | ✅ PASS |
+| UI-101 | User Registration | ✅ PASS |
+| Session | Logout functionality | ✅ PASS |
+| UI-102 | User Login | ✅ PASS |
+| UI-201/202 | Course Discovery | ✅ PASS |
+| UI-301 | Action Interception | ✅ PASS |
+
+#### Lessons Learned:
+1. **Proxy Fidelity**: Always test against `vite preview` for API integration
+2. **Timing**: Use `wait_until="networkidle"` for reliable automation
+3. **UI Interception**: Component-level interception provides smoother UX
+
+---
+
 ## 📊 Progress Summary
 
 ### Completed ✅

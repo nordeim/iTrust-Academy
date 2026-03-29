@@ -202,12 +202,29 @@ scrollToTop()
 
 ### E2E Test Results
 
-| Metric | Value |
-|--------|-------|
-| Total Tests | 14 |
-| Passed | 14 ✅ |
-| Failed | 0 |
-| Pass Rate | 100% |
+| Category | Tests | Status |
+|----------|-------|--------|
+| Landing Page | 14 | ✅ 100% Pass |
+| Authentication UI | 13 | ✅ 100% Pass |
+| Registration & Course Flow | 6 | ✅ 100% Pass |
+| **Total** | **33** | **✅ 100% Pass** |
+
+### Comprehensive E2E Test Suite
+
+| Test Case | Description | Status |
+|-----------|-------------|--------|
+| Initial Load | Page loads correctly | ✅ PASS |
+| UI-101 | User Registration | ✅ PASS |
+| Session | Logout functionality | ✅ PASS |
+| UI-102 | User Login | ✅ PASS |
+| UI-201/202 | Course Discovery & Filtering | ✅ PASS |
+| UI-301 | Action Interception | ✅ PASS |
+
+### Lessons Learned from E2E Journey
+
+1. **Proxy Fidelity**: Always test against `vite preview` for API integration
+2. **Timing**: Use `wait_until="networkidle"` for reliable automation
+3. **UI Interception**: Component-level interception provides smoother UX
 
 ---
 

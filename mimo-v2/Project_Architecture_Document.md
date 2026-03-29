@@ -489,7 +489,13 @@ server: {
 | Missing accessibility | Added aria-hidden to icons | ✅ Fixed |
 | Favicon 404 error | Changed from `/vite.svg` to `/favicon.svg` | ✅ Fixed |
 
-**E2E Test Results**: 14/14 passed (100% pass rate)
+**E2E Test Results (Comprehensive)**:
+| Category | Tests | Status |
+|----------|-------|--------|
+| Landing Page | 14 | ✅ 100% Pass |
+| Authentication UI | 13 | ✅ 100% Pass |
+| Registration & Course Flow | 6 | ✅ 100% Pass |
+| **Total** | **33** | **✅ 100% Pass** |
 
 **Utility Functions**:
 ```typescript
@@ -522,6 +528,12 @@ export function scrollToTop(): void {
 **Favicon**: `/favicon.svg` (in `public/` folder)
 - Vite copies files from `public/` to dist root
 - Files in `src/assets/` are bundled, not copied to root
+
+### 9.1.5 E2E Testing Methodology
+- **Tool**: Playwright (Python Sync API)
+- **Target**: `vite preview` (port 5174) for API proxy support
+- **Strategy**: UUID-based unique users for test isolation
+- **Evidence**: Screenshots for every major state change
 
 ### 9.2 Backend Initialization
 1.  **Start Docker**: `docker-compose up -d` (PostgreSQL, Redis, MinIO)
