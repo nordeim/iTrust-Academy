@@ -28,3 +28,20 @@ export function slugify(text: string): string {
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "")
 }
+
+/**
+ * Smooth scroll to a section by ID
+ */
+export function scrollToSection(sectionId: string): void {
+  const element = document.getElementById(sectionId)
+  if (element) {
+    element.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+}
+
+/**
+ * Scroll to top of page
+ */
+export function scrollToTop(): void {
+  window.scrollTo({ top: 0, behavior: "smooth" })
+}

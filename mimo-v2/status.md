@@ -2917,3 +2917,50 @@ PAD.md	490+	Added server config & E2E section
 ACCOMPLISHMENTS.md	230+	Added Milestone 5, lessons learned
 All documentation is now 100% aligned with the current codebase state! 🚀
 
+---
+
+# Todos
+[✓] Analyze QA findings and identify root causes
+[✓] Validate findings against codebase
+[•] Create TDD remediation plan
+[ ] Execute remediation fixes
+Thinking: Now I need to create the remediation plan. Based on my analysis, I can see the issues:
+1. Logo duplication - The Logo component has an "i" icon + "iTrust Academy" text, which creates "iiTrust Academy"
+2. CTAs not functional - Buttons don't have onClick handlers with navigation
+3. Missing aria labels - Icons don't have proper accessibility attributes
+4. Small button text - Header CTA uses size="sm" which may be too small
+Let me create a comprehensive remediation plan.
+
+---
+
+# Todos
+[✓] Analyze QA findings and identify root causes
+[✓] Validate findings against codebase
+[✓] Create TDD remediation plan
+[•] Fix #1: Logo duplication bug
+[ ] Fix #2: Wire CTA buttons with navigation
+[ ] Fix #3: Add accessibility labels
+[ ] Fix #4: Increase header button text size
+[ ] Verify build passes
+Thinking: I have a comprehensive understanding of the QA findings. Let me now create a detailed remediation plan based on the actual codebase analysis.
+Here's my analysis:
+Issue 1: All CTAs Are Non-Functional ✅ CONFIRMED
+Root Cause: The buttons in the header and hero section don't have onClick handlers. Looking at:
+- header.tsx:175: <Button className="hidden md:inline-flex" size="sm">Get Started</Button> - No onClick
+- hero.tsx:71-78: Both CTA buttons have no onClick handlers
+- course-catalog.tsx (bottom): "View Full Training Calendar" button has no onClick
+Solution: Add onClick handlers with scroll/navigation functionality
+Issue 2: Logo Text Duplication Bug ✅ CONFIRMED
+Root Cause: In header.tsx:9-24, the Logo component shows:
+- Icon container with <span className="text-white font-bold text-xl font-mono">i</span>
+- Text {BRAND_NAME} which is "iTrust Academy" from constants.ts
+This creates "iiTrust Academy" because both the icon "i" and the "i" in "iTrust" are visible.
+Solution: Change the icon to something other than "i" or adjust the text to not start with "i"
+Issue 3: Missing Accessibility Labels on Icons ✅ CONFIRMED
+Root Cause: Icons from lucide-react are used without aria-label attributes throughout the codebase.
+Solution: Add aria-label to icon elements or wrap in accessible containers.
+Issue 4: Header CTA Font Too Small ✅ CONFIRMED
+Root Cause: In header.tsx:175, the button uses size="sm" which maps to h-9 px-4 text-xs from the button variants.
+I'll systematically address each identified problem. The button and icon accessibility issues require careful implementation to ensure both functional and inclusive design. I'll prioritize creating clickable navigation elements while simultaneously improving the logo's visual clarity and adding crucial accessibility attributes.
+Let me analyze each QA finding against the codebase to confirm root causes:
+

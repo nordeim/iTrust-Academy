@@ -1,16 +1,23 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, ChevronRight } from "lucide-react"
+import { Menu, X, ChevronRight, GraduationCap } from "lucide-react"
 import { Container } from "./container"
 import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { cn, scrollToSection, scrollToTop } from "@/lib/utils"
 import { NAV_ITEMS, BRAND_NAME } from "@/lib/constants"
 
 function Logo({ className }: { className?: string }) {
   return (
-    <a href="#" className={cn("flex items-center gap-2.5 group", className)}>
-      <div className="relative w-10 h-10 bg-brand-500 flex items-center justify-center rounded-lg shadow-md group-hover:shadow-lg group-hover:shadow-brand-500/20 transition-all duration-300">
-        <span className="text-white font-bold text-xl font-mono">i</span>
+    <a 
+      href="#" 
+      onClick={(e) => { e.preventDefault(); scrollToTop(); }}
+      className={cn("flex items-center gap-2.5 group", className)}
+    >
+      <div 
+        className="relative w-10 h-10 bg-brand-500 flex items-center justify-center rounded-lg shadow-md group-hover:shadow-lg group-hover:shadow-brand-500/20 transition-all duration-300"
+        aria-hidden="true"
+      >
+        <GraduationCap className="text-white h-5 w-5" />
       </div>
       <div className="flex flex-col">
         <span className="font-sans font-bold text-lg leading-tight tracking-tight text-foreground">
@@ -31,6 +38,11 @@ function DesktopNav() {
         <a
           key={item.href}
           href={item.href}
+          onClick={(e) => {
+            e.preventDefault()
+            const sectionId = item.href.replace("#", "")
+            scrollToSection(sectionId)
+          }}
           className={cn(
             "relative px-4 py-2 font-mono text-sm font-medium uppercase tracking-wider rounded-md",
             "text-foreground-secondary hover:text-brand-600 transition-colors duration-200",
@@ -131,10 +143,25 @@ function MobileNav() {
                 </nav>
 
                 <div className="p-6 border-t border-border space-y-3">
-                  <Button className="w-full" size="lg">
+                  <Button 
+                    className="w-full" 
+                    size="lg"
+                    onClick={() => {
+                      scrollToSection("courses")
+                      setIsOpen(false)
+                    }}
+                  >
                     Get Started
                   </Button>
-                  <Button variant="outline" className="w-full" size="lg">
+                  <Button 
+                    variant="outline" 
+                    className="w-full" 
+                    size="lg"
+                    onClick={() => {
+                      scrollToSection("contact")
+                      setIsOpen(false)
+                    }}
+                  >
                     Request Demo
                   </Button>
                 </div>
@@ -172,7 +199,11 @@ export function Header() {
           <Logo />
           <DesktopNav />
           <div className="flex items-center gap-3">
-            <Button className="hidden md:inline-flex" size="sm">
+            <Button 
+              className="hidden md:inline-flex" 
+              size="default"
+              onClick={() => scrollToSection("courses")}
+            >
               Get Started
             </Button>
             <MobileNav />

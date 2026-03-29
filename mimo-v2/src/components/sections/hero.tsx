@@ -3,6 +3,7 @@ import { ArrowRight, Play } from "lucide-react"
 import { Container } from "@/components/layout/container"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { scrollToSection } from "@/lib/utils"
 
 export function Hero() {
   return (
@@ -44,7 +45,7 @@ export function Hero() {
               Get{" "}
               <span className="text-brand-500 relative">
                 Certified.
-                <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none">
+                <svg className="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 12" fill="none" aria-hidden="true">
                   <path d="M2 10C50 4 100 2 198 10" stroke="#f27a1a" strokeWidth="4" strokeLinecap="round" opacity="0.3"/>
                 </svg>
               </span>
@@ -68,12 +69,21 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4"
           >
-            <Button size="lg" className="group">
+            <Button 
+              size="lg" 
+              className="group"
+              onClick={() => scrollToSection("courses")}
+            >
               Explore SCP Fundamentals
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
             </Button>
-            <Button variant="outline" size="lg" className="group border-2">
-              <Play className="mr-2 h-4 w-4" />
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="group border-2"
+              onClick={() => scrollToSection("courses")}
+            >
+              <Play className="mr-2 h-4 w-4" aria-hidden="true" />
               View All Courses
             </Button>
           </motion.div>

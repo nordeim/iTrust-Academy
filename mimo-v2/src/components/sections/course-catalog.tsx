@@ -6,7 +6,7 @@ import { CourseCard } from "@/components/cards/course-card"
 import { Button } from "@/components/ui/button"
 import { useCourses } from "@/hooks/useCourses"
 import { useCategories } from "@/hooks/useCategories"
-import { cn } from "@/lib/utils"
+import { cn, scrollToSection } from "@/lib/utils"
 import type { Course as CourseType } from "@/services/api/types"
 
 export function CourseCatalog() {
@@ -122,7 +122,11 @@ export function CourseCatalog() {
           viewport={{ once: true }}
           className="text-center mt-14"
         >
-          <Button variant="outline" size="lg">
+          <Button 
+            variant="outline" 
+            size="lg"
+            onClick={() => scrollToSection("schedule")}
+          >
             View Full Training Calendar
           </Button>
         </motion.div>
