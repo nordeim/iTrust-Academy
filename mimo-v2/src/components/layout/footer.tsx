@@ -1,14 +1,21 @@
 import { Container } from "./container"
 import { FOOTER_LINKS, BRAND_NAME } from "@/lib/constants"
 import { LinkedinIcon, TwitterIcon, YoutubeIcon } from "@/components/icons/social-icons"
-import { cn } from "@/lib/utils"
-import { Mail, Phone, MapPin } from "lucide-react"
+import { cn, scrollToSection, scrollToTop } from "@/lib/utils"
+import { Mail, Phone, MapPin, GraduationCap } from "lucide-react"
 
 function FooterLogo() {
   return (
-    <a href="#" className="flex items-center gap-3 group">
-      <div className="w-10 h-10 bg-brand-500 rounded-lg flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:shadow-brand-500/30 transition-shadow">
-        <span className="text-white font-bold text-xl font-mono">i</span>
+    <a 
+      href="#" 
+      onClick={(e) => { e.preventDefault(); scrollToTop(); }}
+      className="flex items-center gap-3 group"
+    >
+      <div 
+        className="w-10 h-10 bg-brand-500 rounded-lg flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:shadow-brand-500/30 transition-shadow"
+        aria-hidden="true"
+      >
+        <GraduationCap className="text-white h-5 w-5" />
       </div>
       <div className="flex flex-col">
         <span className="font-sans font-bold text-lg text-slate-900 dark:text-white leading-tight">

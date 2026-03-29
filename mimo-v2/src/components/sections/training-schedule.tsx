@@ -155,7 +155,12 @@ export function TrainingSchedule() {
                     <div className="text-2xl font-bold">{cohort.price}</div>
                     <div className="text-xs text-muted-foreground">per person</div>
                   </div>
-                  <Button size="sm">Enroll Now</Button>
+                  <Button 
+                    size="sm"
+                    onClick={() => scrollToSection("courses")}
+                  >
+                    Enroll Now
+                  </Button>
                 </div>
               </div>
             </motion.div>

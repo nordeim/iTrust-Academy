@@ -2,10 +2,11 @@ import { motion } from "framer-motion"
 import { Container } from "@/components/layout/container"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
+import { scrollToSection } from "@/lib/utils"
 
 export function CTA() {
   return (
-    <section className="py-20 md:py-32 bg-primary text-primary-foreground relative overflow-hidden">
+    <section id="contact" className="py-20 md:py-32 bg-primary text-primary-foreground relative overflow-hidden">
       {/* Grid pattern overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem]" />
 
@@ -43,14 +44,16 @@ export function CTA() {
             <Button
               size="lg"
               className="bg-white text-primary hover:bg-white/90 group"
+              onClick={() => scrollToSection("contact")}
             >
               Request Corporate Demo
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
             </Button>
             <Button
               size="lg"
               variant="outline"
               className="border-white/30 text-white hover:bg-white/10 hover:border-white"
+              onClick={() => scrollToSection("contact")}
             >
               Contact Sales
             </Button>

@@ -3,7 +3,7 @@ import { Briefcase, GraduationCap, Headphones, FileCheck } from "lucide-react"
 import { Container } from "@/components/layout/container"
 import { Section } from "@/components/layout/section"
 import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { cn, scrollToSection } from "@/lib/utils"
 
 const SERVICES = [
   {
@@ -68,7 +68,11 @@ export function ProfessionalServices() {
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              <Button size="lg" className="group">
+              <Button 
+                size="lg" 
+                className="group"
+                onClick={() => scrollToSection("contact")}
+              >
                 Schedule Consultation
               </Button>
             </motion.div>
