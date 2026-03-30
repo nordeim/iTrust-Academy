@@ -182,6 +182,12 @@ Our E2E suite utilizes **Playwright (Python Sync API)** for high-fidelity browse
 *   Modals refactored to shared Dialog components
 *   WCAG 2.1 compliance verified
 *   100% UI/UX usability (47/47 elements passed)
+*   Multi-page routing architecture (react-router-dom)
+*   Course detail pages with tabbed navigation
+*   Search functionality with debounced filtering
+*   Brand authority pages (About, FAQ, Privacy, Terms)
+*   User dashboard with achievements and quick actions
+*   Usability Enhancement complete (40/41 tests, 97.6%)
 
 ### 🔄 In Progress
 *   Category-based vendor filtering refinement
@@ -189,10 +195,10 @@ Our E2E suite utilizes **Playwright (Python Sync API)** for high-fidelity browse
 *   Error boundary implementation
 
 ### 📋 Planned (Next Directives)
-1.  **Course Detail Pages**: Dynamic routes for course curriculums.
-2.  **Enrollment Flow**: Course enrollment integration with Stripe payments.
-3.  **Profile Management**: Dedicated page for user profile editing.
-4.  **Dark Mode Toggle**: Theme switching logic.
+1.  **Enrollment Flow**: Course enrollment integration with Stripe payments.
+2.  **Profile Management**: Dedicated page for user profile editing.
+3.  **Dark Mode Toggle**: Theme switching logic.
+4.  **Course Progress Tracking**: Track user progress through courses.
 
 ---
 

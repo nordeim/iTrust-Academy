@@ -1,12 +1,13 @@
 // ═══════════════════════════════════════════════════════════
-// Footer Component - Updated with ComingSoonModal & Social Links
+// Footer Component - Updated with react-router-dom Link
 // ═══════════════════════════════════════════════════════════
 
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import { Container } from "./container"
 import { FOOTER_LINKS, BRAND_NAME } from "@/lib/constants"
 import { LinkedinIcon, TwitterIcon, YoutubeIcon } from "@/components/icons/social-icons"
 import { ComingSoonModal } from "@/components/modals/coming-soon-modal"
-import { cn, scrollToTop } from "@/lib/utils"
+import { cn, scrollToSection, scrollToTop } from "@/lib/utils"
 import { Mail, Phone, MapPin, GraduationCap } from "lucide-react"
 import { useState } from "react"
 
@@ -18,13 +19,21 @@ const SOCIAL_URLS: Record<string, string> = {
 }
 
 // Links that should trigger ComingSoonModal
-const COMING_SOON_LINKS = ["Careers", "Partners", "Blog", "Documentation", "FAQ"]
+const COMING_SOON_LINKS = ["Careers", "Partners", "Blog", "Documentation"]
 
 function FooterLogo() {
+  const navigate = useNavigate()
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    scrollToTop()
+    navigate("/")
+  }
+
   return (
     <a
-      href="#"
-      onClick={(e) => { e.preventDefault(); scrollToTop(); }}
+      href="/"
+      onClick={handleClick}
       className="flex items-center gap-3 group"
     >
       <div
@@ -53,6 +62,10 @@ interface FooterLinkProps {
 }
 
 function FooterLink({ href, children, onComingSoon, isComingSoon }: FooterLinkProps) {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  // If it's a Coming Soon link, show button
   if (isComingSoon && onComingSoon) {
     return (
       <button
@@ -64,24 +77,75 @@ function FooterLink({ href, children, onComingSoon, isComingSoon }: FooterLinkPr
     )
   }
 
+  // Handle hash links (scroll to section)
+  if (href.includes("#")) {
+    const handleClick = (e: React.MouseEvent) => {
+      e.preventDefault()
+      const [path, hash] = href.split("#")
+
+      // If we're on a different page, navigate first then scroll
+      if (path && path !== "/" && location.pathname !== path) {
+        navigate(path)
+        setTimeout(() => hash && scrollToSection(hash), 100)
+      } else if (hash) {
+        // If we're on the same page, just scroll
+        if (location.pathname !== "/") {
+          navigate("/")
+          setTimeout(() => scrollToSection(hash), 100)
+        } else {
+          scrollToSection(hash)
+        }
+      }
+    }
+
+    return (
+      <a
+        href={href}
+        onClick={handleClick}
+        className="text-sm text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
+      >
+        {children}
+      </a>
+    )
+  }
+
+  // Regular link
   return (
-    <a
-      href={href}
+    <Link
+      to={href}
       className="text-sm text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
     >
       {children}
-    </a>
+    </Link>
   )
 }
 
 export function Footer() {
   const [comingSoonTitle, setComingSoonTitle] = useState<string | null>(null)
+  const location = useLocation()
+  const navigate = useNavigate()
 
   const handleComingSoon = (title: string) => {
     setComingSoonTitle(title)
   }
 
   const isComingSoonLink = (label: string) => COMING_SOON_LINKS.includes(label)
+
+  const handleCourseClick = (e: React.MouseEvent, vendor: string) => {
+    e.preventDefault()
+    // Navigate to home and scroll to courses with filter
+    if (location.pathname !== "/") {
+      navigate("/")
+      setTimeout(() => {
+        scrollToSection("courses")
+        // Dispatch vendor filter event
+        window.dispatchEvent(new CustomEvent("vendorFilter", { detail: vendor }))
+      }, 100)
+    } else {
+      scrollToSection("courses")
+      window.dispatchEvent(new CustomEvent("vendorFilter", { detail: vendor }))
+    }
+  }
 
   return (
     <footer className="bg-slate-50 dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-t border-slate-200 dark:border-slate-800">
@@ -177,13 +241,19 @@ export function Footer() {
                   </h4>
                   <ul className="space-y-3">
                     {[
-                      { label: "SolarWinds Training", href: "#courses" },
-                      { label: "Securden Certification", href: "#courses" },
-                      { label: "Quest Database Courses", href: "#courses" },
-                      { label: "Ivanti ITAM", href: "#courses" },
+                      { label: "SolarWinds Training", vendor: "SolarWinds" },
+                      { label: "Securden Certification", vendor: "Securden" },
+                      { label: "Quest Database Courses", vendor: "Quest" },
+                      { label: "Ivanti ITAM", vendor: "Ivanti" },
                     ].map((link) => (
                       <li key={link.label}>
-                        <FooterLink href={link.href}>{link.label}</FooterLink>
+                        <a
+                          href={`/#courses`}
+                          onClick={(e) => handleCourseClick(e, link.vendor)}
+                          className="text-sm text-slate-600 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
+                        >
+                          {link.label}
+                        </a>
                       </li>
                     ))}
                   </ul>
@@ -215,12 +285,7 @@ export function Footer() {
                     Resources
                   </h4>
                   <ul className="space-y-3">
-                    {[
-                      { label: "Blog", href: "#" },
-                      { label: "Documentation", href: "#" },
-                      { label: "FAQ", href: "#" },
-                      { label: "Support", href: "#" },
-                    ].map((link) => (
+                    {FOOTER_LINKS.resources.slice(0, 4).map((link) => (
                       <li key={link.label}>
                         <FooterLink
                           href={link.href}
@@ -234,9 +299,20 @@ export function Footer() {
                   </ul>
                 </div>
 
-                {/* Empty column for balance */}
-                <div className="hidden md:block">
-                  {/* Could add newsletter signup here */}
+                {/* Support */}
+                <div>
+                  <h4 className="font-sans font-bold text-sm text-slate-900 dark:text-white mb-5">
+                    Support
+                  </h4>
+                  <ul className="space-y-3">
+                    {FOOTER_LINKS.support.slice(0, 4).map((link) => (
+                      <li key={link.label}>
+                        <FooterLink href={link.href}>
+                          {link.label}
+                        </FooterLink>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             </div>
@@ -252,18 +328,18 @@ export function Footer() {
               © {new Date().getFullYear()} {BRAND_NAME}. All rights reserved.
             </p>
             <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs">
-              <button
-                onClick={() => handleComingSoon("Privacy Policy")}
+              <Link
+                to="/privacy"
                 className="text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
               >
                 Privacy Policy
-              </button>
-              <button
-                onClick={() => handleComingSoon("Terms of Service")}
+              </Link>
+              <Link
+                to="/terms"
                 className="text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"
               >
                 Terms of Service
-              </button>
+              </Link>
               <button
                 onClick={() => handleComingSoon("Cookie Policy")}
                 className="text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"

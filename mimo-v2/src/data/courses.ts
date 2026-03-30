@@ -1,3 +1,26 @@
+export interface CurriculumModule {
+  title: string
+  duration: string
+  topics: string[]
+}
+
+export interface Instructor {
+  name: string
+  title: string
+  bio: string
+  certifications: string[]
+  experience: string
+  avatar?: string
+}
+
+export interface Certification {
+  name: string
+  provider: string
+  examCode?: string
+  passingScore?: string
+  validity?: string
+}
+
 export interface Course {
   id: string
   slug: string
@@ -15,6 +38,11 @@ export interface Course {
   featured: boolean
   tags: string[]
   color: string
+  curriculum: CurriculumModule[]
+  instructor: Instructor
+  certification?: Certification
+  learningOutcomes: string[]
+  prerequisites: string[]
 }
 
 export const COURSES: Course[] = [
@@ -35,6 +63,47 @@ export const COURSES: Course[] = [
     featured: true,
     tags: ["Network Monitoring", "NPM", "Alerts"],
     color: "#7B8794",
+    curriculum: [
+      { title: "Introduction to Network Monitoring", duration: "2 hours", topics: ["NPM architecture", "Network discovery", "Initial setup"] },
+      { title: "Device Management", duration: "3 hours", topics: ["Adding devices", "Credential management", "Polling configuration"] },
+      { title: "Performance Monitoring", duration: "4 hours", topics: ["Interface monitoring", "CPU/Memory tracking", "Bandwidth analysis"] },
+      { title: "Alert Configuration", duration: "3 hours", topics: ["Alert types", "Threshold settings", "Notification actions"] },
+      { title: "Custom Dashboards", duration: "3 hours", topics: ["Widget creation", "Map views", "Executive summaries"] },
+      { title: "Reports & Analytics", duration: "2 hours", topics: ["Report scheduling", "Custom reports", "Data export"] },
+      { title: "Advanced Troubleshooting", duration: "3 hours", topics: ["NetPath analysis", "PerfStack", "Network topology"] },
+      { title: "Integration & APIs", duration: "2 hours", topics: ["API basics", "Third-party integration", "Webhooks"] },
+      { title: "High Availability", duration: "2 hours", topics: ["HA setup", "Additional polling engines", "Database maintenance"] },
+      { title: "Security Best Practices", duration: "2 hours", topics: ["Access control", "Audit logging", "Encryption"] },
+      { title: "Performance Optimization", duration: "2 hours", topics: ["Polling optimization", "Database tuning", "Scaling strategies"] },
+      { title: "Certification Preparation", duration: "3 hours", topics: ["Exam overview", "Practice questions", "Review session"] },
+    ],
+    instructor: {
+      name: "Michael Chen",
+      title: "Senior Network Architect",
+      bio: "Michael has 15+ years of experience in network infrastructure and monitoring. He has deployed SolarWinds solutions for Fortune 500 companies across Asia-Pacific and holds multiple vendor certifications.",
+      certifications: ["SolarWinds Certified Professional", "CCNP", "CCIE Written"],
+      experience: "15 years",
+    },
+    certification: {
+      name: "SolarWinds Certified Professional (SCP)",
+      provider: "SolarWinds",
+      examCode: "SCP-NPM",
+      passingScore: "70%",
+      validity: "3 years",
+    },
+    learningOutcomes: [
+      "Deploy and configure SolarWinds NPM in enterprise environments",
+      "Create custom dashboards and alerts for proactive monitoring",
+      "Troubleshoot network performance issues using NPM tools",
+      "Implement best practices for network monitoring at scale",
+      "Integrate NPM with other IT management tools",
+      "Prepare for the SolarWinds Certified Professional exam",
+    ],
+    prerequisites: [
+      "Basic understanding of TCP/IP networking",
+      "Familiarity with network devices (routers, switches, firewalls)",
+      "Experience with Windows Server administration",
+    ],
   },
   {
     id: "2",
@@ -52,6 +121,43 @@ export const COURSES: Course[] = [
     featured: true,
     tags: ["PAM", "Security", "Compliance"],
     color: "#0EA5E9",
+    curriculum: [
+      { title: "PAM Fundamentals", duration: "2 hours", topics: ["Privileged access concepts", "Threat landscape", "Securden overview"] },
+      { title: "Vault Configuration", duration: "3 hours", topics: ["Vault setup", "Secret types", "Folder structure"] },
+      { title: "Account Discovery", duration: "2 hours", topics: ["Auto-discovery", "Manual import", "Account classification"] },
+      { title: "Password Rotation", duration: "3 hours", topics: ["Rotation policies", "Scheduled rotation", "Emergency rotation"] },
+      { title: "Session Management", duration: "3 hours", topics: ["Session recording", "Live monitoring", "Session playback"] },
+      { title: "Access Control", duration: "2 hours", topics: ["Role-based access", "Approval workflows", "Time-based access"] },
+      { title: "Remote Access", duration: "2 hours", topics: ["Web-based access", "RDP/SSH proxy", "Just-in-time access"] },
+      { title: "Compliance & Auditing", duration: "2 hours", topics: ["Audit reports", "Compliance dashboards", "SIEM integration"] },
+      { title: "API & Automation", duration: "2 hours", topics: ["REST API", "CLI tools", "DevOps integration"] },
+      { title: "Deployment Best Practices", duration: "3 hours", topics: ["HA deployment", "Disaster recovery", "Performance tuning"] },
+    ],
+    instructor: {
+      name: "Sarah Johnson",
+      title: "Cybersecurity Consultant",
+      bio: "Sarah is a certified cybersecurity professional specializing in privileged access management. She has helped organizations across APAC implement zero-trust security frameworks.",
+      certifications: ["CISSP", "CISM", "Securden Certified Engineer"],
+      experience: "12 years",
+    },
+    certification: {
+      name: "Securden Certified Engineer",
+      provider: "Securden",
+      validity: "2 years",
+    },
+    learningOutcomes: [
+      "Deploy Securden PAM in enterprise environments",
+      "Configure password policies and rotation schedules",
+      "Implement session recording and monitoring",
+      "Create compliance reports and audit trails",
+      "Integrate PAM with existing security tools",
+      "Prepare for Securden certification",
+    ],
+    prerequisites: [
+      "Understanding of IT security fundamentals",
+      "Experience with Windows/Linux administration",
+      "Knowledge of networking basics",
+    ],
   },
   {
     id: "3",
@@ -70,6 +176,41 @@ export const COURSES: Course[] = [
     featured: false,
     tags: ["Oracle", "Database", "SQL"],
     color: "#6366F1",
+    curriculum: [
+      { title: "TOAD Installation & Setup", duration: "2 hours", topics: ["Installation", "Connection setup", "UI overview"] },
+      { title: "SQL Development", duration: "3 hours", topics: ["SQL Editor", "Code completion", "Debugging"] },
+      { title: "Schema Management", duration: "3 hours", topics: ["Object browser", "Schema compare", "Script generation"] },
+      { title: "Data Modeling", duration: "3 hours", topics: ["ER diagrams", "Model design", "Reverse engineering"] },
+      { title: "Performance Tuning", duration: "3 hours", topics: ["SQL optimization", "Explain plans", "Index analysis"] },
+      { title: "Data Management", duration: "2 hours", topics: ["Data import/export", "Data compare", "Data generation"] },
+      { title: "Automation", duration: "2 hours", topics: ["Automation designer", "Scheduled tasks", "Batch scripts"] },
+      { title: "Team Collaboration", duration: "2 hours", topics: ["Version control", "Code reviews", "Project management"] },
+    ],
+    instructor: {
+      name: "David Tan",
+      title: "Oracle Database Architect",
+      bio: "David has been working with Oracle databases for over 18 years. He specializes in performance tuning and has optimized database systems for major banks and telecommunications companies.",
+      certifications: ["Oracle ACE", "OCP DBA", "Quest Certified Professional"],
+      experience: "18 years",
+    },
+    certification: {
+      name: "Quest TOAD Certified Professional",
+      provider: "Quest",
+      validity: "2 years",
+    },
+    learningOutcomes: [
+      "Efficiently develop and debug SQL code",
+      "Manage database schemas and objects",
+      "Create data models and ER diagrams",
+      "Optimize SQL performance using TOAD tools",
+      "Automate routine database tasks",
+      "Collaborate effectively with development teams",
+    ],
+    prerequisites: [
+      "Basic SQL knowledge",
+      "Familiarity with Oracle database concepts",
+      "Experience with database development",
+    ],
   },
   {
     id: "4",
@@ -87,6 +228,43 @@ export const COURSES: Course[] = [
     featured: true,
     tags: ["Endpoint", "Patch Management", "EMM"],
     color: "#EC4899",
+    curriculum: [
+      { title: "EPM Architecture", duration: "2 hours", topics: ["Core server", "Agents", "Distribution points"] },
+      { title: "Device Inventory", duration: "3 hours", topics: ["Hardware inventory", "Software inventory", "Custom data forms"] },
+      { title: "Patch Management", duration: "4 hours", topics: ["Patch scanning", "Patch groups", "Deployment scheduling"] },
+      { title: "Software Distribution", duration: "3 hours", topics: ["Package creation", "Distribution methods", "Targeting"] },
+      { title: "OS Deployment", duration: "3 hours", topics: ["Imaging", "Provisioning", "Migration"] },
+      { title: "Remote Control", duration: "2 hours", topics: ["Remote access", "Chat/File transfer", "Session recording"] },
+      { title: "Security & Compliance", duration: "2 hours", topics: ["Security policies", "Compliance scanning", "Antivirus management"] },
+      { title: "Reporting", duration: "2 hours", topics: ["Built-in reports", "Custom reports", "Dashboard creation"] },
+      { title: "Mobile Device Management", duration: "2 hours", topics: ["MDM enrollment", "Policy management", "App distribution"] },
+      { title: "Best Practices", duration: "3 hours", topics: ["Performance tuning", "Scaling", "Troubleshooting"] },
+    ],
+    instructor: {
+      name: "Jennifer Lee",
+      title: "Endpoint Management Specialist",
+      bio: "Jennifer has managed endpoint environments for enterprises with 50,000+ devices. She specializes in Ivanti solutions and has trained hundreds of IT professionals across Southeast Asia.",
+      certifications: ["Ivanti Certified Engineer", "ITIL v4", "Microsoft Certified"],
+      experience: "10 years",
+    },
+    certification: {
+      name: "Ivanti Certified Endpoint Manager",
+      provider: "Ivanti",
+      validity: "2 years",
+    },
+    learningOutcomes: [
+      "Deploy and configure Ivanti EPM",
+      "Implement patch management strategies",
+      "Create software distribution packages",
+      "Manage OS deployment and migrations",
+      "Generate compliance reports",
+      "Prepare for Ivanti certification",
+    ],
+    prerequisites: [
+      "Windows Server administration experience",
+      "Understanding of networking fundamentals",
+      "Basic scripting knowledge",
+    ],
   },
   {
     id: "5",
@@ -104,6 +282,46 @@ export const COURSES: Course[] = [
     featured: false,
     tags: ["SIEM", "Security", "Log Management"],
     color: "#7B8794",
+    curriculum: [
+      { title: "SIEM Fundamentals", duration: "2 hours", topics: ["SIEM concepts", "Log management", "SEM architecture"] },
+      { title: "Log Collection", duration: "3 hours", topics: ["Log sources", "Agents", "Syslog configuration"] },
+      { title: "Normalization", duration: "2 hours", topics: ["Log parsing", "Field mapping", "Data enrichment"] },
+      { title: "Correlation Rules", duration: "3 hours", topics: ["Rule creation", "Threshold rules", "Sequence rules"] },
+      { title: "Threat Detection", duration: "3 hours", topics: ["Anomaly detection", "Behavioral analysis", "Threat intelligence"] },
+      { title: "Alerting", duration: "2 hours", topics: ["Alert configuration", "Notification actions", "Escalation"] },
+      { title: "Incident Response", duration: "3 hours", topics: ["Automated response", "Remediation", "Forensic analysis"] },
+      { title: "Compliance Reporting", duration: "2 hours", topics: ["Built-in reports", "Custom reports", "Audit trails"] },
+      { title: "Integration", duration: "2 hours", topics: ["NPM integration", "API usage", "Third-party tools"] },
+      { title: "Performance Tuning", duration: "2 hours", topics: ["Storage optimization", "Query performance", "Scaling"] },
+      { title: "Best Practices", duration: "2 hours", topics: ["Deployment strategies", "Maintenance", "Troubleshooting"] },
+    ],
+    instructor: {
+      name: "Robert Kim",
+      title: "Security Operations Manager",
+      bio: "Robert leads security operations for a major managed security service provider. He has extensive experience implementing SIEM solutions and incident response frameworks.",
+      certifications: ["CISSP", "GIAC GCIH", "SolarWinds SCP"],
+      experience: "14 years",
+    },
+    certification: {
+      name: "SolarWinds Certified Professional - SEM",
+      provider: "SolarWinds",
+      examCode: "SCP-SEM",
+      passingScore: "70%",
+      validity: "3 years",
+    },
+    learningOutcomes: [
+      "Deploy and configure SolarWinds SEM",
+      "Create correlation rules for threat detection",
+      "Implement automated incident response",
+      "Generate compliance reports",
+      "Integrate SEM with other security tools",
+      "Prepare for SCP-SEM certification",
+    ],
+    prerequisites: [
+      "Understanding of security concepts",
+      "Experience with log management",
+      "Basic networking knowledge",
+    ],
   },
   {
     id: "6",
@@ -121,6 +339,40 @@ export const COURSES: Course[] = [
     featured: false,
     tags: ["Secrets", "DevOps", "Cloud Security"],
     color: "#0EA5E9",
+    curriculum: [
+      { title: "Secrets Management Fundamentals", duration: "2 hours", topics: ["Secrets concepts", "Threat models", "Securden AAM overview"] },
+      { title: "Vault Configuration", duration: "3 hours", topics: ["Vault setup", "Secret types", "Access policies"] },
+      { title: "API Key Management", duration: "3 hours", topics: ["Key generation", "Rotation policies", "Revocation"] },
+      { title: "DevOps Integration", duration: "3 hours", topics: ["CI/CD integration", "Container secrets", "Kubernetes"] },
+      { title: "Cloud Integration", duration: "2 hours", topics: ["AWS", "Azure", "GCP integration"] },
+      { title: "Monitoring & Auditing", duration: "2 hours", topics: ["Access logs", "Anomaly detection", "Compliance"] },
+      { title: "Best Practices", duration: "2 hours", topics: ["Secret hygiene", "Emergency access", "Disaster recovery"] },
+    ],
+    instructor: {
+      name: "Alex Wong",
+      title: "DevSecOps Lead",
+      bio: "Alex specializes in security automation and secrets management for cloud-native applications. He has helped organizations implement zero-trust security in their CI/CD pipelines.",
+      certifications: ["AWS Security Specialty", "CKA", "Securden Certified"],
+      experience: "8 years",
+    },
+    certification: {
+      name: "Securden Application Access Manager Certified",
+      provider: "Securden",
+      validity: "2 years",
+    },
+    learningOutcomes: [
+      "Deploy Securden AAM for secrets management",
+      "Configure API key rotation policies",
+      "Integrate secrets management with CI/CD",
+      "Implement cloud provider integration",
+      "Monitor and audit secrets access",
+      "Follow security best practices",
+    ],
+    prerequisites: [
+      "Understanding of DevOps practices",
+      "Experience with cloud platforms",
+      "Basic security knowledge",
+    ],
   },
   {
     id: "7",
@@ -138,6 +390,41 @@ export const COURSES: Course[] = [
     featured: false,
     tags: ["Active Directory", "Backup", "Recovery"],
     color: "#6366F1",
+    curriculum: [
+      { title: "AD Protection Fundamentals", duration: "2 hours", topics: ["AD risks", "Recovery challenges", "RMAD overview"] },
+      { title: "Backup Configuration", duration: "3 hours", topics: ["Backup methods", "Scheduling", "Storage"] },
+      { title: "Object Recovery", duration: "3 hours", topics: ["Deleted objects", "Attribute recovery", "Group membership"] },
+      { title: "GPO Recovery", duration: "2 hours", topics: ["GPO backup", "GPO restore", "Comparison"] },
+      { title: "DNS Recovery", duration: "2 hours", topics: ["DNS zones", "DNS records", "Forest recovery"] },
+      { title: "Change Tracking", duration: "2 hours", topics: ["Change auditing", "Who changed what", "Rollback"] },
+      { title: "Disaster Recovery", duration: "3 hours", topics: ["Forest recovery", "Bare metal restore", "Testing"] },
+      { title: "Best Practices", duration: "2 hours", topics: ["Backup validation", "Documentation", "Compliance"] },
+    ],
+    instructor: {
+      name: "Emily Chang",
+      title: "Identity Management Architect",
+      bio: "Emily specializes in Active Directory and identity management solutions. She has designed and implemented AD disaster recovery plans for global enterprises.",
+      certifications: ["Microsoft MVP", "MCSE", "Quest Certified"],
+      experience: "16 years",
+    },
+    certification: {
+      name: "Quest Recovery Manager Certified",
+      provider: "Quest",
+      validity: "2 years",
+    },
+    learningOutcomes: [
+      "Configure automated AD backups",
+      "Perform granular object recovery",
+      "Track and audit AD changes",
+      "Implement disaster recovery plans",
+      "Test recovery procedures",
+      "Follow AD protection best practices",
+    ],
+    prerequisites: [
+      "Active Directory administration experience",
+      "Windows Server knowledge",
+      "Backup concepts",
+    ],
   },
   {
     id: "8",
@@ -156,6 +443,42 @@ export const COURSES: Course[] = [
     featured: true,
     tags: ["ITSM", "Service Desk", "ITIL"],
     color: "#EC4899",
+    curriculum: [
+      { title: "ITSM Fundamentals", duration: "2 hours", topics: ["ITIL overview", "ITSM concepts", "Ivanti Neurons"] },
+      { title: "Incident Management", duration: "3 hours", topics: ["Incident lifecycle", "Escalation", "SLA management"] },
+      { title: "Service Request", duration: "3 hours", topics: ["Request catalog", "Approval workflows", "Fulfillment"] },
+      { title: "Change Management", duration: "3 hours", topics: ["Change types", "CAB process", "Risk assessment"] },
+      { title: "CMDB", duration: "3 hours", topics: ["CI management", "Relationships", "Reconciliation"] },
+      { title: "Self-Service Portal", duration: "2 hours", topics: ["Portal design", "Knowledge base", "Chatbot"] },
+      { title: "Reporting & Analytics", duration: "2 hours", topics: ["Dashboards", "KPIs", "Trend analysis"] },
+      { title: "Automation", duration: "2 hours", topics: ["Workflow designer", "Business rules", "Integration"] },
+      { title: "Best Practices", duration: "2 hours", topics: ["Implementation", "Adoption", "Continuous improvement"] },
+    ],
+    instructor: {
+      name: "Daniel Lim",
+      title: "ITSM Consultant",
+      bio: "Daniel has helped organizations implement ITSM best practices for over a decade. He is an ITIL Expert and has extensive experience with Ivanti service management solutions.",
+      certifications: ["ITIL Expert", "Ivanti Certified", "HDI Support Center Manager"],
+      experience: "12 years",
+    },
+    certification: {
+      name: "Ivanti Service Management Certified",
+      provider: "Ivanti",
+      validity: "2 years",
+    },
+    learningOutcomes: [
+      "Configure Ivanti ITSM modules",
+      "Implement ITIL-aligned processes",
+      "Design self-service portals",
+      "Create automation workflows",
+      "Generate ITSM reports",
+      "Prepare for Ivanti certification",
+    ],
+    prerequisites: [
+      "Basic IT service management knowledge",
+      "Help desk or support experience",
+      "No prior Ivanti experience required",
+    ],
   },
   {
     id: "9",
@@ -173,6 +496,44 @@ export const COURSES: Course[] = [
     featured: false,
     tags: ["Database", "Performance", "Monitoring"],
     color: "#7B8794",
+    curriculum: [
+      { title: "DPA Architecture", duration: "2 hours", topics: ["Architecture overview", "Supported databases", "Installation"] },
+      { title: "Instance Registration", duration: "2 hours", topics: ["SQL Server", "Oracle", "MySQL registration"] },
+      { title: "Wait-Time Analysis", duration: "3 hours", topics: ["Wait states", "Bottleneck identification", "Trends"] },
+      { title: "Query Analysis", duration: "3 hours", topics: ["Query tuning", "Execution plans", "Resource usage"] },
+      { title: "Storage Analysis", duration: "2 hours", topics: ["I/O analysis", "Disk latency", "File growth"] },
+      { title: "VM Monitoring", duration: "2 hours", topics: ["Virtual environment", "Resource contention", "VM recommendations"] },
+      { title: "Alerting", duration: "2 hours", topics: ["Alert configuration", "Thresholds", "Notifications"] },
+      { title: "Capacity Planning", duration: "2 hours", topics: ["Forecasting", "What-if analysis", "Recommendations"] },
+      { title: "Best Practices", duration: "2 hours", topics: ["Deployment", "Maintenance", "Troubleshooting"] },
+    ],
+    instructor: {
+      name: "Kevin Patel",
+      title: "Database Performance Expert",
+      bio: "Kevin has optimized database performance for enterprise applications serving millions of users. He specializes in cross-platform database monitoring and tuning.",
+      certifications: ["Oracle ACE", "Microsoft MVP", "SolarWinds SCP"],
+      experience: "20 years",
+    },
+    certification: {
+      name: "SolarWinds Certified Professional - DPA",
+      provider: "SolarWinds",
+      examCode: "SCP-DPA",
+      passingScore: "70%",
+      validity: "3 years",
+    },
+    learningOutcomes: [
+      "Deploy SolarWinds DPA for multi-platform monitoring",
+      "Perform wait-time analysis to identify bottlenecks",
+      "Tune SQL queries using DPA insights",
+      "Monitor virtualized database environments",
+      "Create capacity planning forecasts",
+      "Prepare for SCP-DPA certification",
+    ],
+    prerequisites: [
+      "Database administration experience",
+      "SQL knowledge",
+      "Understanding of database performance concepts",
+    ],
   },
 ]
 
@@ -207,4 +568,10 @@ export const VENDORS = [
   },
 ]
 
-export const COURSE_CATEGORIES = ["All", "SolarWinds", "Securden", "Quest", "Ivanti"] as const
+export const COURSE_CATEGORIES = [
+  { slug: "all", name: "All" },
+  { slug: "solarwinds", name: "SolarWinds" },
+  { slug: "securden", name: "Securden" },
+  { slug: "quest", name: "Quest" },
+  { slug: "ivanti", name: "Ivanti" },
+]

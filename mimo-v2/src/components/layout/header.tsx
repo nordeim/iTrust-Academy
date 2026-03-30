@@ -1,8 +1,10 @@
 // ═══════════════════════════════════════════════════════════
 // Header Component with Authentication Integration
+// Updated with react-router-dom Link support
 // ═══════════════════════════════════════════════════════════
 
 import { useState, useEffect } from "react"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, ChevronRight, GraduationCap, LogIn, UserPlus } from "lucide-react"
 import { Container } from "./container"
@@ -15,13 +17,21 @@ import { LoginModal } from "@/components/forms/login-modal"
 import { RegisterModal } from "@/components/forms/register-modal"
 
 function Logo({ className }: { className?: string }) {
+  const navigate = useNavigate()
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    scrollToTop()
+    navigate("/")
+  }
+
   return (
-    <a 
-      href="#" 
-      onClick={(e) => { e.preventDefault(); scrollToTop(); }}
+    <a
+      href="/"
+      onClick={handleClick}
       className={cn("flex items-center gap-2.5 group", className)}
     >
-      <div 
+      <div
         className="relative w-10 h-10 bg-brand-500 flex items-center justify-center rounded-lg shadow-md group-hover:shadow-lg group-hover:shadow-brand-500/20 transition-all duration-300"
         aria-hidden="true"
       >
@@ -40,44 +50,72 @@ function Logo({ className }: { className?: string }) {
 }
 
 function DesktopNav() {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
+    // Handle hash links (scroll to section)
+    if (href.includes("#")) {
+      e.preventDefault()
+      const [path, hash] = href.split("#")
+
+      // If we're on a different page, navigate first then scroll
+      if (path && path !== "/" && location.pathname !== path) {
+        navigate(path)
+        setTimeout(() => scrollToSection(hash), 100)
+      } else if (hash) {
+        // If we're on the same page, just scroll
+        if (location.pathname !== "/") {
+          navigate("/")
+          setTimeout(() => scrollToSection(hash), 100)
+        } else {
+          scrollToSection(hash)
+        }
+      }
+    }
+    // For regular links (like /about), let Link handle it
+  }
+
   return (
     <nav className="hidden lg:flex items-center gap-1" aria-label="Main navigation">
-      {NAV_ITEMS.map((item) => (
-        <a
-          key={item.href}
-          href={item.href}
-          onClick={(e) => {
-            e.preventDefault()
-            const sectionId = item.href.replace("#", "")
-            scrollToSection(sectionId)
-          }}
-          className={cn(
-            "relative px-4 py-2 font-mono text-sm font-medium uppercase tracking-wider rounded-md",
-            "text-foreground-secondary hover:text-brand-600 transition-colors duration-200",
-            "hover:bg-brand-50/50",
-            "after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5",
-            "after:bg-brand-500 after:transition-all after:duration-300 after:rounded-full",
-            "hover:after:w-6"
-          )}
-        >
-          {item.label}
-        </a>
-      ))}
+      {NAV_ITEMS.map((item) => {
+        const isHashLink = item.href.includes("#")
+        const isActive = !isHashLink && location.pathname === item.href
+
+        return (
+          <Link
+            key={item.href}
+            to={item.href}
+            onClick={(e) => handleNavClick(e, item.href)}
+            className={cn(
+              "relative px-4 py-2 font-mono text-sm font-medium uppercase tracking-wider rounded-md",
+              "text-foreground-secondary hover:text-brand-600 transition-colors duration-200",
+              "hover:bg-brand-50/50",
+              "after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5",
+              "after:bg-brand-500 after:transition-all after:duration-300 after:rounded-full",
+              "hover:after:w-6",
+              isActive && "text-brand-600 after:w-6"
+            )}
+          >
+            {item.label}
+          </Link>
+        )
+      })}
     </nav>
   )
 }
 
-function GuestButtons({ 
-  onLoginClick, 
-  onRegisterClick 
-}: { 
+function GuestButtons({
+  onLoginClick,
+  onRegisterClick
+}: {
   onLoginClick: () => void
-  onRegisterClick: () => void 
+  onRegisterClick: () => void
 }) {
   return (
     <div className="flex items-center gap-2">
-      <Button 
-        variant="ghost" 
+      <Button
+        variant="ghost"
         size="default"
         onClick={onLoginClick}
         className="hidden md:inline-flex"
@@ -85,7 +123,7 @@ function GuestButtons({
         <LogIn className="mr-2 h-4 w-4" />
         Sign In
       </Button>
-      <Button 
+      <Button
         size="default"
         onClick={onRegisterClick}
         className="hidden md:inline-flex"
@@ -97,15 +135,17 @@ function GuestButtons({
   )
 }
 
-function MobileNav({ 
-  onLoginClick, 
-  onRegisterClick 
-}: { 
+function MobileNav({
+  onLoginClick,
+  onRegisterClick
+}: {
   onLoginClick: () => void
-  onRegisterClick: () => void 
+  onRegisterClick: () => void
 }) {
   const [isOpen, setIsOpen] = useState(false)
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
+  const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (isOpen) {
@@ -115,6 +155,31 @@ function MobileNav({
     }
     return () => { document.body.style.overflow = "" }
   }, [isOpen])
+
+  const handleNavClick = (e: React.MouseEvent, href: string) => {
+    setIsOpen(false)
+
+    // Handle hash links (scroll to section)
+    if (href.includes("#")) {
+      e.preventDefault()
+      const [path, hash] = href.split("#")
+
+      // If we're on a different page, navigate first then scroll
+      if (path && path !== "/" && location.pathname !== path) {
+        navigate(path)
+        setTimeout(() => hash && scrollToSection(hash), 100)
+      } else if (hash) {
+        // If we're on the same page, just scroll
+        if (location.pathname !== "/") {
+          navigate("/")
+          setTimeout(() => scrollToSection(hash), 100)
+        } else {
+          scrollToSection(hash)
+        }
+      }
+    }
+    // For regular links (like /about), let Link handle it
+  }
 
   return (
     <div className="lg:hidden">
@@ -171,19 +236,14 @@ function MobileNav({
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.05 }}
                       >
-                        <a
-                          href={item.href}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            setIsOpen(false)
-                            const sectionId = item.href.replace("#", "")
-                            scrollToSection(sectionId)
-                          }}
+                        <Link
+                          to={item.href}
+                          onClick={(e) => handleNavClick(e, item.href)}
                           className="flex items-center justify-between py-4 px-4 font-mono text-base font-medium uppercase tracking-wider text-foreground-secondary hover:text-brand-600 hover:bg-brand-50/50 rounded-lg transition-colors"
                         >
                           {item.label}
                           <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                        </a>
+                        </Link>
                       </motion.li>
                     ))}
                   </ul>
@@ -192,8 +252,8 @@ function MobileNav({
                 <div className="p-6 border-t border-border space-y-3">
                   {!isAuthenticated && (
                     <>
-                      <Button 
-                        className="w-full" 
+                      <Button
+                        className="w-full"
                         size="lg"
                         onClick={() => {
                           setIsOpen(false)
@@ -203,9 +263,9 @@ function MobileNav({
                         <LogIn className="mr-2 h-4 w-4" />
                         Sign In
                       </Button>
-                      <Button 
-                        variant="outline" 
-                        className="w-full" 
+                      <Button
+                        variant="outline"
+                        className="w-full"
                         size="lg"
                         onClick={() => {
                           setIsOpen(false)
@@ -269,12 +329,12 @@ export function Header() {
               {isAuthenticated ? (
                 <UserNav />
               ) : (
-                <GuestButtons 
+                <GuestButtons
                   onLoginClick={() => setLoginOpen(true)}
                   onRegisterClick={() => setRegisterOpen(true)}
                 />
               )}
-              <MobileNav 
+              <MobileNav
                 onLoginClick={() => setLoginOpen(true)}
                 onRegisterClick={() => setRegisterOpen(true)}
               />
@@ -283,13 +343,13 @@ export function Header() {
         </Container>
       </header>
 
-      <LoginModal 
-        open={loginOpen} 
+      <LoginModal
+        open={loginOpen}
         onOpenChange={setLoginOpen}
         onSwitchToRegister={handleSwitchToRegister}
       />
-      <RegisterModal 
-        open={registerOpen} 
+      <RegisterModal
+        open={registerOpen}
         onOpenChange={setRegisterOpen}
         onSwitchToLogin={handleSwitchToLogin}
       />

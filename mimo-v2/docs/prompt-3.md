@@ -30,6 +30,18 @@ Awesome job on your meticulous review, analysis and planning. Please keep up the
 
 ---
 
+Awesome job on your meticulous analysis, planning and execution. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Based on your deep understanding of the current UI/UX state of the current codebase, please think deeper and think harder to systematically and thoroughly explore 5 top improvements you would recommend to improve the features, functions, usabilities or user experence of the web application, it can be create some dummy content and pages to make some of the key footer navigation links become functional, or it can be to seed some courses so that the search function produce more impressive results for demo purposes. In other words, re-imagine how to improve the user experience so that the current site at URL `http://localhost:5174/` become more impressive as a demo website.
+
+---
+
+Awesome job on your meticulous analysis, planning and execution. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Yes, please meticulously plan and proceed with Phase 2. Before starting each phase, create a sub-plan with ToDO list, review and validate it against the codebase again to check accurate alignment before executing the sub-plan. Use the same rigorous and meticulous approach. Remember to use Test-Driven Development (TDD) approach in planning for the code changes.
+
+---
+
+Awesome job on your meticulous review, analysis and planning. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Now, please meticulously review @status_6.md , @ACCOMPLISHMENTS.md , @@CLAUDE.md , @GEMINI.md , @USABILITY_ENHANCEMENT_REPORT.md , @PHASE5_COMPLETION.md , @MERGED_IMPROVEMENT_PLAN.md and @improvement_suggestions_2.md to have a good understanding of the recent code changes and the related enhancements, then meticulously plan to audit and validate the changes against the codebase. Next, meticulously plan to run your own browser test to verify the usability enhancements and improvements. Run lint test and `npm run build` to check for any coding issues, then restart the frontend web service robustly before commencing your browser UI/UX verification test. After completing the browser verification and usability test, generate a comprehensive verification assessment report.
+
+---
+
 Awesome job on your meticulous analysis, planning and execution. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Now, please meticulously review @status_3.md and @QA_findings_4.md , then meticulously plan to validate the QA findings and claims in `QA_findings_4.md` against the codebase using the following browsing skills. restart the frontend web service robustly before starting your browser verifications. $ ls -l skills/browser-automation/* skills/chrome-devtools-mcp/* skills/webapp-testing-journey/* skills/frontend-ui-testing-journey/* skills/e2e-testing-lessons/*
 -rw-rw-r-- 1 pete pete 15057 Mar 26 06:43 skills/browser-automation/SKILL.md
 -rw-rw-r-- 1 pete pete 17129 Mar 26 06:46 skills/chrome-devtools-mcp/SKILL.md
