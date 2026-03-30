@@ -188,10 +188,18 @@ Our E2E suite utilizes **Playwright (Python Sync API)** for high-fidelity browse
 *   Authentication UI (Login/Register Modals)
 *   User Profile navigation and dropdown
 *   Zustand auth store with persistence
-*   Visual design enhancements & QA remediation
+*   Visual design enhancements & QA remediation (Phase 1-8)
 *   100% E2E test pass rate (33/33 total)
+*   ContactModal system implemented (3 modals)
+*   ComingSoonModal system implemented (graceful degradation)
+*   Social links fixed (external navigation)
+*   Platform cards enhanced (CustomEvent filtering)
+*   QA Remediation Phase 9 complete (12/15 elements)
+*   Bidirectional data transformers (snake_case ↔ camelCase)
+*   Footer complete rewrite with modals & social links
 
 ### 🔄 In Progress
+*   Category-based vendor filtering refinement
 *   Loading skeleton components for catalog
 *   Error boundary implementation
 

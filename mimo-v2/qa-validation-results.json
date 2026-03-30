@@ -1,0 +1,201 @@
+{
+  "validation_date": "2026-03-30T09:37:00.216138",
+  "target_url": "http://localhost:5174",
+  "summary": {
+    "total": 21,
+    "passed": 12,
+    "failed": 9,
+    "success_rate": "57.1%"
+  },
+  "results": [
+    {
+      "test_id": "CTA-01",
+      "element": "EXPLORE SCP FUNDAMENTALS",
+      "expected": "Navigate/modal",
+      "actual": "Scrolled to 1708px",
+      "status": "PASS",
+      "details": "Button scrolls to courses section",
+      "timestamp": "2026-03-30T09:36:42.187185"
+    },
+    {
+      "test_id": "CTA-02",
+      "element": "ENROLL NOW (button 1)",
+      "expected": "Open enrollment/login modal",
+      "actual": "Login modal or toast shown",
+      "status": "PASS",
+      "details": "Action interception working",
+      "timestamp": "2026-03-30T09:36:45.285496"
+    },
+    {
+      "test_id": "CTA-03",
+      "element": "ENROLL NOW (button 2)",
+      "expected": "Open enrollment/login modal",
+      "actual": "Login modal or toast shown",
+      "status": "PASS",
+      "details": "Action interception working",
+      "timestamp": "2026-03-30T09:36:47.005334"
+    },
+    {
+      "test_id": "CTA-04",
+      "element": "ENROLL NOW (button 3)",
+      "expected": "Open enrollment/login modal",
+      "actual": "Login modal or toast shown",
+      "status": "PASS",
+      "details": "Action interception working",
+      "timestamp": "2026-03-30T09:36:48.693203"
+    },
+    {
+      "test_id": "CTA-05",
+      "element": "ENROLL NOW (button 4)",
+      "expected": "Open enrollment/login modal",
+      "actual": "Login modal or toast shown",
+      "status": "PASS",
+      "details": "Action interception working",
+      "timestamp": "2026-03-30T09:36:50.374845"
+    },
+    {
+      "test_id": "PC-01",
+      "element": "SolarWinds card",
+      "expected": "Navigate to course listings",
+      "actual": "No action",
+      "status": "FAIL",
+      "details": "Card does not navigate",
+      "timestamp": "2026-03-30T09:36:51.458406"
+    },
+    {
+      "test_id": "PC-02",
+      "element": "Securden card",
+      "expected": "Navigate to course listings",
+      "actual": "No action",
+      "status": "FAIL",
+      "details": "Card does not navigate",
+      "timestamp": "2026-03-30T09:36:52.211130"
+    },
+    {
+      "test_id": "PC-03",
+      "element": "Quest card",
+      "expected": "Navigate to course listings",
+      "actual": "No action",
+      "status": "FAIL",
+      "details": "Card does not navigate",
+      "timestamp": "2026-03-30T09:36:52.976878"
+    },
+    {
+      "test_id": "PC-04",
+      "element": "Ivanti card",
+      "expected": "Navigate to course listings",
+      "actual": "No action",
+      "status": "FAIL",
+      "details": "Card does not navigate",
+      "timestamp": "2026-03-30T09:36:53.744296"
+    },
+    {
+      "test_id": "CTA-06",
+      "element": "SCHEDULE CONSULTATION",
+      "expected": "Open form/modal",
+      "actual": "Modal shown or navigation occurred",
+      "status": "PASS",
+      "details": "CTA triggers expected action",
+      "timestamp": "2026-03-30T09:36:56.409155"
+    },
+    {
+      "test_id": "CTA-07",
+      "element": "REQUEST CORPORATE DEMO",
+      "expected": "Open form/modal",
+      "actual": "Modal shown or navigation occurred",
+      "status": "PASS",
+      "details": "CTA triggers expected action",
+      "timestamp": "2026-03-30T09:36:57.948142"
+    },
+    {
+      "test_id": "CTA-08",
+      "element": "CONTACT SALES",
+      "expected": "Open form/modal",
+      "actual": "Modal shown or navigation occurred",
+      "status": "PASS",
+      "details": "CTA triggers expected action",
+      "timestamp": "2026-03-30T09:36:59.383997"
+    },
+    {
+      "test_id": "FL-01",
+      "element": "About Us",
+      "expected": "Navigate to page",
+      "actual": "Has href: #about",
+      "status": "PASS",
+      "details": "Link properly configured",
+      "timestamp": "2026-03-30T09:36:59.734283"
+    },
+    {
+      "test_id": "FL-02",
+      "element": "Careers",
+      "expected": "Navigate to page",
+      "actual": "Link not visible",
+      "status": "FAIL",
+      "details": "Element not found",
+      "timestamp": "2026-03-30T09:36:59.737957"
+    },
+    {
+      "test_id": "FL-03",
+      "element": "Partners",
+      "expected": "Navigate to page",
+      "actual": "Link not visible",
+      "status": "FAIL",
+      "details": "Element not found",
+      "timestamp": "2026-03-30T09:36:59.741336"
+    },
+    {
+      "test_id": "FL-04",
+      "element": "Blog",
+      "expected": "Navigate to page",
+      "actual": "Link not visible",
+      "status": "FAIL",
+      "details": "Element not found",
+      "timestamp": "2026-03-30T09:36:59.744557"
+    },
+    {
+      "test_id": "FL-05",
+      "element": "Documentation",
+      "expected": "Navigate to page",
+      "actual": "Link not visible",
+      "status": "FAIL",
+      "details": "Element not found",
+      "timestamp": "2026-03-30T09:36:59.749964"
+    },
+    {
+      "test_id": "FL-06",
+      "element": "FAQ",
+      "expected": "Navigate to page",
+      "actual": "Link not visible",
+      "status": "FAIL",
+      "details": "Element not found",
+      "timestamp": "2026-03-30T09:36:59.767829"
+    },
+    {
+      "test_id": "SL-01",
+      "element": "LinkedIn",
+      "expected": "Open external in new tab",
+      "actual": "target='_blank', href=https://linkedin.com/company/itrust-academy",
+      "status": "PASS",
+      "details": "Social link properly configured",
+      "timestamp": "2026-03-30T09:36:59.887786"
+    },
+    {
+      "test_id": "SL-02",
+      "element": "Twitter",
+      "expected": "Open external in new tab",
+      "actual": "target='_blank', href=https://twitter.com/itrustacademy",
+      "status": "PASS",
+      "details": "Social link properly configured",
+      "timestamp": "2026-03-30T09:37:00.037797"
+    },
+    {
+      "test_id": "SL-03",
+      "element": "YouTube",
+      "expected": "Open external in new tab",
+      "actual": "target='_blank', href=https://youtube.com/@itrustacademy",
+      "status": "PASS",
+      "details": "Social link properly configured",
+      "timestamp": "2026-03-30T09:37:00.169629"
+    }
+  ]
+}

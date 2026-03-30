@@ -74,7 +74,7 @@ export function RegisterModal({ open, onOpenChange, onSwitchToLogin }: RegisterM
       toast.success("Account created successfully!")
       reset()
       onOpenChange(false)
-    } catch (error) {
+    } catch {
       toast.error("Registration failed. Please try again.")
     } finally {
       setIsSubmitting(false)

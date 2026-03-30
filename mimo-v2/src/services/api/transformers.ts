@@ -181,3 +181,30 @@ export function transformKeys(
 
   return obj
 }
+
+// ─────────────────────────────────────────────────────────
+// 7. Reverse Transform: camelCase → snake_case
+// ─────────────────────────────────────────────────────────
+
+function camelToSnake(str: string): string {
+  return str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`)
+}
+
+export function transformKeysToSnake(
+  obj: unknown
+): unknown {
+  if (Array.isArray(obj)) {
+    return obj.map(transformKeysToSnake)
+  }
+
+  if (obj !== null && typeof obj === "object") {
+    return Object.fromEntries(
+      Object.entries(obj as Record<string, unknown>).map(([key, value]) => [
+        camelToSnake(key),
+        transformKeysToSnake(value),
+      ])
+    )
+  }
+
+  return obj
+}

@@ -68,10 +68,13 @@ itrust-academy/
 │   │   ├── forms/                   # Form-specific logic and UI (React Hook Form)
 │   │   │   ├── login-modal.tsx      # Login form with Zod validation
 │   │   │   └── register-modal.tsx   # Registration form with Zod validation
+│   │   ├── modals/                  # Modal components
+│   │   │   ├── contact-modal.tsx    # Contact form modal (consultation/demo/sales)
+│   │   │   └── coming-soon-modal.tsx # Coming soon placeholder modal
 │   │   ├── icons/                   # Custom SVG brand icons (Lucide-compatible)
 │   │   ├── layout/                  # Global Layout: Header, Light Footer, Section Wrappers
 │   │   │   ├── header.tsx           # Header with auth state management
-│   │   │   ├── footer.tsx           # Footer with contact info
+│   │   │   ├── footer.tsx           # Footer with contact info & modals
 │   │   │   └── user-nav.tsx         # Authenticated user dropdown
 │   │   ├── sections/                # Feature-specific landing page sections
 │   │   └── ui/                      # Atomic UI primitives (Button, Badge, Input, etc.)
@@ -83,7 +86,7 @@ itrust-academy/
 │   │   └── api/
 │   │       ├── client.ts            # Axios instance with JWT interceptors
 │   │       ├── types.ts             # API response types (Backend & Frontend)
-│   │       ├── transformers.ts      # snake_case → camelCase transformers
+│   │       ├── transformers.ts      # snake_case ↔ camelCase transformers
 │   │       ├── courses.ts           # Course API functions
 │   │       ├── categories.ts        # Category API functions
 │   │       └── auth.ts              # Authentication API functions
@@ -99,8 +102,8 @@ itrust-academy/
 │   ├── data/                        # Static Data (fallback/legacy)
 │   │   └── courses.ts               # Course data & types
 │   ├── lib/                         # Utilities & Constants
-│   │   ├── constants.ts             # App constants & API_URL
-│   │   └── utils.ts                 # Utility functions
+│   │   ├── constants.ts             # App constants & API_URL & SOCIAL_URLS
+│   │   └── utils.ts                 # Utility functions (scrollToSection, scrollToTop)
 │   └── types/                       # Type Definitions
 │       └── vite-env.d.ts            # Vite environment declarations
 │

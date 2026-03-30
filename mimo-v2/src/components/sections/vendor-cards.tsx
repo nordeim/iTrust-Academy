@@ -40,20 +40,29 @@ export function VendorCards() {
         </div>
 
         {/* Vendor Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {VENDORS.map((vendor, index) => (
-            <motion.a
-              key={vendor.id}
-              href={`#courses`}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className={cn(
-                "group relative bg-card border border-border p-8 overflow-hidden",
-                "hover:border-primary/50 hover:shadow-lg transition-all duration-300"
-              )}
-            >
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {VENDORS.map((vendor, index) => (
+          <motion.button
+            key={vendor.id}
+            onClick={() => {
+              // Dispatch custom event for CourseCatalog to listen
+              window.dispatchEvent(
+                new CustomEvent("vendorFilter", { detail: vendor.id })
+              )
+              // Scroll to courses section
+              document
+                .getElementById("courses")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+            className={cn(
+              "group relative bg-card border border-border p-8 overflow-hidden text-left cursor-pointer",
+              "hover:border-primary/50 hover:shadow-lg transition-all duration-300"
+            )}
+          >
               {/* Accent color bar */}
               <div
                 className="absolute top-0 left-0 w-full h-1 transition-all duration-300 group-hover:h-2"
@@ -79,11 +88,11 @@ export function VendorCards() {
                 <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider">
                   {vendor.courses} courses
                 </span>
-                <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
-              </div>
-            </motion.a>
-          ))}
-        </div>
+            <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+          </div>
+        </motion.button>
+      ))}
+    </div>
       </Container>
     </Section>
   )

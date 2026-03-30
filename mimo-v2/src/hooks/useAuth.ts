@@ -4,6 +4,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useAuthStore } from "@/store/useAuthStore"
+import { transformKeysToSnake } from "@/services/api/transformers"
 import {
   login as loginApi,
   register as registerApi,
@@ -68,7 +69,11 @@ export function useUpdateUser() {
   const setUser = useAuthStore((s) => s.setUser)
 
   return useMutation({
-    mutationFn: (data: Partial<User>) => updateUser(data as any),
+    mutationFn: (data: Partial<User>) => {
+      // Transform camelCase to snake_case before API call
+      const snakeCaseData = transformKeysToSnake(data)
+      return updateUser(snakeCaseData as Parameters<typeof updateUser>[0])
+    },
     onSuccess: (user) => {
       setUser(user)
       queryClient.invalidateQueries({ queryKey: ["currentUser"] })

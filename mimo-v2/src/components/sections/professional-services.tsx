@@ -3,7 +3,9 @@ import { Briefcase, GraduationCap, Headphones, FileCheck } from "lucide-react"
 import { Container } from "@/components/layout/container"
 import { Section } from "@/components/layout/section"
 import { Button } from "@/components/ui/button"
-import { cn, scrollToSection } from "@/lib/utils"
+import { ContactModal } from "@/components/modals/contact-modal"
+import { cn } from "@/lib/utils"
+import { useState } from "react"
 
 const SERVICES = [
   {
@@ -29,6 +31,8 @@ const SERVICES = [
 ]
 
 export function ProfessionalServices() {
+  const [showContactModal, setShowContactModal] = useState(false)
+
   return (
     <Section background="dark">
       <Container>
@@ -68,10 +72,10 @@ export function ProfessionalServices() {
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              <Button 
-                size="lg" 
+              <Button
+                size="lg"
                 className="group"
-                onClick={() => scrollToSection("contact")}
+                onClick={() => setShowContactModal(true)}
               >
                 Schedule Consultation
               </Button>
@@ -108,6 +112,12 @@ export function ProfessionalServices() {
           </div>
         </div>
       </Container>
+
+      <ContactModal
+        type="consultation"
+        open={showContactModal}
+        onClose={() => setShowContactModal(false)}
+      />
     </Section>
   )
 }

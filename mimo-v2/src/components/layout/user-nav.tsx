@@ -2,7 +2,6 @@
 // User Navigation Component (Authenticated Users)
 // ═══════════════════════════════════════════════════════════
 
-import { useState } from "react"
 import { User, LogOut, BookOpen, Settings } from "lucide-react"
 import {
   DropdownMenu,

@@ -56,7 +56,7 @@ export function LoginModal({ open, onOpenChange, onSwitchToRegister }: LoginModa
       toast.success("Welcome back!")
       reset()
       onOpenChange(false)
-    } catch (error) {
+    } catch {
       toast.error("Login failed. Please check your credentials.")
     } finally {
       setIsSubmitting(false)

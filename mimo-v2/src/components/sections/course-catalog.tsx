@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Container } from "@/components/layout/container"
 import { Section } from "@/components/layout/section"
@@ -22,8 +22,21 @@ export function CourseCatalog() {
   const filteredCourses: CourseType[] = activeVendor === "All"
     ? coursesData?.courses ?? []
     : coursesData?.courses.filter((course) =>
-        course.categories.some(cat => cat.slug === activeVendor)
-      ) ?? []
+      course.categories.some(cat => cat.slug === activeVendor)
+    ) ?? []
+
+  // Listen for vendor filter events from VendorCards
+  useEffect(() => {
+    const handleVendorFilter = (e: CustomEvent<string>) => {
+      setActiveVendor(e.detail)
+    }
+
+    window.addEventListener("vendorFilter", handleVendorFilter as EventListener)
+
+    return () => {
+      window.removeEventListener("vendorFilter", handleVendorFilter as EventListener)
+    }
+  }, [])
 
   return (
     <Section id="courses">
