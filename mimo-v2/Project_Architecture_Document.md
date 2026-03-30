@@ -61,7 +61,7 @@ This document serves as the primary technical blueprint for iTrust Academy. It p
 itrust-academy/
 ├── 📁 src/                          # React Frontend
 │   ├── app/                         # Application Core & Configuration
-│   │   ├── app.tsx                  # Main App component (Section orchestrator)
+│   │   ├── app.tsx                  # Main App component (Section orchestrator + Toaster)
 │   │   └── globals.css              # Tailwind v4 theme, variables, and global resets
 │   ├── components/                  # Component Library
 │   │   ├── cards/                   # Composite card components (e.g., CourseCard)
@@ -77,8 +77,14 @@ itrust-academy/
 │   │   │   ├── footer.tsx           # Footer with contact info & modals
 │   │   │   └── user-nav.tsx         # Authenticated user dropdown
 │   │   ├── sections/                # Feature-specific landing page sections
+│   │   │   ├── hero.tsx             # Hero banner section
+│   │   │   ├── vendor-cards.tsx     # Vendor showcase cards with filtering
+│   │   │   ├── course-catalog.tsx   # Course grid with API integration
+│   │   │   ├── professional-services.tsx # Services section with ContactModal
+│   │   │   ├── cta.tsx              # CTA section with ContactModal
+│   │   │   └── training-schedule.tsx # Training schedule with enrollment
 │   │   └── ui/                      # Atomic UI primitives (Button, Badge, Input, etc.)
-│   │       ├── dialog.tsx           # Radix UI dialog primitive
+│   │       ├── dialog.tsx           # Radix UI dialog primitive with DialogDescription
 │   │       ├── dropdown-menu.tsx    # Dropdown menu primitive
 │   │       ├── avatar.tsx           # Avatar component
 │   │       └── label.tsx            # Form label component

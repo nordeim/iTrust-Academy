@@ -9,10 +9,12 @@ import { TrainingSchedule } from "@/components/sections/training-schedule"
 import { ProfessionalServices } from "@/components/sections/professional-services"
 import { Testimonials } from "@/components/sections/testimonials"
 import { CTA } from "@/components/sections/cta"
+import { Toaster } from "sonner"
 
 export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
+      <Toaster position="bottom-right" richColors />
       <Header />
       <main className="flex-1">
         <Hero />

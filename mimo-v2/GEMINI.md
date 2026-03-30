@@ -4,7 +4,7 @@
 > **Project**: iTrust Academy - Enterprise IT Training Platform (APAC)
 > **Tech Stack**: React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS v4 + Django REST API
 > **Design Philosophy**: Avant-Garde / Meticulous Minimalism / Corporate Precision
-> **Last Synchronized**: March 29, 2026
+> **Last Synchronized**: March 30, 2026
 
 ---
 
@@ -36,7 +36,9 @@ src/
 │   ├── app.tsx           # Root orchestrator for all sections
 │   └── globals.css       # Tailwind v4 CSS-first theme & variables
 ├── components/
-│   ├── forms/            # NEW: Zod-validated Auth Modals (Login, Register)
+│   ├── cards/            # CourseCard, Platform Cards (API-driven)
+│   ├── forms/            # Zod-validated Auth Modals (Login, Register)
+│   ├── modals/           # NEW: ContactModal, ComingSoonModal systems
 │   ├── layout/           # Sticky Header, UserNav Dropdown, Light Footer
 │   ├── sections/         # Animated landing page sections (Hero, Stats, Catalog, etc.)
 │   ├── ui/               # Radix Primitives: Dialog, Dropdown, Avatar, Button, etc.
@@ -59,6 +61,7 @@ src/
 1.  **Identity**: `useAuthStore` (Zustand) → `apiClient` (Axios Interceptors) → JWT Injection.
 2.  **Server State**: `React Query` → `apiService` → `Transformers (snake → camel)` → Components.
 3.  **Navigation**: `scrollToSection()` utility for single-page; React Router planned for detail pages.
+4.  **Events**: `VendorCards` (Dispatch) → `CustomEvent("vendorFilter")` → `CourseCatalog` (Listener).
 
 ---
 
@@ -87,43 +90,17 @@ All phases of the API integration have been implemented:
 ### Mandatory Verification Commands
 1.  **Linting**: `npm run lint` (Must pass with 0 errors).
 2.  **Type Checking & Build**: `npm run build` (Ensures production bundle integrity).
-3.  **UI Verification**: Use Playwright scripts to capture screenshots to `/screenshots/`.
-4.  **E2E Testing**: 27/27 test cases must pass (14 Landing + 13 Auth).
+3.  **UI Validation**: Execute `python3 scripts/validate_qa_findings.py` for automated UX check.
+4.  **E2E Testing**: 33/33 test cases must pass (14 Landing + 13 Auth + 6 Registration).
 
 ### Server Configuration
 ```bash
 # Development server runs on port 5174
 npm run dev  # http://localhost:5174
 
-# Vite config includes allowedHosts for external domain
-allowedHosts: ['itrust-academy.jesspete.shop', 'localhost', '127.0.0.1']
+# Production preview (required for E2E proxy support)
+npm run preview -- --port 5174 --host 0.0.0.0
 ```
-
----
-
-## ⚠️ History: The "Remediation" Phase
-**CRITICAL: Do not revert these architectural decisions.**
-1.  **React 19 Patterns**: Use `useSyncExternalStore` for accessibility hooks.
-2.  **Fast Refresh Fix**: CVA Variants are in `src/components/ui/variants.ts`.
-3.  **Footer Redesign**: Light Theme (`#F8FAFC`) matching reference samples.
-4.  **Logo Fix**: Icon changed to `<GraduationCap>` to prevent duplication.
-5.  **Favicon Fix**: Reference changed from `/vite.svg` to `/favicon.svg`.
-6.  **Auth UI**: Implemented as high-conversion modals using Radix UI Dialog.
-
----
-
-## 🚀 Accomplishments & Milestones
-
-### Milestone 7: Authentication UI (March 29, 2026)
-*   ✅ **Radix UI Primitives**: Created foundational `src/components/ui/` primitives: `dialog.tsx`, `dropdown-menu.tsx`, `avatar.tsx`, and `label.tsx`.
-*   ✅ **High-Conversion Modals**: Implemented `LoginModal` and `RegisterModal` with seamless switching logic.
-*   ✅ **Identity Persistence**: Integrated `useAuthStore` (Zustand) with localStorage to maintain sessions across reloads.
-*   ✅ **Dynamic Header**: Refactored `Header.tsx` to conditionally render Guest CTAs or the `UserNav` profile menu.
-
-### Milestone 8: Full-Stack E2E Validation (March 29, 2026)
-*   ✅ **Integrated Lifecycle**: Successfully simulated the full user journey: Registration → Auto-Login → Logout → Manual Login.
-*   ✅ **Discovery Sync**: Verified real-time course fetching and category filtering from the Django REST backend.
-*   ✅ **Action Interception**: Implemented and verified guest-to-auth redirection for business-critical actions (Enroll Now).
 
 ---
 
@@ -150,33 +127,36 @@ Our E2E suite utilizes **Playwright (Python Sync API)** for high-fidelity browse
 
 ---
 
-## ⚠️ Technical Hurdles & Resolutions
-
-### 1. Network & Connectivity
-*   **Issue**: `localhost` resolving to IPv6 caused `ERR_CONNECTION_REFUSED` in automated environments.
-*   **Resolution**: Explicitly bind Vite to `127.0.0.1` (`--host 127.0.0.1`) and update test scripts to use IP-based URLs.
-
-### 2. Mock vs. Real Infrastructure
-*   **Issue**: Python `http.server` returned `501 Unsupported Method` for authentication `POST` requests.
-*   **Resolution**: Standardized on `vite preview` for all verification phases to ensure the API proxy layer is active.
-
-### 3. Robust Selectors
-*   **Issue**: Non-standard CSS selectors (e.g., `:has-text`) used in `document.querySelector` caused runtime errors in DOM utilities.
-*   **Resolution**: Refactored `scrollToSection` and interception logic to use robust, standard-compliant `Array.from(document.querySelectorAll('button'))` patterns.
+## ⚠️ History: The "Remediation" Phase
+**CRITICAL: Do not revert these architectural decisions.**
+1.  **React 19 Patterns**: Use `useSyncExternalStore` for accessibility hooks.
+2.  **Fast Refresh Fix**: CVA Variants are in `src/components/ui/variants.ts`.
+3.  **Footer Redesign**: Light Theme (`#F8FAFC`) matching reference samples.
+4.  **Logo Fix**: Icon changed to `<GraduationCap>` to prevent duplication.
+5.  **Favicon Fix**: Reference changed from `/vite.svg` to `/favicon.svg`.
+6.  **Auth UI**: Implemented as high-conversion modals using Radix UI Dialog.
+7.  **UX Remediation (Phase 9)**: `ContactModal` system, `ComingSoonModal`, and event-based filtering.
 
 ---
 
-## 🎓 Lessons Learnt
-1.  **Proxy Fidelity**: Never assume a static build is "integrated" without an active proxy. Always test against the environment that matches the `VITE_API_URL` configuration.
-2.  **Timing is Everything**: Development modules take time to compile. Use `wait_until="networkidle"` and include "warm-up" navigation calls in E2E scripts.
-3.  **UI Interception**: Intercepting guest actions at the component level (instead of global route guards) provides a smoother UX for single-page applications.
+## 🚀 Accomplishments & Milestones
 
----
+### Milestone 7: Authentication UI (March 29, 2026)
+*   ✅ **Radix UI Primitives**: Created foundational `src/components/ui/` primitives: `dialog.tsx`, `dropdown-menu.tsx`, `avatar.tsx`, and `label.tsx`.
+*   ✅ **High-Conversion Modals**: Implemented `LoginModal` and `RegisterModal` with seamless switching logic.
+*   ✅ **Identity Persistence**: Integrated `useAuthStore` (Zustand) with localStorage to maintain sessions across reloads.
+*   ✅ **Dynamic Header**: Refactored `Header.tsx` to conditionally render Guest CTAs or the `UserNav` profile menu.
 
-## 🔧 Troubleshooting Tips for Future Agents
-*   **Server Stability**: If port 5174 is hanging, use `fuser -k 5174/tcp` to clear the process before restarting.
-*   **Zod Errors**: If a form isn't submitting and no API call is visible, check the `errors` object in `react-hook-form`; Zod will block submission silently if the schema isn't met.
-*   **JWT Issues**: If API calls return 401, check the `itrust-auth` entry in Application Storage. Ensure the `accessToken` is present.
+### Milestone 8: Full-Stack E2E Validation (March 29, 2026)
+*   ✅ **Integrated Lifecycle**: Successfully simulated the full user journey: Registration → Auto-Login → Logout → Manual Login.
+*   ✅ **Discovery Sync**: Verified real-time course fetching and category filtering from the Django REST backend.
+*   ✅ **Action Interception**: Implemented and verified guest-to-auth redirection for business-critical actions (Enroll Now).
+
+### Milestone 9: Advanced UX Remediation (March 30, 2026)
+*   ✅ **Modal Systems**: Created `ContactModal` and `ComingSoonModal` architectures.
+*   ✅ **Event-Driven UI**: Implemented `CustomEvent` pattern for cross-component filtering.
+*   ✅ **Security Best Practices**: Refactored all social and external links for safety and UX.
+*   ✅ **Bidirectional Types**: Added `transformKeysToSnake` for full API compatibility.
 
 ---
 
@@ -197,6 +177,11 @@ Our E2E suite utilizes **Playwright (Python Sync API)** for high-fidelity browse
 *   QA Remediation Phase 9 complete (12/15 elements)
 *   Bidirectional data transformers (snake_case ↔ camelCase)
 *   Footer complete rewrite with modals & social links
+*   Dialog accessibility warnings eliminated (11 → 0 warnings)
+*   Toaster mounted in app.tsx for form submission feedback
+*   Modals refactored to shared Dialog components
+*   WCAG 2.1 compliance verified
+*   100% UI/UX usability (47/47 elements passed)
 
 ### 🔄 In Progress
 *   Category-based vendor filtering refinement

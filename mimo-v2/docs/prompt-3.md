@@ -18,6 +18,18 @@ Awesome job on your meticulous analysis, planning and execution. Please keep up 
 
 ---
 
+Awesome job on your meticulous analysis, planning and execution. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Now, please restart the frontend web servie robustly and then meticulously plan to repeat the E2E tests mentioned in @QA_findings_4.md to thoroughly confirm whether the highlighted issues/gaps have been fixed or resolved. 
+
+---
+
+Please review the the attached QA and resolution reports, then meticulously plan to repeat browser based usability checks from a user/customer perspective on the demo site at `https://itrust-academy.jesspete.shop/` . Do look out for any usability defects and experience gaps. At the end of your UI/UX testing of the site, please create a comprehensive UI/UX usability assessment report as a markdown file. Include in your report, the goals and objectives, methodology (command samples) used, problems encountered and their resolution, testing results and findings, finally follow by conclusion and recommendations.
+
+---
+
+Awesome job on your meticulous review, analysis and planning. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Now, please meticulously review new QA test report @QA_findings_5.md , then meticulously plan to run your own browser test to verify the QA findings and claims regarding the UI/UX usability aspect. Follow with your own comprehensive verification assessment report.
+
+---
+
 Awesome job on your meticulous analysis, planning and execution. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Now, please meticulously review @status_3.md and @QA_findings_4.md , then meticulously plan to validate the QA findings and claims in `QA_findings_4.md` against the codebase using the following browsing skills. restart the frontend web service robustly before starting your browser verifications. $ ls -l skills/browser-automation/* skills/chrome-devtools-mcp/* skills/webapp-testing-journey/* skills/frontend-ui-testing-journey/* skills/e2e-testing-lessons/*
 -rw-rw-r-- 1 pete pete 15057 Mar 26 06:43 skills/browser-automation/SKILL.md
 -rw-rw-r-- 1 pete pete 17129 Mar 26 06:46 skills/chrome-devtools-mcp/SKILL.md
@@ -30,5 +42,4 @@ total 20
 skills/webapp-testing-journey/references:
 total 8
 -rw-rw-r-- 1 pete pete 8002 Mar 24 18:54 mobile-navigation.md 
-
 
