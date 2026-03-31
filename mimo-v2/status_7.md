@@ -375,3 +375,45 @@ The iTrust Academy platform is now production-ready for public launch with all P
 
   The repository is now in its most stable and optimized state to date. 🚀
 
+---
+
+✦ I will begin by investigating the current status of the frontend web service by checking for active processes on port 5174 and verifying the state of the Vite preview server. If the service is indeed down, I will perform a robust
+  restart to ensure maximum availability.
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ -  Shell lsof -i :5174                                                                                                                                                                                                               │
+│                                                                                                                                                                                                                                      │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+
+ℹ Request cancelled.
+▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+ > please restart the frontend web service robustly in the background using 'nohup'                                                                                                                                                         
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+✦ I will now robustly restart the frontend web service. First, I will clear port 5174 of any hung processes, then I will use nohup to start the Vite preview server in the background, ensuring it remains active and accessible across the
+  network.
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ ✓  Shell fuser -k 5174/tcp || true                                                                                                                                                                                                   │
+│                                                                                                                                                                                                                                      │
+│ COMMAND      PID USER   FD   TYPE   DEVICE SIZE/OFF NODE NAME                                                                                                                                                                        │
+│ MainThrea 275472 pete   26u  IPv4 19444391      0t0  TCP *:5174 (LISTEN)                                                                                                                                                             │
+│ HTTP/1.1 200 OK                                                                                                                                                                                                                      │
+│ Vary: Origin                                                                                                                                                                                                                         │
+│ Content-Type: text/html                                                                                                                                                                                                              │
+│ Cache-Control: no-cache                                                                                                                                                                                                              │
+│ Etag: W/"4fe-uOg7rQB7Sf8zdmZZDlHOaXcc1ZU"                                                                                                                                                                                            │
+│ Date: Tue, 31 Mar 2026 03:55:59 GMT                                                                                                                                                                                                  │
+│ Connection: keep-alive                                                                                                                                                                                                               │
+│ Keep-Alive: timeout=5                                                                                                                                                                                                                │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+✦ I have meticulously performed a robust restart of the frontend web service.
+
+  🛠 Restart Summary
+   1. Process Management: Cleared port 5174 using fuser to eliminate any orphaned or hung processes.
+   2. Robust Execution: Initialized the Vite preview server using nohup, ensuring it runs as a persistent background process that survives terminal detachment.
+   3. Network Binding: Bound the service to 0.0.0.0, allowing for reliable connectivity from localhost, 127.0.0.1, and external hostnames.
+
+  ✅ Verification
+   * Port Check: lsof confirms a new active listener on port 5174 (PID: 275472).
+   * Response Check: curl verifies the server is responding with a 200 OK status.
+
+  The frontend web service is now fully operational and stable in the background. 🚀
+

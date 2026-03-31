@@ -61,8 +61,8 @@ This document serves as the primary technical blueprint for iTrust Academy. It p
 itrust-academy/
 ├── 📁 src/                          # React Frontend
 │   ├── app/                         # Application Core & Configuration
-│   │   ├── app.tsx                  # Main App component (Routes + Toaster)
-│   │   ├── layout.tsx               # Shared layout wrapper (Header, Footer, Toaster)
+│   │   ├── app.tsx                  # Routes configuration with lazy-loaded pages
+│   │   ├── layout.tsx               # Shared layout with Header, Footer, Toaster
 │   │   └── globals.css              # Tailwind v4 theme, variables, and global resets
 │   ├── pages/                       # Page Components (Multi-Page Routing)
 │   │   ├── home.tsx                 # Landing page with all sections
@@ -102,7 +102,10 @@ itrust-academy/
 │   │       ├── dialog.tsx           # Radix UI dialog primitive with DialogDescription
 │   │       ├── dropdown-menu.tsx    # Dropdown menu primitive
 │   │       ├── avatar.tsx           # Avatar component
-│   │       └── label.tsx            # Form label component
+│   │       ├── label.tsx            # Form label component
+│   │       ├── separator.tsx        # Visual divider with orientation
+│   │       ├── error-boundary.tsx   # React error boundary (class component)
+│   │       └── with-error-boundary.tsx # Error boundary HOC wrapper
 │   ├── services/                    # API Integration Layer
 │   │   └── api/
 │   │       ├── client.ts            # Axios instance with JWT interceptors
@@ -120,6 +123,8 @@ itrust-academy/
 │   │   └── useReducedMotion.ts      # Accessibility hook
 │   ├── providers/                   # Context Providers
 │   │   └── QueryProvider.tsx        # TanStack Query configuration
+│   ├── styles/                      # Framer Motion Animation Variants
+│   │   └── animations.ts            # Shared animation definitions
 │   ├── data/                        # Static Data (fallback/legacy)
 │   │   └── courses.ts               # Course data & types (with curriculum, instructor)
 │   ├── lib/                         # Utilities & Constants
@@ -172,8 +177,9 @@ itrust-academy/
 | File | Role | Responsibility |
 | :--- | :--- | :--- |
 | `src/main.tsx` | Entry Point | Mounts React with QueryProvider wrapper. |
-| `src/app/app.tsx` | Root Component | Orchestrates the vertical stacking of all landing page sections. |
+| `src/app/app.tsx` | Routes Config | Lazy-loaded route definitions with ErrorBoundary + Suspense per route. |
 | `src/app/globals.css` | Theme Engine | Defines OKLCH colors, brand shadows, and Tailwind v4 @theme. |
+| `src/components/ui/error-boundary.tsx` | Fault Tolerance | Catches runtime errors to prevent application crashes. |
 | `src/services/api/client.ts` | API Client | Axios instance with JWT interceptors and response unwrapping. |
 | `src/services/api/types.ts` | Type Definitions | Backend/Frontend type mappings for API communication. |
 | `src/services/api/transformers.ts` | Data Transformers | Converts snake_case API responses to camelCase frontend types. |
@@ -435,7 +441,7 @@ All endpoints return a standardized envelope:
 | `useCategories()` | All categories | 30 minutes |
 | `useLogin()` | Login mutation | N/A |
 | `useRegister()` | Register mutation | N/A |
-| `useCurrentUser()` | Current user profile | 5 minutes |
+| `useCurrentUser()` | Current user profile (defined in useAuth.ts) | 5 minutes |
 
 ### 7.4 State Management Flow
 ```mermaid

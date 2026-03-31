@@ -80,7 +80,7 @@
 - **Session Persistence**: Zustand + localStorage
 
 ### 🧭 Navigation
-- **Multi-Page Routing**: React Router with 8 routes
+- **Multi-Page Routing**: React Router with 7 routes
 - **Sticky Header**: Fixed navigation that adapts on scroll
 - **Mobile Drawer**: Full-screen mobile navigation with smooth animations
 - **Footer Links**: Real content pages (About, FAQ, Privacy, Terms)
@@ -234,9 +234,15 @@ itrust-academy/
 │   │       ├── badge.tsx                # Badge component
 │   │       ├── input.tsx                # Form input
 │   │       ├── dialog.tsx               # Dialog primitive
+│   │       ├── separator.tsx            # Visual divider
+│   │       ├── error-boundary.tsx       # Error boundary component
+│   │       ├── with-error-boundary.tsx  # Error boundary HOC
 │   │       └── variants.ts              # CVA variants
 │   │
-│   ├── 📁 services/                     # API Integration
+│   ├── 📁 styles/
+│   │   └── animations.ts                # Framer Motion animation variants
+│   │
+│   ├── 📁 data/
 │   │   └── 📁 api/
 │   │       ├── client.ts                # Axios + JWT interceptors
 │   │       ├── types.ts                 # API type definitions
@@ -535,12 +541,19 @@ docker-compose up -d
 The application uses Playwright for E2E testing.
 
 ```bash
-# Run E2E tests
+# Run full E2E suite
+python3 run_reg_course_e2e.py
+
+# Run phase verification scripts
 python3 scripts/verify_phase1_routing.py
 python3 scripts/verify_phase2_course_detail.py
 python3 scripts/verify_phase3_search.py
 python3 scripts/verify_phase4_brand_pages.py
 python3 scripts/verify_phase5_dashboard.py
+
+# Run additional validation scripts
+python3 scripts/validate_qa_findings.py
+python3 scripts/test_phase1_vendor_filter.py
 ```
 
 ### Test Results
