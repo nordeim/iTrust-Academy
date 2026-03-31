@@ -1,4 +1,9 @@
-# 🎓 iTrust Academy
+#!/usr/bin/env python3
+"""
+Generate comprehensive README.md for iTrust Academy
+"""
+
+readme_content = """# 🎓 iTrust Academy
 
 > **Enterprise IT Training & Certification Platform**
 > Expert-led, hands-on training across SolarWinds, Securden, Quest, and Ivanti platforms.
@@ -363,7 +368,7 @@ docker-compose up -d
 # Setup backend (optional - for full API)
 cd backend
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # On Windows: venv\\Scripts\\activate
 pip install -r requirements/base.txt
 python manage.py migrate
 python manage.py runserver 8000
@@ -595,3 +600,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 Made with ❤️ by the iTrust Academy Team
 
 </div>
+"""
+
+# Write the README.md file
+with open("/home/project/iTrust-Academy/mimo-v2/README.md", "w") as f:
+    f.write(readme_content)
+
+print("✅ README.md generated successfully!")
+print(f"📄 File size: {len(readme_content)} characters")

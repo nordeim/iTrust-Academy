@@ -61,10 +61,25 @@ This document serves as the primary technical blueprint for iTrust Academy. It p
 itrust-academy/
 ├── 📁 src/                          # React Frontend
 │   ├── app/                         # Application Core & Configuration
-│   │   ├── app.tsx                  # Main App component (Section orchestrator + Toaster)
+│   │   ├── app.tsx                  # Main App component (Routes + Toaster)
+│   │   ├── layout.tsx               # Shared layout wrapper (Header, Footer, Toaster)
 │   │   └── globals.css              # Tailwind v4 theme, variables, and global resets
+│   ├── pages/                       # Page Components (Multi-Page Routing)
+│   │   ├── home.tsx                 # Landing page with all sections
+│   │   ├── course-detail.tsx        # Course detail with tabbed navigation
+│   │   ├── about.tsx                # About Us page (company info, values)
+│   │   ├── faq.tsx                  # FAQ page (20+ questions, accordion UI)
+│   │   ├── privacy.tsx              # Privacy Policy page
+│   │   ├── terms.tsx                # Terms of Service page
+│   │   └── dashboard.tsx            # User Dashboard (achievements, quick actions)
 │   ├── components/                  # Component Library
 │   │   ├── cards/                   # Composite card components (e.g., CourseCard)
+│   │   ├── course/                  # Course-specific components
+│   │   │   ├── course-tabs.tsx      # Tabbed navigation (Overview, Curriculum, Instructor)
+│   │   │   ├── course-curriculum.tsx # Expandable module list with topics
+│   │   │   ├── course-instructor.tsx # Instructor profile with certifications
+│   │   │   ├── course-certification.tsx # Certification path information
+│   │   │   └── related-courses.tsx  # Related courses grid
 │   │   ├── forms/                   # Form-specific logic and UI (React Hook Form)
 │   │   │   ├── login-modal.tsx      # Login form with Zod validation
 │   │   │   └── register-modal.tsx   # Registration form with Zod validation
@@ -73,13 +88,13 @@ itrust-academy/
 │   │   │   └── coming-soon-modal.tsx # Coming soon placeholder modal
 │   │   ├── icons/                   # Custom SVG brand icons (Lucide-compatible)
 │   │   ├── layout/                  # Global Layout: Header, Light Footer, Section Wrappers
-│   │   │   ├── header.tsx           # Header with auth state management
-│   │   │   ├── footer.tsx           # Footer with contact info & modals
+│   │   │   ├── header.tsx           # Header with auth state management + Link
+│   │   │   ├── footer.tsx           # Footer with contact info & modals + Link
 │   │   │   └── user-nav.tsx         # Authenticated user dropdown
 │   │   ├── sections/                # Feature-specific landing page sections
 │   │   │   ├── hero.tsx             # Hero banner section
 │   │   │   ├── vendor-cards.tsx     # Vendor showcase cards with filtering
-│   │   │   ├── course-catalog.tsx   # Course grid with API integration
+│   │   │   ├── course-catalog.tsx   # Course grid with search & API integration
 │   │   │   ├── professional-services.tsx # Services section with ContactModal
 │   │   │   ├── cta.tsx              # CTA section with ContactModal
 │   │   │   └── training-schedule.tsx # Training schedule with enrollment
@@ -106,10 +121,11 @@ itrust-academy/
 │   ├── providers/                   # Context Providers
 │   │   └── QueryProvider.tsx        # TanStack Query configuration
 │   ├── data/                        # Static Data (fallback/legacy)
-│   │   └── courses.ts               # Course data & types
+│   │   └── courses.ts               # Course data & types (with curriculum, instructor)
 │   ├── lib/                         # Utilities & Constants
 │   │   ├── constants.ts             # App constants & API_URL & SOCIAL_URLS
 │   │   └── utils.ts                 # Utility functions (scrollToSection, scrollToTop)
+│   ├── main.tsx                     # React entry point (BrowserRouter + QueryProvider)
 │   └── types/                       # Type Definitions
 │       └── vite-env.d.ts            # Vite environment declarations
 │
