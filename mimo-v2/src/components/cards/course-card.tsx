@@ -73,7 +73,7 @@ export function CourseCard({ course, index = 0 }: CourseCardProps) {
           <div className="flex items-center gap-4 text-xs text-muted-foreground mb-5">
             <div className="flex items-center gap-1.5">
               <Clock className="w-3.5 h-3.5" />
-              <span className="font-mono">{course.durationWeeks} weeks</span>
+              <span className="font-mono">{course.durationLabel || `${course.durationWeeks} weeks`}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <BarChart3 className="w-3.5 h-3.5" />

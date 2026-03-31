@@ -12,17 +12,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useCourses } from "@/hooks/useCourses"
 import { useCategories } from "@/hooks/useCategories"
-import { cn, scrollToSection } from "@/lib/utils"
-import { COURSES, COURSE_CATEGORIES } from "@/data/courses"
+import { cn, scrollToSection, formatDuration } from "@/lib/utils"
+import { COURSES, COURSE_CATEGORIES, VENDOR_TO_CATEGORY } from "@/data/courses"
 import type { Course as CourseType } from "@/services/api/types"
-
-// Vendor to category mapping
-const VENDOR_TO_CATEGORY: Record<string, { id: number; name: string; slug: string; color: string }> = {
-  "SolarWinds": { id: 1, name: "Network Monitoring", slug: "network-monitoring", color: "#7B8794" },
-  "Securden": { id: 2, name: "Security", slug: "security", color: "#0EA5E9" },
-  "Quest": { id: 3, name: "Database", slug: "database", color: "#6366F1" },
-  "Ivanti": { id: 4, name: "Endpoint Management", slug: "endpoint-management", color: "#EC4899" },
-}
 
 export function CourseCatalog() {
   const [activeVendor, setActiveVendor] = useState<string>("All")
@@ -70,6 +62,7 @@ export function CourseCatalog() {
         level: course.level.toLowerCase() as "beginner" | "intermediate" | "advanced",
         modulesCount: course.modules,
         durationWeeks: parseInt(course.duration) || 1,
+        durationLabel: formatDuration(course.duration),
         price: course.price,
         originalPrice: course.originalPrice || null,
         discountPercentage: course.originalPrice ? Math.round((1 - course.price / course.originalPrice) * 100) : 0,

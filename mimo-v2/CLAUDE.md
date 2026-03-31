@@ -4,7 +4,7 @@
 > 
 > **Project**: iTrust Academy - Enterprise IT Training Platform
 > **Tech Stack**: React 19 + TypeScript + Tailwind CSS v4 + Vite + Django REST API
-> **Last Updated**: March 29, 2026
+> **Last Updated**: April 1, 2026
 
 ---
 
@@ -21,6 +21,7 @@ iTrust Academy is a **production-ready full-stack application** for enterprise I
 - ✅ **Full API integration with Django backend**
 - ✅ **JWT authentication with token refresh**
 - ✅ **Real-time data fetching with React Query**
+- ✅ **Vitest unit testing infrastructure (14/14 tests)**
 
 ---
 
@@ -80,7 +81,7 @@ Render to DOM
 | `src/app/globals.css` | Global styles | Tailwind v4 theme tokens, CSS variables |
 | `src/data/courses.ts` | Course data | 9 courses, VENDORS array, COURSE_CATEGORIES |
 | `src/lib/constants.ts` | App constants | BRAND_NAME, NAV_ITEMS, FOOTER_LINKS, API_URL |
-| `src/lib/utils.ts` | Utilities | `cn()` class merger, `formatPrice()`, `formatDate()` |
+| `src/lib/utils.ts` | Utilities | `cn()`, `formatPrice()`, `formatDate()`, `parseDuration()`, `formatDuration()` |
 
 ### Component Architecture
 
@@ -107,6 +108,7 @@ Render to DOM
 - `Badge.tsx` - Badge/label component
 - `Input.tsx` - Form input
 - `Separator.tsx` - Visual divider
+- `ErrorBoundary.tsx` - React error boundary with recovery UI
 - `variants.ts` - CVA variant definitions for buttons/badges
 
 **Custom Components** (`src/components/`)
@@ -115,6 +117,9 @@ Render to DOM
 
 ### Hooks
 - `useReducedMotion.ts` - Detects `prefers-reduced-motion` preference
+- `useAuth.ts` - Auth mutation hooks (login, register, logout, current user)
+- `useCourses.ts` - Course query hooks (React Query)
+- `useCategories.ts` - Category query hooks (React Query)
 
 ### Styles
 - `globals.css` - Tailwind v4 theme configuration
@@ -183,6 +188,8 @@ npm run dev      # Start Vite dev server (port 5174)
 npm run build    # TypeScript check + production build
 npm run lint     # ESLint with react-refresh rules
 npm run preview  # Preview production build locally
+npm test         # Run unit tests (Vitest, 14 tests)
+npm run test:watch  # Run tests in watch mode
 ```
 
 ### Build Process
@@ -212,7 +219,8 @@ import { COURSES } from "@/data/courses"
 - ✅ Linting passes (`npm run lint`)
 - ✅ TypeScript compiles (`npm run build`)
 - ✅ Production build generates successfully
-- ✅ E2E tests pass (9 test cases)
+- ✅ Unit tests pass (14/14 via Vitest)
+- ✅ E2E tests pass (33/33 test cases)
 
 ### E2E Testing
 
@@ -306,6 +314,13 @@ server: {
 21. ✅ Search functionality with debounced filtering
 22. ✅ Brand authority pages (About, FAQ, Privacy, Terms)
 23. ✅ User dashboard with achievements and quick actions
+24. ✅ Vitest test infrastructure installed and configured
+25. ✅ Duration inconsistency bug fixed ("5 weeks" vs "5 days")
+26. ✅ Filter category mismatch fixed (vendor slugs aligned)
+27. ✅ 404 catch-all route with NotFoundPage component
+28. ✅ Skip-to-content link for keyboard accessibility
+29. ✅ SEO meta tags (OG, Twitter Card, canonical)
+30. ✅ Bundle size warning threshold configured (1000KB)
 
 ### Current State
 - All lint checks pass (0 errors)
@@ -383,11 +398,13 @@ scrollToTop()
 - Files in `src/assets/` are bundled, not copied to root
 
 ### Potential Improvements
-- [ ] Add unit tests with Vitest
+- [x] ~~Add unit tests with Vitest~~ ✅ Done (14 tests)
 - [ ] Implement contact form functionality
-- [ ] Add course detail pages
+- [x] ~~Add course detail pages~~ ✅ Done
+- [x] ~~Add 404 error page~~ ✅ Done
 - [ ] Add loading skeletons for async operations
 - [ ] Dark mode toggle
+- [ ] Per-page SEO with react-helmet-async
 
 ---
 
@@ -596,9 +613,9 @@ import { motion } from "framer-motion"
 
 ---
 
-**Last Updated**: March 28, 2026  
+**Last Updated**: April 1, 2026  
 **Maintained By**: iTrust Academy Development Team  
-**Version**: 0.0.0
+**Version**: 2.1.0
 
 ---
 

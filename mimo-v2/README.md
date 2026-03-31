@@ -45,6 +45,7 @@
 
 | Metric | Value |
 |--------|-------|
+| **Unit Tests** | 14/14 pass (Vitest) |
 | **E2E Test Pass Rate** | 100% (33/33) |
 | **Usability Tests** | 97.6% (40/41) |
 | **ESLint Errors** | 0 |
@@ -60,6 +61,8 @@
 - **Smooth Animations**: Framer Motion-powered entrance and scroll animations
 - **Accessible Components**: WCAG 2.1 compliant with Radix UI primitives
 - **Toast Notifications**: Real-time user feedback with Sonner
+- **Skip-to-Content**: Keyboard-accessible skip link for screen reader users
+- **Error Boundaries**: Graceful error handling per route with recovery UI
 
 ### 📚 Course Catalog
 - **Interactive Filtering**: Filter courses by vendor (SolarWinds, Securden, Quest, Ivanti)
@@ -80,7 +83,7 @@
 - **Session Persistence**: Zustand + localStorage
 
 ### 🧭 Navigation
-- **Multi-Page Routing**: React Router with 7 routes
+- **Multi-Page Routing**: React Router with 7 routes + 404 catch-all
 - **Sticky Header**: Fixed navigation that adapts on scroll
 - **Mobile Drawer**: Full-screen mobile navigation with smooth animations
 - **Footer Links**: Real content pages (About, FAQ, Privacy, Terms)
@@ -195,7 +198,8 @@ itrust-academy/
 │   │   ├── faq.tsx                      # FAQ with accordion
 │   │   ├── privacy.tsx                  # Privacy Policy
 │   │   ├── terms.tsx                    # Terms of Service
-│   │   └── dashboard.tsx                # User Dashboard
+│   │   ├── dashboard.tsx                # User Dashboard
+│   │   └── not-found.tsx                # 404 catch-all page
 │   │
 │   ├── 📁 components/                   # Component Library
 │   │   ├── 📁 cards/
@@ -408,6 +412,8 @@ npm run dev
 | `build` | `npm run build` | TypeScript check + production build |
 | `lint` | `npm run lint` | Run ESLint |
 | `preview` | `npm run preview` | Preview production build |
+| `test` | `npm test` | Run unit tests (Vitest) |
+| `test:watch` | `npm run test:watch` | Run tests in watch mode |
 
 ### Code Conventions
 
@@ -535,6 +541,26 @@ docker-compose up -d
 ---
 
 ## 🧪 Testing
+
+### Unit Testing (Vitest)
+
+The project uses Vitest with React Testing Library for unit tests.
+
+```bash
+# Run all unit tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+```
+
+**Test Suites**:
+| File | Tests | Status |
+|------|-------|--------|
+| `src/lib/__tests__/utils.test.ts` | 10 | ✅ Pass |
+| `src/components/sections/__tests__/course-filter.test.ts` | 2 | ✅ Pass |
+| `src/app/__tests__/layout-a11y.test.tsx` | 2 | ✅ Pass |
+| **Total** | **14** | **✅ 100% Pass** |
 
 ### E2E Testing
 

@@ -27,6 +27,7 @@ const FAQPage = lazy(() => import("@/pages/faq").then(m => ({ default: m.FAQPage
 const PrivacyPage = lazy(() => import("@/pages/privacy").then(m => ({ default: m.PrivacyPage })))
 const TermsPage = lazy(() => import("@/pages/terms").then(m => ({ default: m.TermsPage })))
 const DashboardPage = lazy(() => import("@/pages/dashboard").then(m => ({ default: m.DashboardPage })))
+const NotFoundPage = lazy(() => import("@/pages/not-found").then(m => ({ default: m.NotFoundPage })))
 
 export default function App() {
   return (
@@ -80,6 +81,11 @@ export default function App() {
               <ErrorBoundary>
                 <DashboardPage />
               </ErrorBoundary>
+            </Suspense>
+          } />
+          <Route path="*" element={
+            <Suspense fallback={<PageLoader />}>
+              <NotFoundPage />
             </Suspense>
           } />
         </Route>

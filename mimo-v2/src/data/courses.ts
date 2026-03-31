@@ -575,3 +575,11 @@ export const COURSE_CATEGORIES = [
   { slug: "quest", name: "Quest" },
   { slug: "ivanti", name: "Ivanti" },
 ]
+
+// Vendor to category mapping — slugs must match COURSE_CATEGORIES for fallback filtering
+export const VENDOR_TO_CATEGORY: Record<string, { id: number; name: string; slug: string; color: string }> = {
+  "SolarWinds": { id: 1, name: "SolarWinds", slug: "solarwinds", color: "#7B8794" },
+  "Securden": { id: 2, name: "Securden", slug: "securden", color: "#0EA5E9" },
+  "Quest": { id: 3, name: "Quest", slug: "quest", color: "#6366F1" },
+  "Ivanti": { id: 4, name: "Ivanti", slug: "ivanti", color: "#EC4899" },
+}

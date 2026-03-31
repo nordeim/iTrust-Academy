@@ -46,6 +46,19 @@ Awesome job on your meticulous review, analysis and planning. Please keep up the
 
 ---
 
+Awesome job on your meticulous review, analysis and planning. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Now, please meticulously review @Project_Requirements_Document.md , @itrust-homepage-content.json and @Comparative_Analysis_Report.md , then validate the findings and claims about the feature and functionality gaps and suggestions against the codebase.
+
+---
+
+Please analyze this codebase and create an AGENTS.md file containing:
+1. Build/lint/test commands - especially for running a single test
+2. Code style guidelines including imports, formatting, types, naming conventions, error handling, etc.
+The file you create will be given to agentic coding agents (such as yourself) that operate in this repository. Make it about 150 lines long.
+If there are Cursor rules (in .cursor/rules/ or .cursorrules) or Copilot rules (in .github/copilot-instructions.md), make sure to include them.
+If there's already an AGENTS.md, improve it if it's located in /home/project/iTrust-Academy/mimo-v2
+
+---
+
 Awesome job on your meticulous review, analysis and planning. Please keep up the good work in your rigorous and meticulous approach to planning and execution. Now, please meticulously plan to perform E2E web application Ui/UX verification test using browser tools and skills. The goal is to perform a final sanity check (verification) before production deployment to ensure all UI/UX interactions and components work as a user would expect. 
 $ ls -l skills/browser-automation/* skills/chrome-devtools-mcp/* skills/e2e-testing-lessons/* skills/frontend-ui-testing-journey/* skills/webapp-testing-journey/*                                                                       
    -rw-rw-r-- 1 pete pete 15057 Mar 26 06:43 skills/browser-automation/SKILL.md                                                                                                                                                             

@@ -148,6 +148,7 @@ export interface Course {
   level: "beginner" | "intermediate" | "advanced"
   modulesCount: number
   durationWeeks: number
+  durationLabel?: string
   price: number
   originalPrice: number | null
   discountPercentage: number

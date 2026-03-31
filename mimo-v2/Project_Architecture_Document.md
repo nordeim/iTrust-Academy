@@ -2,9 +2,9 @@
 
 > **The Definitive Technical Handbook & Source of Truth**
 > **Project**: iTrust Academy - Enterprise IT Training Platform
-> **Version**: 2.0.0
-> **Last Updated**: March 29, 2026
-> **Status**: Full-Stack Integration Complete
+> **Version**: 2.1.0
+> **Last Updated**: April 1, 2026
+> **Status**: Full-Stack Integration Complete + TDD Infrastructure
 
 ---
 
@@ -62,7 +62,7 @@ itrust-academy/
 ├── 📁 src/                          # React Frontend
 │   ├── app/                         # Application Core & Configuration
 │   │   ├── app.tsx                  # Routes configuration with lazy-loaded pages
-│   │   ├── layout.tsx               # Shared layout with Header, Footer, Toaster
+│   │   ├── layout.tsx               # Shared layout with Header, Footer, Toaster, SkipLink
 │   │   └── globals.css              # Tailwind v4 theme, variables, and global resets
 │   ├── pages/                       # Page Components (Multi-Page Routing)
 │   │   ├── home.tsx                 # Landing page with all sections
@@ -71,7 +71,8 @@ itrust-academy/
 │   │   ├── faq.tsx                  # FAQ page (20+ questions, accordion UI)
 │   │   ├── privacy.tsx              # Privacy Policy page
 │   │   ├── terms.tsx                # Terms of Service page
-│   │   └── dashboard.tsx            # User Dashboard (achievements, quick actions)
+│   │   ├── dashboard.tsx            # User Dashboard (achievements, quick actions)
+│   │   └── not-found.tsx            # 404 catch-all page
 │   ├── components/                  # Component Library
 │   │   ├── cards/                   # Composite card components (e.g., CourseCard)
 │   │   ├── course/                  # Course-specific components
@@ -126,10 +127,10 @@ itrust-academy/
 │   ├── styles/                      # Framer Motion Animation Variants
 │   │   └── animations.ts            # Shared animation definitions
 │   ├── data/                        # Static Data (fallback/legacy)
-│   │   └── courses.ts               # Course data & types (with curriculum, instructor)
+│   │   └── courses.ts               # Course data, types, COURSE_CATEGORIES, VENDOR_TO_CATEGORY
 │   ├── lib/                         # Utilities & Constants
 │   │   ├── constants.ts             # App constants & API_URL & SOCIAL_URLS
-│   │   └── utils.ts                 # Utility functions (scrollToSection, scrollToTop)
+│   │   └── utils.ts                 # Utility functions (cn, formatPrice, parseDuration, formatDuration)
 │   ├── main.tsx                     # React entry point (BrowserRouter + QueryProvider)
 │   └── types/                       # Type Definitions
 │       └── vite-env.d.ts            # Vite environment declarations
@@ -180,6 +181,8 @@ itrust-academy/
 | `src/app/app.tsx` | Routes Config | Lazy-loaded route definitions with ErrorBoundary + Suspense per route. |
 | `src/app/globals.css` | Theme Engine | Defines OKLCH colors, brand shadows, and Tailwind v4 @theme. |
 | `src/components/ui/error-boundary.tsx` | Fault Tolerance | Catches runtime errors to prevent application crashes. |
+| `src/pages/not-found.tsx` | 404 Page | Catch-all route for unknown paths with back-to-home CTA. |
+| `src/lib/utils.ts` | Utilities | Class merging (cn), price formatting, duration parsing. |
 | `src/services/api/client.ts` | API Client | Axios instance with JWT interceptors and response unwrapping. |
 | `src/services/api/types.ts` | Type Definitions | Backend/Frontend type mappings for API communication. |
 | `src/services/api/transformers.ts` | Data Transformers | Converts snake_case API responses to camelCase frontend types. |
@@ -479,7 +482,8 @@ graph LR
 1.  **Dependencies**: `npm install`
 2.  **Linting Check**: `npm run lint` (0 errors required).
 3.  **Build Check**: `npm run build` (Ensures Type/Vite integrity).
-4.  **Dev Server**: `npm run dev` (Port 5174).
+4.  **Unit Tests**: `npm test` (14 tests must pass).
+5.  **Dev Server**: `npm run dev` (Port 5174).
 
 ### 9.1.1 Vite Server Configuration
 ```typescript
@@ -578,6 +582,8 @@ export function scrollToTop(): void {
 *   **Lucide Compatibility**: For social icons, use the custom SVG components in `src/components/icons/social-icons.tsx`.
 *   **API Integration**: Always use React Query hooks for data fetching. Never use `useEffect` for API calls.
 *   **Type Safety**: Use TypeScript types from `src/services/api/types.ts` for all API interactions.
+*   **Vendor Mapping**: `VENDOR_TO_CATEGORY` slugs must match `COURSE_CATEGORIES` for fallback filter alignment.
+*   **TDD**: Write failing tests first. Run `npm test` before committing.
 
 ---
 

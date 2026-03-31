@@ -4,7 +4,7 @@
 > **Project**: iTrust Academy - Enterprise IT Training Platform (APAC)
 > **Tech Stack**: React 19 + TypeScript 5.9 + Vite 8 + Tailwind CSS v4 + Django REST API
 > **Design Philosophy**: Avant-Garde / Meticulous Minimalism / Corporate Precision
-> **Last Synchronized**: March 30, 2026
+> **Last Synchronized**: April 1, 2026
 
 ---
 
@@ -33,8 +33,15 @@ As a Gemini agent in this workspace, you are an **internally acclaimed web desig
 ```
 src/
 ├── app/                  # Main Entry & Global Configuration
-│   ├── app.tsx           # Root orchestrator for all sections
+│   ├── app.tsx           # Routes config with lazy-loaded pages + 404 catch-all
+│   ├── layout.tsx        # Shared layout (Header, Footer, Toaster, SkipLink)
 │   └── globals.css       # Tailwind v4 CSS-first theme & variables
+├── pages/
+│   ├── home.tsx          # Landing page
+│   ├── course-detail.tsx # Course detail with tabs
+│   ├── about.tsx, faq.tsx, privacy.tsx, terms.tsx
+│   ├── dashboard.tsx     # User dashboard
+│   └── not-found.tsx     # 404 page
 ├── components/
 │   ├── cards/            # CourseCard, Platform Cards (API-driven)
 │   ├── forms/            # Zod-validated Auth Modals (Login, Register)
@@ -158,6 +165,17 @@ Our E2E suite utilizes **Playwright (Python Sync API)** for high-fidelity browse
 *   ✅ **Security Best Practices**: Refactored all social and external links for safety and UX.
 *   ✅ **Bidirectional Types**: Added `transformKeysToSnake` for full API compatibility.
 
+### Milestone 10: Comprehensive QA & Codebase Remediation (April 1, 2026)
+*   ✅ **Test Infrastructure**: Installed Vitest + React Testing Library. 14 unit tests across 3 test files.
+*   ✅ **Duration Bug Fixed**: Added `parseDuration()`/`formatDuration()` to utils. Course cards now display "5 days" not "5 weeks".
+*   ✅ **Filter Mismatch Fixed**: Aligned `VENDOR_TO_CATEGORY` slugs with `COURSE_CATEGORIES`. Fallback filtering now works.
+*   ✅ **404 Page**: Created `NotFoundPage` component with catch-all `<Route path="*">`.
+*   ✅ **Accessibility**: Added skip-to-content link in `layout.tsx` with `id="main-content"` on `<main>`.
+*   ✅ **SEO**: Added Open Graph, Twitter Card, and canonical tags to `index.html`.
+*   ✅ **Bundle Config**: Set `chunkSizeWarningLimit: 1000` in `vite.config.ts`.
+*   ✅ **Documentation**: Created `VALIDATION_REPORT_README_PAD.md`, `VALIDATED_ASSESSMENT_REPORT.md`, `REMEDIATION_PLAN.md`.
+*   ✅ **Data Integrity**: Refactored `VENDOR_TO_CATEGORY` to `src/data/courses.ts` for Fast Refresh compliance.
+
 ---
 
 ## 🎯 Current Roadmap & Pending Tasks
@@ -188,11 +206,17 @@ Our E2E suite utilizes **Playwright (Python Sync API)** for high-fidelity browse
 *   Brand authority pages (About, FAQ, Privacy, Terms)
 *   User dashboard with achievements and quick actions
 *   Usability Enhancement complete (40/41 tests, 97.6%)
+*   **Vitest test infrastructure (14/14 unit tests)**
+*   **Duration inconsistency bug fixed (parseDuration/formatDuration)**
+*   **Filter category mismatch fixed (vendor slug alignment)**
+*   **404 catch-all route with NotFoundPage**
+*   **Skip-to-content link (keyboard accessibility)**
+*   **SEO meta tags (OG, Twitter Card, canonical)**
+*   **Bundle size warning configured (1000KB limit)**
 
 ### 🔄 In Progress
-*   Category-based vendor filtering refinement
 *   Loading skeleton components for catalog
-*   Error boundary implementation
+*   Per-page SEO with react-helmet-async
 
 ### 📋 Planned (Next Directives)
 1.  **Enrollment Flow**: Course enrollment integration with Stripe payments.
